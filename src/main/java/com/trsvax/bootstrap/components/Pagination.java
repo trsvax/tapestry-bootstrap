@@ -113,7 +113,7 @@ public class Pagination {
 	}
 	
 	private void next(MarkupWriter writer) {
-		if ( currentPage == pages ) {
+		if ( currentPage >= pages ) {
 			writer.element("li","class","next disabled");
 			writer.element("a", "href","#");
 		} else {

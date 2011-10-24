@@ -67,13 +67,10 @@ public class Pagination {
 		writer.element("div", "class","pagination");
 		writer.element("ul");
 		
-		prev(writer);		
-		for ( Integer i = 1; i < pages; i++ ) {
-			int min = currentPage - range;
-			int max = currentPage + range;
-			if ( i < min || i > max ) {
-				continue;
-			}
+		prev(writer);	
+		int min = currentPage - range;
+		int max = currentPage + range;
+		for ( Integer i = min; i < max; i++ ) {
 			page(writer,i);
 		}		
 		next(writer);

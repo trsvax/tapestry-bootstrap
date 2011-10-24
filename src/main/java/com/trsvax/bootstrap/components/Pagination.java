@@ -70,7 +70,15 @@ public class Pagination {
 		prev(writer);	
 		int min = currentPage - range;
 		int max = currentPage + range;
-		for ( Integer i = min; i < max; i++ ) {
+		if ( min < 0 ) {
+			int offset = Math.abs(min) + 1;
+			min += offset;
+			max += offset;
+		}
+		if ( max > pages ) {
+			max = pages;
+		}
+		for ( Integer i = min; i <= max; i++ ) {
 			page(writer,i);
 		}		
 		next(writer);

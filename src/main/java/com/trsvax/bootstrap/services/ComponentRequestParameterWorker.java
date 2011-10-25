@@ -44,8 +44,8 @@ public class ComponentRequestParameterWorker implements ComponentClassTransformW
 		for ( PlasticField field : fields ) {
 			ActivationRequestParameter annotation = field.getAnnotation(ActivationRequestParameter.class);
 			String parameterName = getParameterName(field, annotation);
-			Class fieldType = classCache.forName(field.getTypeName());
-			ValueEncoder encoder = valueEncoderSource.getValueEncoder(fieldType);
+			Class<?> fieldType = classCache.forName(field.getTypeName());
+			ValueEncoder<?> encoder = valueEncoderSource.getValueEncoder(fieldType);
 			FieldHandle handle = field.getHandle();
 			String fieldName = String.format("%s.%s", field.getPlasticClass().getClassName(), field.getName());
 			
@@ -57,7 +57,7 @@ public class ComponentRequestParameterWorker implements ComponentClassTransformW
 
 
 	void setValue(PlasticMethod method, final PlasticField field, String fieldName, final FieldHandle handle,
-			final String parameterName, final ValueEncoder encoder) {
+			final String parameterName, final ValueEncoder<?> encoder) {
 		
 		method.addAdvice(new MethodAdvice() {
 

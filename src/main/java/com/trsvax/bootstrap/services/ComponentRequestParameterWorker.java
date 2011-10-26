@@ -33,6 +33,9 @@ public class ComponentRequestParameterWorker implements ComponentClassTransformW
 
 	public void transform(PlasticClass plasticClass, TransformationSupport support,
 			MutableComponentModel model) {
+		if ( model.isPage() ) {
+			return;
+		}
 		
 		List<PlasticField> fields = plasticClass.getFieldsWithAnnotation(ActivationRequestParameter.class);
 		

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+<ul class="media-grid gallery">
+	<t:loop  source="source" value="row">
+			<li><t:body/></li>
+	</t:loop>
+</ul>
+      
+</html>

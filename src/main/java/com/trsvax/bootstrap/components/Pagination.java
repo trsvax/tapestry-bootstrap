@@ -55,8 +55,8 @@ public class Pagination {
 		writer.end();
 		writer.end();
 	}
-	
-	
+
+
 	private void link(MarkupWriter writer, Integer page) {
 		if ( currentPage.equals(page)) {
 			writer.element("li","class","active");

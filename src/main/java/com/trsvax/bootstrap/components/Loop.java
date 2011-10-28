@@ -16,7 +16,11 @@ public class Loop<T> {
 	@Parameter
 	@Property
 	private Object value;
+	
+	@Parameter
+	@Property
+	private Integer index;
 
-	@Component(parameters={"source=values.source","value=value"})
+	@Component(parameters={"source=values.source","value=value","index=index"})
 	private org.apache.tapestry5.corelib.components.Loop<T> loop;
 }

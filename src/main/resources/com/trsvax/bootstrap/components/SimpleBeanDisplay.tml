@@ -1,0 +1,17 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">          
+<div class="t-beandisplay" xml:space="default"
+	    xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	
+	    <t:loop t:source="model.propertyNames" formState="ITERATION" t:value="propertyName">
+	
+	        <t:delegate to="propertyBlock"/>
+	
+	        
+	        
+	    </t:loop>
+	    
+	    <t:block id="MediaTitle">
+	    	<h3><t:propertydisplay model="propertyModel" overrides="overrides" object="object"/></h3>
+	    </t:block>
+</div>
+</t:container>

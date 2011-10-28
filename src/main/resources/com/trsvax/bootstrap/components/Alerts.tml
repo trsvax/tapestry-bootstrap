@@ -1,0 +1,7 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
+<t:loop t:id="alerts" source="alerts" value="alert">
+<t:tb.basicAlert>
+${message}
+</t:tb.basicAlert>
+</t:loop>
+</t:container>

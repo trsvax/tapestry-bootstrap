@@ -1,16 +1,16 @@
 package com.trsvax.bootstrap.mixins;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.CleanupRender;
-import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.runtime.Component;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
@@ -76,6 +76,9 @@ public class Pager<T> {
 			int toIndex = fromIndex + paginationValues.getRowsPerPage();
 			if ( toIndex > paginationValues.getItemCount()) {
 				toIndex = paginationValues.getItemCount();
+			}
+			if ( fromIndex >= toIndex ) {
+				return Collections.emptyList();
 			}
 			return source.subList(fromIndex, toIndex);
 		}

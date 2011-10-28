@@ -1,73 +1,39 @@
 package com.trsvax.bootstrap.components;
 
-import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.annotations.ActivationRequestParameter;
 import org.apache.tapestry5.annotations.BeginRender;
+import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.SetupRender;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.PageRenderLinkSource;
+import org.apache.tapestry5.annotations.Property;
 
-import com.trsvax.bootstrap.services.TwitterBootstrapModule;
+import com.trsvax.bootstrap.PaginationEnvironment;
 
 public class Pagination {
 	
-	@Parameter
+	@Property
+	@Environmental
+	private PaginationEnvironment values;
+	
+	@Parameter(value="values.currentPage",required=true)
 	private Integer currentPage; 
 	
-	@Parameter(required=true)
+	@Parameter(value="values.itemCount",required=true)
 	private Integer itemCount;
 	
-	@Parameter(value=TwitterBootstrapModule.PaginationRowsPerPage,required=true)
+	@Parameter(value="values.rowsPerPage",required=true)
 	private Integer rowsPerPage;
 	
-	@Parameter(value=TwitterBootstrapModule.PaginationRange,required=true)
+	@Parameter(value="values.range",required=true)
 	private Integer range;
-
-	@Parameter(defaultPrefix="literal")
-	private String event;
-	
-	@Parameter(defaultPrefix="literal")
-	private String requestParameter;
-	
-	@Inject
-	private ComponentResources resources;
-		
-	@Inject
-	private PageRenderLinkSource pageRenderLinkSource;
-	
-	private Integer pages;
-
-	
-	@SetupRender
-	void setupRender() {
-		if ( currentPage == null ) {
-			currentPage = 1;
-		}
-		ActivationRequestParameter p = resources.getParameterAnnotation("currentPage", ActivationRequestParameter.class);
-		if ( p != null && ! resources.isBound("requestParameter") ) {			
-			requestParameter = p.value();
-		}
-		
-		if ( requestParameter == null ) {
-			event = resources.getId();
-		}
-	}
-	
+			
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
 
-		pages = itemCount/rowsPerPage;
+		Integer pageCount = itemCount/rowsPerPage;
 		if ( itemCount % rowsPerPage != 0 ) {
-			pages ++;
+			pageCount ++;
 		}
-		
-		writer.element("div", "class","pagination");
-		writer.element("ul");
-		
-		prev(writer);	
 		int min = currentPage - range;
 		int max = currentPage + range;
 		if ( min < 0 ) {
@@ -75,26 +41,30 @@ public class Pagination {
 			min += offset;
 			max += offset;
 		}
-		if ( max > pages ) {
-			max = pages;
+		if ( max > pageCount ) {
+			max = pageCount;
 		}
-		for ( Integer i = min; i <= max; i++ ) {
-			page(writer,i);
+		
+		writer.element("div", "class","pagination");
+		writer.element("ul");		
+		prev(writer);
+		for ( Integer page = min; page <= max; page++ ) {
+			link(writer,page);
 		}		
-		next(writer);
+		next(writer,pageCount);
 		writer.end();
 		writer.end();
 	}
 	
 	
-	private void page(MarkupWriter writer, Integer i) {
-		if ( currentPage.equals(i)) {
+	private void link(MarkupWriter writer, Integer page) {
+		if ( currentPage.equals(page)) {
 			writer.element("li","class","active");
 		} else {
 			writer.element("li");
 		}
-		writer.element("a", "href",makeLink(i).toAbsoluteURI());
-		writer.write(i.toString());
+		writer.element("a", "href",makeLink(page));
+		writer.write(page.toString());
 		writer.end();
 		writer.end();
 	}
@@ -112,8 +82,8 @@ public class Pagination {
 		writer.end();
 	}
 	
-	private void next(MarkupWriter writer) {
-		if ( currentPage >= pages ) {
+	private void next(MarkupWriter writer, Integer pageCount) {
+		if ( currentPage >= pageCount ) {
 			writer.element("li","class","next disabled");
 			writer.element("a", "href","#");
 		} else {
@@ -127,14 +97,7 @@ public class Pagination {
 	}
 	
 	private Link makeLink(Integer count) {
-		Link link = null;
-		if ( event != null ) {
-			link = resources.getContainerResources().createEventLink(event,count);
-		} else {
-			link = pageRenderLinkSource.createPageRenderLink(resources.getPageName());
-			link.addParameter(requestParameter,count.toString());
-		}
-		return link;
+		return values.getLink(count);		
 	}
 
 }

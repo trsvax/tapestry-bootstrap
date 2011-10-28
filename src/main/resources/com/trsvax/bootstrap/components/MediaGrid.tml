@@ -3,10 +3,14 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
-<ul class="media-grid gallery">
-	<t:loop  source="source" value="row">
-			<li><t:body/></li>
-	</t:loop>
-</ul>
+ <t:any t:mixins="tb/pager" source="source" parameterName="parameterName">
+      <t:tb.pagination/>
+      <ul class="media-grid gallery">
+	      <t:tb.loop value="value">
+	      	<li><t:body/></li>
+	      </t:tb.loop>
+      </ul>     
+      <t:tb.pagination/>
+</t:any>
       
 </html>

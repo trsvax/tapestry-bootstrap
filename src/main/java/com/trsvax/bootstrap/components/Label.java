@@ -11,24 +11,25 @@ import com.trsvax.bootstrap.environment.ButtonEnvironment;
 
 public class Label {
 	
-	@Parameter(value="label?.type",defaultPrefix="literal")
-	@Property
+	@Parameter(value="prop:label?.type",defaultPrefix="literal")
 	private String type;
 	
 	@SuppressWarnings("unused")
 	@Environmental(false)
 	@Property
 	private ButtonEnvironment label;
-	
-	
+		
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
-		writer.element("span","class", String.format("label %s",type == null ? "" : type));
+		writer.element("span","class", String.format("label%s",format(type)));
 	}
 	
 	@AfterRender
 	void afterRender(MarkupWriter writer) {
 		writer.end();
 	}
-
+	
+	String format(String s) {
+		return s == null ? "" : " " + s;
+	}
 }

@@ -8,6 +8,8 @@ import org.apache.tapestry5.alerts.AlertStorage;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 
+import com.trsvax.bootstrap.environment.AlertType;
+
 public class Alerts {
 	
 	@Property
@@ -27,16 +29,16 @@ public class Alerts {
     	return alert.message;
     }
     
-    public String getType() {
+    public AlertType getType() {
     	switch (alert.severity) {
     		case INFO:
-    			return "info";
+    			return AlertType.info;
     		case WARN:
-    			return "warning";
+    			return AlertType.warning;
     		case ERROR:
-    			return "error";
+    			return AlertType.error;
     	}
-    	return "";
+    	return null;
     }
 
 }

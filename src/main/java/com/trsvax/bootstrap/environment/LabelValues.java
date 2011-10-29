@@ -1,5 +1,6 @@
 package com.trsvax.bootstrap.environment;
 
+@Environment(environmentInterface=LabelEnvironment.class)
 public class LabelValues implements LabelEnvironment {
 	private LabelType type;
 

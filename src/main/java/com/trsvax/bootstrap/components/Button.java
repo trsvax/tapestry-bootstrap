@@ -11,10 +11,10 @@ import com.trsvax.bootstrap.environment.ButtonEnvironment;
 
 public class Button {
 	
-	@Parameter(value="button?.type",defaultPrefix="literal")
+	@Parameter(value="prop:button?.type",defaultPrefix="literal")
 	private String type;
 	
-	@Parameter(value="button?.size",defaultPrefix="literal")
+	@Parameter(value="prop:button?.size",defaultPrefix="literal")
 	private String size;
 	
 	@SuppressWarnings("unused")
@@ -24,12 +24,16 @@ public class Button {
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
-		writer.element("button", "class", "btn " + size + " " + type);
+		writer.element("button", "class", String.format("btn%s%s", format(size) , format(type)));
 	}
 	
 	@AfterRender
 	void afterRender(MarkupWriter writer) {
 		writer.end();
+	}
+	
+	String format(String s) {
+		return s == null ? "" : " " + s;
 	}
 
 }

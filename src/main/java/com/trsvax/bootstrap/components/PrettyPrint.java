@@ -13,7 +13,7 @@ import com.trsvax.bootstrap.environment.PrettyPrintEnvironment;
 @Import(stylesheet="classpath:/com/trsvax/bootstrap/google-code-prettify/prettify.css",
 library="classpath:/com/trsvax/bootstrap/google-code-prettify/prettify.js")
 public class PrettyPrint {
-	@Parameter(value="prop:prettyPrint.language",defaultPrefix="literal")
+	@Parameter(value="prop:prettyPrint?.language",defaultPrefix="literal")
 	private String language;
 	
 	@SuppressWarnings("unused")

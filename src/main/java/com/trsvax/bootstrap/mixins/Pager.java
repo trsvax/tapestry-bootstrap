@@ -16,10 +16,10 @@ import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.ValueEncoderSource;
 
-import com.trsvax.bootstrap.LoopEnvironment;
-import com.trsvax.bootstrap.LoopValues;
-import com.trsvax.bootstrap.PaginationEnvironment;
-import com.trsvax.bootstrap.PaginationValues;
+import com.trsvax.bootstrap.environment.LoopEnvironment;
+import com.trsvax.bootstrap.environment.LoopValues;
+import com.trsvax.bootstrap.environment.PaginationEnvironment;
+import com.trsvax.bootstrap.environment.PaginationValues;
 
 public class Pager<T> {
 	

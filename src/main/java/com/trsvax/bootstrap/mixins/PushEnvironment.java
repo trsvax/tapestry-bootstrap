@@ -3,47 +3,45 @@ package com.trsvax.bootstrap.mixins;
 import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Environment;
+import org.slf4j.Logger;
 
 public class PushEnvironment<T> {
 	
-	@Parameter
-	private Object push;
+	@Parameter(required=true)
+	@Property
+	private T environment;
 		
  	@Parameter
- 	private Class<T> clazz;
+ 	private Class<T> environmentInterface;
  	
  	@Inject
-  	private Environment environment;
+  	private Environment e;
+ 	
+ 	@Inject
+ 	private Logger logger;
 	
-	@SuppressWarnings("unchecked")
 	@BeginRender
 	void beginRender() {
-		if ( clazz == null ) {
-			clazz = findInterface(push);
+		if ( environmentInterface == null ) {
+			environmentInterface = getInterface();
 		}
-		environment.push(clazz, (T) push);
+		logger.info("push {}",environmentInterface.getName());
+		e.push(environmentInterface, environment);
 	}
 	
 	@AfterRender
 	void afterRender() {
-		if ( clazz != null ) {
-			environment.pop(clazz);
-		}
+		e.pop(environmentInterface);
 	}
 	
 	@SuppressWarnings("unchecked")
-	Class<T> findInterface(Object push) {
+	Class<T> getInterface() {
 		@SuppressWarnings("rawtypes")
-		Class clazz = null;
-		Class<?>[] interfaces = push.getClass().getInterfaces();
-		for ( Class<?> c : interfaces) {
-			if ( c.getName().contains("Environment")) {
-				clazz = c;
-			}
-		}		
-		return clazz;
+		Class i = environment.getClass().getAnnotation(com.trsvax.bootstrap.environment.Environment.class).environmentInterface();
+		return i;
 	}
 
 }

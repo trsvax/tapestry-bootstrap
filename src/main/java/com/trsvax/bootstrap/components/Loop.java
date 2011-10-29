@@ -7,11 +7,11 @@ import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 
-import com.trsvax.bootstrap.LoopEnvironment;
+import com.trsvax.bootstrap.environment.LoopEnvironment;
 
 @SuppressWarnings("unused")
 public class Loop<T> {	
-	@Parameter(value="values?.source",required=true)
+	@Parameter(value="loop?.source",required=true)
 	@Property
 	private List<T> source;
 	
@@ -25,8 +25,8 @@ public class Loop<T> {
 	
 	@Environmental(false)
 	@Property
-	private LoopEnvironment<T> values;
+	private LoopEnvironment<T> loop;
 
 	@Component(parameters={"source=source","value=value","index=index"})
-	private org.apache.tapestry5.corelib.components.Loop<T> loop;
+	private org.apache.tapestry5.corelib.components.Loop<T> l;
 }

@@ -7,24 +7,24 @@ import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 
-import com.trsvax.bootstrap.PaginationEnvironment;
+import com.trsvax.bootstrap.environment.PaginationEnvironment;
 
 public class Pagination {
 	
 	@Property
 	@Environmental(false)
-	private PaginationEnvironment values;
+	private PaginationEnvironment pagination;
 	
-	@Parameter(value="values?.currentPage",required=true)
+	@Parameter(value="pagination?.currentPage",required=true)
 	private Integer currentPage; 
 	
-	@Parameter(value="values?.itemCount",required=true)
+	@Parameter(value="pagination?.itemCount",required=true)
 	private Integer itemCount;
 	
-	@Parameter(value="values?.rowsPerPage",required=true)
+	@Parameter(value="pagination?.rowsPerPage",required=true)
 	private Integer rowsPerPage;
 	
-	@Parameter(value="values?.range",required=true)
+	@Parameter(value="pagination?.range",required=true)
 	private Integer range;
 			
 	@BeginRender
@@ -97,7 +97,7 @@ public class Pagination {
 	}
 	
 	private Link makeLink(Integer count) {
-		return values.getLink(count);		
+		return pagination.getLink(count);		
 	}
 
 }

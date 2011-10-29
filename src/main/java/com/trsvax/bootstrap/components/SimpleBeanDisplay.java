@@ -1,4 +1,4 @@
-package com.trsvax.bootstrap.components;
+ package com.trsvax.bootstrap.components;
 
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.corelib.components.BeanDisplay;

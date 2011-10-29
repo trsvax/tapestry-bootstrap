@@ -12,19 +12,19 @@ import com.trsvax.bootstrap.PaginationEnvironment;
 public class Pagination {
 	
 	@Property
-	@Environmental
+	@Environmental(false)
 	private PaginationEnvironment values;
 	
-	@Parameter(value="values.currentPage",required=true)
+	@Parameter(value="values?.currentPage",required=true)
 	private Integer currentPage; 
 	
-	@Parameter(value="values.itemCount",required=true)
+	@Parameter(value="values?.itemCount",required=true)
 	private Integer itemCount;
 	
-	@Parameter(value="values.rowsPerPage",required=true)
+	@Parameter(value="values?.rowsPerPage",required=true)
 	private Integer rowsPerPage;
 	
-	@Parameter(value="values.range",required=true)
+	@Parameter(value="values?.range",required=true)
 	private Integer range;
 			
 	@BeginRender

@@ -26,5 +26,17 @@ public class Alerts {
     public String getMessage() {
     	return alert.message;
     }
+    
+    public String getType() {
+    	switch (alert.severity) {
+    		case INFO:
+    			return "info";
+    		case WARN:
+    			return "warning";
+    		case ERROR:
+    			return "error";
+    	}
+    	return "";
+    }
 
 }

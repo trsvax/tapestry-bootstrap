@@ -25,14 +25,65 @@
       
       <section id="block-message">
        <h3>Block Message</h3>
+       <t:blockMessage type="warning"><strong>Holy guacamole! This is a warning!</strong> Best check yo self, you're not looking to good.
+       Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
+       <p:actions>
+       <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
+       </p:actions>
+       </t:blockMessage>
+       
+       <t:blockMessage type="error"><strong>Oh snap!</strong> Change this and that and try again.
+       <ul>
+          <li>Duis mollis est non commodo luctus</li>
+          <li>Nisi erat porttitor ligula</li>
+          <li>Eget lacinia odio sem nec elit</li>
+        </ul>
+       <p:actions>
+       <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
+       </p:actions>
+       </t:blockMessage>
+       
+       <t:blockMessage type="success"><strong>Well done!</strong> You successfully read this alert message.
+       <ul>
+          <li>Duis mollis est non commodo luctus</li>
+          <li>Nisi erat porttitor ligula</li>
+          <li>Eget lacinia odio sem nec elit</li>
+        </ul>
+       <p:actions>
+       <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
+       </p:actions>
+       </t:blockMessage>
+       
+        <t:blockMessage type="info"><strong>Heads up!</strong> TThis is an alert that needs your attention, but it's not a huge priority just yet.
+       <p:actions>
+       <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
+       </p:actions>
+       </t:blockMessage>
+       
       </section>
       
       <section id="button">
        <h3>Button</h3>
+       <t:button type="primary">Primary</t:button>
+       <t:button>Default</t:button>
+       <t:button type="info">Info</t:button>
+       <t:button type="success">Success</t:button>
+       <t:button type="danger">Danger</t:button>
+       <h4>Alternate sizes</h4>
+       <t:button type="primary" size="large">Primary action</t:button>
+        <t:button  size="large">Action</t:button>
+        <br/>
+        <t:button type="primary" size="small">Primary action</t:button>
+        <t:button  size="small">Action</t:button>
       </section>
       
       <section id="label">
        <h3>Label</h3>
+       <t:label>Default</t:label>
+       <t:label type="success">New</t:label>
+       <t:label type="warning">Warning</t:label>
+       <t:label type="important">Important</t:label>
+       <t:label type="notice">Notice</t:label>
       </section>
       
       <section id="media-grid">
@@ -46,19 +97,20 @@
       
       <section id="pagination">
        <h3>Pagination</h3>
+       <t:pagination currentpage="1" itemCount="20" range="3" rowsPerPage="5"/>
       </section>
       
       <section id="pretty-print">
       <h3>Pretty Print</h3>
       <t:prettyPrint>
-      public class PrettyPrint {
-	@Parameter(value="prop:prettyPrint?.language",defaultPrefix="literal")
-	private String language;
+public class PrettyPrint {
+@Parameter(value="prop:prettyPrint?.language",defaultPrefix="literal")
+private String language;
 	
-	@SuppressWarnings("unused")
-	@Environmental(false)
-	@Property
-	private PrettyPrintEnvironment prettyPrint;
+@SuppressWarnings("unused")
+@Environmental(false)
+@Property
+private PrettyPrintEnvironment prettyPrint;
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {

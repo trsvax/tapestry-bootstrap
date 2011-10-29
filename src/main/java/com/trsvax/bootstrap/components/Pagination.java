@@ -97,6 +97,9 @@ public class Pagination {
 	}
 	
 	private Link makeLink(Integer count) {
+		if ( pagination == null ) {
+			return null;
+		}
 		return pagination.getLink(count);		
 	}
 

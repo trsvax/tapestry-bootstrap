@@ -19,16 +19,12 @@ public class PushEnvironment<T> {
  	
  	@Inject
   	private Environment e;
- 	
- 	@Inject
- 	private Logger logger;
-	
+ 
 	@BeginRender
 	void beginRender() {
 		if ( environmentInterface == null ) {
 			environmentInterface = getInterface();
 		}
-		logger.info("push {}",environmentInterface.getName());
 		e.push(environmentInterface, environment);
 	}
 	

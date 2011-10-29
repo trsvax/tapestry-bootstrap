@@ -11,10 +11,10 @@ import com.trsvax.bootstrap.environment.ButtonEnvironment;
 
 public class Button {
 	
-	@Parameter(value="button?.type")
+	@Parameter(value="button?.type",defaultPrefix="literal")
 	private String type;
 	
-	@Parameter(value="button?.size")
+	@Parameter(value="button?.size",defaultPrefix="literal")
 	private String size;
 	
 	@SuppressWarnings("unused")

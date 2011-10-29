@@ -8,6 +8,7 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
+@SuppressWarnings("unused")
 public class MediaGrid<T> {
 	
 	@Parameter(autoconnect=true,required=true)
@@ -31,6 +32,6 @@ public class MediaGrid<T> {
 	private ComponentResources resources;
 	
 	@Component(parameters={"value=value","index=index"})
-	private Loop loop;
+	private Loop<T> loop;
 
 }

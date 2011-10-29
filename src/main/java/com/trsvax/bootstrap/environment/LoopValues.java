@@ -1,7 +1,8 @@
-package com.trsvax.bootstrap;
+package com.trsvax.bootstrap.environment;
 
 import java.util.List;
 
+@Environment(environmentInterface=LoopEnvironment.class)
 public class LoopValues<T> implements LoopEnvironment<T> {
 	private List<T> source;
 	private List<T> view;

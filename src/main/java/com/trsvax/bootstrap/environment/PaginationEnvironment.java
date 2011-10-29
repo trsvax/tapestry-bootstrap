@@ -1,4 +1,4 @@
-package com.trsvax.bootstrap;
+package com.trsvax.bootstrap.environment;
 
 import org.apache.tapestry5.Link;
 

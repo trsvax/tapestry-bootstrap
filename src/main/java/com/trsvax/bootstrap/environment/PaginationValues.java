@@ -1,7 +1,8 @@
-package com.trsvax.bootstrap;
+package com.trsvax.bootstrap.environment;
 
 
 
+@Environment(environmentInterface=PaginationEnvironment.class)
 public abstract class PaginationValues implements PaginationEnvironment, Cloneable {
 	private Integer itemCount;
 	private Integer rowsPerPage = 6;

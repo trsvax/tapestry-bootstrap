@@ -130,6 +130,8 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                             <value>development</value>
                         </systemProperty>
                     </systemProperties>
+                    <useTestClasspath>true</useTestClasspath>
+					<webAppSourceDirectory>src/test/webapp</webAppSourceDirectory>
                 </configuration>
             </plugin>
         </plugins>

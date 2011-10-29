@@ -7,6 +7,7 @@
       
       <section id="alerts">    
        <h3>Alerts</h3>
+       <t:alerts/>
       </section>
       
       <section id="basic-alert">

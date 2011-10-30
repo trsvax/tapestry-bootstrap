@@ -12,28 +12,28 @@
       
       <section id="basic-alert">
        <h3>Basic Alert</h3>
-       <t:basicAlert type="warning"><strong>Holy guacamole!</strong> Best check yo self, you're not looking to good.</t:basicAlert>
-       <t:basicAlert type="error"><strong>Oh snap!</strong> Change this and that and try again.</t:basicAlert>
-       <t:basicAlert type="success"><strong>Well done!</strong> You successfully read this alert message.</t:basicAlert>
-       <t:basicAlert type="info"><strong>Heads up!</strong> TThis is an alert that needs your attention, but it's not a huge priority just yet.</t:basicAlert>
+       <t:tb.basicAlert type="warning"><strong>Holy guacamole!</strong> Best check yo self, you're not looking to good.</t:tb.basicAlert>
+       <t:tb.basicAlert type="error"><strong>Oh snap!</strong> Change this and that and try again.</t:tb.basicAlert>
+       <t:tb.basicAlert type="success"><strong>Well done!</strong> You successfully read this alert message.</t:tb.basicAlert>
+       <t:tb.basicAlert type="info"><strong>Heads up!</strong> TThis is an alert that needs your attention, but it's not a huge priority just yet.</t:tb.basicAlert>
 		<h4>Example Code</h4>
-<t:prettyprint>
+<t:tb.prettyprint>
 &lt;t:basicAlert type="warning"&gt;
 &lt;strong>Holy guacamole!&lt;/strong&gt; Best check yo self, you're not looking to good.&lt;/t:basicAlert&gt;
-</t:prettyprint>
+</t:tb.prettyprint>
       
       </section>
       
       <section id="block-message">
        <h3>Block Message</h3>
-       <t:blockMessage type="warning"><strong>Holy guacamole! This is a warning!</strong> Best check yo self, you're not looking to good.
+       <t:tb.blockMessage type="warning"><strong>Holy guacamole! This is a warning!</strong> Best check yo self, you're not looking to good.
        Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
        <p:actions>
        <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
        </p:actions>
-       </t:blockMessage>
+       </t:tb.blockMessage>
        
-       <t:blockMessage type="error"><strong>Oh snap!</strong> Change this and that and try again.
+       <t:tb.blockMessage type="error"><strong>Oh snap!</strong> Change this and that and try again.
        <ul>
           <li>Duis mollis est non commodo luctus</li>
           <li>Nisi erat porttitor ligula</li>
@@ -42,9 +42,9 @@
        <p:actions>
        <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
        </p:actions>
-       </t:blockMessage>
+       </t:tb.blockMessage>
        
-       <t:blockMessage type="success"><strong>Well done!</strong> You successfully read this alert message.
+       <t:tb.blockMessage type="success"><strong>Well done!</strong> You successfully read this alert message.
        <ul>
           <li>Duis mollis est non commodo luctus</li>
           <li>Nisi erat porttitor ligula</li>
@@ -53,38 +53,38 @@
        <p:actions>
        <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
        </p:actions>
-       </t:blockMessage>
+       </t:tb.blockMessage>
        
-        <t:blockMessage type="info"><strong>Heads up!</strong> TThis is an alert that needs your attention, but it's not a huge priority just yet.
+        <t:tb.blockMessage type="info"><strong>Heads up!</strong> TThis is an alert that needs your attention, but it's not a huge priority just yet.
        <p:actions>
        <a class="btn small" href="#">Take this action</a> <a class="btn small" href="#">Or do this</a>
        </p:actions>
-       </t:blockMessage>
+       </t:tb.blockMessage>
        
       </section>
       
       <section id="button">
        <h3>Button</h3>
-       <t:button type="primary">Primary</t:button>
-       <t:button>Default</t:button>
-       <t:button type="info">Info</t:button>
-       <t:button type="success">Success</t:button>
-       <t:button type="danger">Danger</t:button>
+       <t:tb.button type="primary">Primary</t:tb.button>
+       <t:tb.button>Default</t:tb.button>
+       <t:tb.button type="info">Info</t:tb.button>
+       <t:tb.button type="success">Success</t:tb.button>
+       <t:tb.button type="danger">Danger</t:tb.button>
        <h4>Alternate sizes</h4>
-       <t:button type="primary" size="large">Primary action</t:button>
-        <t:button  size="large">Action</t:button>
+       <t:tb.button type="primary" size="large">Primary action</t:tb.button>
+        <t:tb.button  size="large">Action</t:tb.button>
         <br/>
-        <t:button type="primary" size="small">Primary action</t:button>
-        <t:button  size="small">Action</t:button>
+        <t:tb.button type="primary" size="small">Primary action</t:tb.button>
+        <t:tb.button  size="small">Action</t:tb.button>
       </section>
       
       <section id="label">
        <h3>Label</h3>
-       <t:label>Default</t:label>
-       <t:label type="success">New</t:label>
-       <t:label type="warning">Warning</t:label>
-       <t:label type="important">Important</t:label>
-       <t:label type="notice">Notice</t:label>
+       <t:tb.label>Default</t:tb.label>
+       <t:tb.label type="success">New</t:tb.label>
+       <t:tb.label type="warning">Warning</t:tb.label>
+       <t:tb.label type="important">Important</t:tb.label>
+       <t:tb.label type="notice">Notice</t:tb.label>
       </section>
       
       <section id="media-grid">
@@ -98,12 +98,12 @@
       
       <section id="pagination">
        <h3>Pagination</h3>
-       <t:pagination currentpage="1" itemCount="20" range="3" rowsPerPage="5"/>
+       <t:tb.pagination currentpage="1" itemCount="20" range="3" rowsPerPage="5"/>
       </section>
       
       <section id="pretty-print">
       <h3>Pretty Print</h3>
-      <t:prettyPrint>
+      <t:tb.prettyPrint>
 public class PrettyPrint {
 @Parameter(value="prop:prettyPrint?.language",defaultPrefix="literal")
 private String language;
@@ -127,10 +127,19 @@ private PrettyPrintEnvironment prettyPrint;
 		return s == null ? "" : " " + s;
 	}
 }
-      </t:prettyPrint>
+      </t:tb.prettyPrint>
       </section>
-      
-      <p:sidebar>
+
+
+	<section id="environment">
+		<h3>Environment</h3>
+		<t:any t:mixins="tb/pushEnvironment" environment="buttonValues">
+			<t:tb.button>Environment Button</t:tb.button>
+		</t:any>
+	</section>
+
+
+<p:sidebar>
       	<ul>
      	<li><a href="#alerts">Alerts</a></li>
      	<li><a href="#basic-alert">Basic Alert</a></li>
@@ -141,6 +150,7 @@ private PrettyPrintEnvironment prettyPrint;
      	<li><a href="#modal">Modal</a></li>
      	<li><a href="#pagination">Pagination</a></li>
      	<li><a href="#pretty-print">Pretty Print</a></li>
+     	<li><a href="#environment">Environment</a></li>
      	</ul>
       </p:sidebar>
 </html>

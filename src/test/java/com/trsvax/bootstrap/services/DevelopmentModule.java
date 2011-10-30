@@ -11,7 +11,7 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 public class DevelopmentModule
 {
 	
-	/*
+	
     public static void contributeApplicationDefaults(
             MappedConfiguration<String, Object> configuration)
     {
@@ -26,6 +26,6 @@ public class DevelopmentModule
         // change, to force the browser to download new versions.
         configuration.add(SymbolConstants.APPLICATION_VERSION, "1.0-SNAPSHOT-DEV");
     }
-    */
+    
     
 }

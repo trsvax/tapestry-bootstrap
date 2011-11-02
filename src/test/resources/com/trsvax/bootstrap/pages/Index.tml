@@ -89,6 +89,7 @@
       
       <section id="media-grid">
        <h3>Media Grid</h3>
+       
       </section>
       
       <section id="modal">
@@ -158,7 +159,7 @@ private PrettyPrintEnvironment prettyPrint;
      	<li><a href="#block-message">Block Message</a></li>
      	<li><a href="#button">Button</a></li>
      	<li><a href="#label">Label</a></li>
-     	<li><a href="#media-grid">Media Grid</a></li>
+     	<li><t:pagelink page="mediagrid">Media Grid</t:pagelink></li>
      	<li><a href="#modal">Modal</a></li>
      	<li><a href="#pagination">Pagination</a></li>
      	<li><a href="#pretty-print">Pretty Print</a></li>

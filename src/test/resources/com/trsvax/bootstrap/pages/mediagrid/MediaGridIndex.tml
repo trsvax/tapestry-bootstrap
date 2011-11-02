@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" t:type="containerLayout"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:tb.mediagrid t:id="media" value="value" index="index" >	
+          <a href="#" page="gallery">
+      		<img width="90" height="90" class="thumbnail" src="/tapestry-bootstrap/images/Twins1.jpg"/>
+      		<h3>Grid ${value} ${index}</h3>
+		</a>
+      </t:tb.mediagrid>
+      
+      
+</html>

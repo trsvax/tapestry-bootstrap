@@ -1,7 +1,9 @@
 <t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">          
-<t:any t:id="mediaGrid" t:mixins="tb/pager" source="source" parameterName="parameterName" >
-      <ul t:type="any" t:id="gridContent" class="media-grid gallery" t:mixins="tb/infiniteScroll"
-      	options='{navSelector: ".pagination", nextSelector: "a#next:last", itemSelector: "#gridContent li"}'>
+<t:any id="${clientId}" t:mixins="tb/pager" source="source" parameterName="parameterName" >
+      <ul t:type="any" class="media-grid gallery" t:mixins="tb/infiniteScroll"
+      	options='{navSelector: "#${clientId} .pagination", 
+      		nextSelector: "#${clientId} a.next:last", 
+      		itemSelector: "#${clientId} .media-grid li"}'>
 	      <t:tb.loop t:id="loop">
 	      	<li><t:body/></li>
 	      </t:tb.loop>

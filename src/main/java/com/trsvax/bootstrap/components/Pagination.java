@@ -88,7 +88,7 @@ public class Pagination {
 			writer.element("a", "href","#");
 		} else {
 			writer.element("li","class","next");
-			writer.element("a", "href",makeLink( currentPage + 1),"id","next");
+			writer.element("a", "href",makeLink( currentPage + 1),"class","next");
 		}
 
 		writer.writeRaw("Next &rarr;");

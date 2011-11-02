@@ -133,8 +133,9 @@ private PrettyPrintEnvironment prettyPrint;
 
 	<section id="environment">
 		<h3>Environment</h3>
-		<t:any t:mixins="tb/pushEnvironment" environment="buttonValues">
+		<t:any t:mixins="tb/pushEnvironment" environments="values">
 			<t:tb.button>Environment Button</t:tb.button>
+			<t:tb.label>Environment Label</t:tb.label>
 		</t:any>
 	</section>
 	

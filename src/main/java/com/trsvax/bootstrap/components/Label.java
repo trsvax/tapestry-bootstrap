@@ -8,6 +8,7 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
+import com.trsvax.bootstrap.environment.LabelEnvironment;
 
 public class Label {
 	
@@ -17,7 +18,7 @@ public class Label {
 	@SuppressWarnings("unused")
 	@Environmental(false)
 	@Property
-	private ButtonEnvironment label;
+	private LabelEnvironment label;
 		
 	@BeginRender
 	void beginRender(MarkupWriter writer) {

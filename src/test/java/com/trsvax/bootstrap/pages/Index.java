@@ -20,7 +20,7 @@ public class Index {
 	}
 	
     public ButtonValues getButtonValues() {
-    	ButtonValues values = new ButtonValues();
+    	ButtonValues values = new ButtonValues(null);
     	values.setType(ButtonType.danger);
     	values.setSize(ButtonSize.small);
     	return values;

@@ -57,8 +57,7 @@ public class Pager<T> {
 			PaginationValues paginationValues = values(event,parameterName);
 	    	paginationValues.setCurrentPage(currentPage());
 	    	paginationValues.setItemCount(source.size());
-						
-			LoopValues<T> loopValues = new LoopValues<T>();
+			LoopValues<T> loopValues = new LoopValues<T>(environment.peek(LoopEnvironment.class));
 			loopValues.setSource(source(paginationValues));
     	
 			environment.push(LoopEnvironment.class, loopValues);
@@ -93,8 +92,8 @@ public class Pager<T> {
 			return valueEncoderSource.getValueEncoder(Integer.class).toValue(request.getParameter(parameterName));
 		}
 		
-		PaginationValues values(final String event,final String parameterName) {
-			return new PaginationValues() {
+		PaginationValues values( final String event,final String parameterName) {
+			return new PaginationValues(environment.peek(PaginationEnvironment.class)) {
 	    		public Link getLink(Integer count) {
 	    			Link link = null;
 	    			if ( event != null ) {

@@ -7,6 +7,12 @@ public class LoopValues<T> implements LoopEnvironment<T> {
 	private List<T> source;
 	private List<T> view;
 	
+	public LoopValues(LoopEnvironment<T> values) {
+		if ( values != null ) {
+			source = values.getSource();
+		}
+	}
+	
 
 	public List<T> getSource() {
 		return source;

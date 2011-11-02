@@ -6,6 +6,13 @@ public class ButtonValues implements ButtonEnvironment {
 	private ButtonType type;
 	private ButtonSize size;
 	
+	public ButtonValues(ButtonEnvironment values) {
+		if ( values != null ) {
+			type = values.getType();
+			size = values.getSize();
+		}
+	}
+	
 	public ButtonType getType() {
 		return type;
 	}

@@ -8,6 +8,15 @@ public abstract class PaginationValues implements PaginationEnvironment, Cloneab
 	private Integer rowsPerPage = 6;
 	private Integer currentPage;
 	private Integer range = 6;
+	
+	public PaginationValues(PaginationEnvironment values) {
+		if ( values != null ) {
+			itemCount = values.getItemCount();
+			rowsPerPage = values.getRowsPerPage();
+			currentPage = values.getCurrentPage();
+			range = values.getRange();
+		}
+	}
 
 	
 	/* (non-Javadoc)

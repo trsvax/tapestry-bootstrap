@@ -17,6 +17,7 @@ public class TwitterBootstrapModule
 	
     public static void bind(ServiceBinder binder) {
     	binder.bind(BindingFactory.class,SessionBindingFactory.class).withId("SessionBindingFactory");
+    	binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
     }
     
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
@@ -24,8 +25,11 @@ public class TwitterBootstrapModule
     }
     
     public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> configuration,
-    		@InjectService("SessionBindingFactory") BindingFactory SessionBindingFactory ) {
-        configuration.add("session", SessionBindingFactory);      
+    		@InjectService("SessionBindingFactory") BindingFactory sessionBindingFactory,
+    		@InjectService("EnvironmentBindingFactory") BindingFactory environmentBindingFactory
+    		) {
+        configuration.add("session", sessionBindingFactory);  
+        configuration.add("env", environmentBindingFactory);
     }
    
    

@@ -4,7 +4,7 @@ import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 
-public class Modal {
+public class Modal extends BootstrapComponent {
 	
 	@Parameter
 	@Property

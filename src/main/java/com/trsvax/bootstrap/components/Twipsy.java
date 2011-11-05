@@ -1,7 +1,5 @@
 package com.trsvax.bootstrap.components;
 
-import org.apache.tapestry5.ClientElement;
-import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
@@ -10,7 +8,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 @Import(library="classpath:/com/trsvax/bootstrap/bootstrap-twipsy.js")
-public class Twipsy implements ClientElement {
+public class Twipsy extends BootstrapComponent {
 	@Parameter(defaultPrefix="literal")
 	@Property
 	private Object title;
@@ -18,14 +16,9 @@ public class Twipsy implements ClientElement {
 	@Inject
 	private JavaScriptSupport javaScriptSupport;
 	
-	@Inject
-	private ComponentResources resources;
-	
-	private String clientID;
-	
+
 	@BeginRender
 	void beginRender() {
-		clientID = javaScriptSupport.allocateClientId(resources);
 		if ( getTitleIsString() ) {
 			javaScriptSupport.addScript("$('a[rel=twipsy]').twipsy({live: true})");
 		} else {
@@ -40,9 +33,5 @@ public class Twipsy implements ClientElement {
 		return title instanceof String;
 	}
 
-	public String getClientId() {
-		return clientID;
-	}
 	
-
 }

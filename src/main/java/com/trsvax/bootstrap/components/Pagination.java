@@ -9,22 +9,22 @@ import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.environment.PaginationEnvironment;
 
-public class Pagination {
+public class Pagination extends BootstrapComponent {
 	
 	@Property
 	@Environmental(false)
 	private PaginationEnvironment pagination;
 	
-	@Parameter(value="pagination?.currentPage",required=true)
+	@Parameter(value=PaginationEnvironment.currentPage,required=true)
 	private Integer currentPage; 
 	
-	@Parameter(value="pagination?.itemCount",required=true)
+	@Parameter(value=PaginationEnvironment.itemCount,required=true)
 	private Integer itemCount;
 	
-	@Parameter(value="pagination?.rowsPerPage",required=true)
+	@Parameter(value=PaginationEnvironment.rowsPerPage,required=true)
 	private Integer rowsPerPage;
 	
-	@Parameter(value="pagination?.range",required=true)
+	@Parameter(value=PaginationEnvironment.range,required=true)
 	private Integer range;
 			
 	@BeginRender

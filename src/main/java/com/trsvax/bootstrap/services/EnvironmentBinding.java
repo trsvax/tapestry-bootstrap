@@ -1,38 +1,33 @@
 package com.trsvax.bootstrap.services;
 
-import java.lang.reflect.Method;
-
-import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.PropertyConduit;
 import org.apache.tapestry5.internal.bindings.AbstractBinding;
 import org.apache.tapestry5.ioc.Location;
+import org.apache.tapestry5.ioc.internal.util.TapestryException;
 import org.apache.tapestry5.services.Environment;
 
 public class EnvironmentBinding extends AbstractBinding {
-	Class<?> enviromentInterface;
-	private final Method get;
-	private final Method set;
+	private final Class<?> enviromentInterface;
 	private final Environment environment;
+	private final PropertyConduit conduit;
+	private final String toString;
 
-	public EnvironmentBinding(String description, ComponentResources container,
-			ComponentResources component, String expression, Location location,
-			Environment environment) throws Exception {
-		
-		Integer index = expression.lastIndexOf(".");
-		String className = expression.substring(0, index);
-		enviromentInterface = Class.forName(className);
-		String propertyName = expression.substring(index+1);
-		get = findMethod("get",enviromentInterface, propertyName);	
-		set = findMethod("set",enviromentInterface, propertyName);
+	public EnvironmentBinding(Location location,
+			PropertyConduit conduit, String toString, Environment environment, Class<?> enviromentInterface) {
 		this.environment = environment;
+		this.toString = toString;
+		this.enviromentInterface = enviromentInterface;
+		this.conduit = conduit;
 	}
 
 	public Object get() {
 		try {
 			Object o = environment.peek(enviromentInterface);
 			if ( o != null ) {
-				return get.invoke(o);
+				return conduit.get(o);
 			}
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			throw new TapestryException(ex.getMessage(), getLocation(), ex);
 		}
 		return null;
 	}
@@ -41,20 +36,20 @@ public class EnvironmentBinding extends AbstractBinding {
 		try {
 			Object o = environment.peek(enviromentInterface);
 			if ( o != null ) {
-				set.invoke(o, value);
+				conduit.set(o, value);
 			}
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			throw new TapestryException(ex.getMessage(), getLocation(), ex);
 		}
 	}
+	
+	public boolean isInvariant() {
+		return false;
+	}
 
-	private Method findMethod(String type,Class<?> ssoClass,String propertyName) {
-		String methodName = type + propertyName.toLowerCase();
-		for ( Method m : ssoClass.getMethods() ) {
-			if ( m.getName().toLowerCase().equals(methodName)) {
-				return m;
-			}
-		}
-		return null;
+	
+	public String toString() {
+		return toString;
 	}
 
 }

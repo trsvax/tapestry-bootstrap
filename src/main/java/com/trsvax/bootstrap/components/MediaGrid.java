@@ -11,7 +11,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
 @SuppressWarnings("unused")
-public class MediaGrid<T> implements ClientElement {
+public class MediaGrid<T> extends BootstrapComponent {
 	
 	@Parameter(autoconnect=true,required=true)
 	@Property
@@ -33,19 +33,9 @@ public class MediaGrid<T> implements ClientElement {
 	@Property
 	private ComponentResources resources;
 	
-	@Inject
-	private JavaScriptSupport javaScriptSupport;
-	
-	private String clientId;
 	
 	@Component(parameters={"value=value","index=index"})
 	private Loop<T> loop;
 
-	public String getClientId() {
-		if ( clientId == null ) {
-			clientId = javaScriptSupport.allocateClientId(resources);
-		}
-		return clientId;
-	}
 
 }

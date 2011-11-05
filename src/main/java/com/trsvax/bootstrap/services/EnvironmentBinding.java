@@ -4,7 +4,6 @@ import java.lang.annotation.Annotation;
 
 import org.apache.tapestry5.Binding;
 import org.apache.tapestry5.PropertyConduit;
-import org.apache.tapestry5.internal.bindings.AbstractBinding;
 import org.apache.tapestry5.ioc.Location;
 import org.apache.tapestry5.ioc.internal.util.TapestryException;
 import org.apache.tapestry5.services.Environment;

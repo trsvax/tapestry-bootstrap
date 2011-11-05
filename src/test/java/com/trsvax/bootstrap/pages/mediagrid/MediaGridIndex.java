@@ -7,6 +7,7 @@ import org.apache.tapestry5.annotations.ActivationRequestParameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
 
+@SuppressWarnings("unused")
 public class MediaGridIndex {
 	@ActivationRequestParameter
 	private Integer count;

@@ -9,6 +9,7 @@ import org.apache.tapestry5.annotations.Property;
 library={"classpath:/com/trsvax/bootstrap/bootstrap-scrollspy.js","classpath:/com/trsvax/bootstrap/bootstrap-twipsy.js"})
 public class ContainerLayout {
 	
+	@SuppressWarnings("unused")
 	@Parameter
 	@Property
 	private Block sidebar;

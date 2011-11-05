@@ -1,6 +1,5 @@
 package com.trsvax.bootstrap.mixins;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,6 +56,7 @@ public class Pager<T> {
 			PaginationValues paginationValues = values(event,parameterName);
 	    	paginationValues.setCurrentPage(currentPage());
 	    	paginationValues.setItemCount(source.size());
+			@SuppressWarnings("unchecked")
 			LoopValues<T> loopValues = new LoopValues<T>(environment.peek(LoopEnvironment.class));
 			loopValues.setSource(source(paginationValues));
     	

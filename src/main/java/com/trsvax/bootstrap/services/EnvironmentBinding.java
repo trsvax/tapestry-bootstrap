@@ -28,7 +28,10 @@ public class EnvironmentBinding extends AbstractBinding {
 
 	public Object get() {
 		try {
-			return get.invoke(environment.peek(enviromentInterface));
+			Object o = environment.peek(enviromentInterface);
+			if ( o != null ) {
+				return get.invoke(o);
+			}
 		} catch (Exception e) {
 		}
 		return null;
@@ -36,7 +39,10 @@ public class EnvironmentBinding extends AbstractBinding {
 	
 	public void set(Object value) {
 		try {
-			set.invoke(environment.peek(enviromentInterface), value);
+			Object o = environment.peek(enviromentInterface);
+			if ( o != null ) {
+				set.invoke(o, value);
+			}
 		} catch (Exception e) {
 		}
 	}

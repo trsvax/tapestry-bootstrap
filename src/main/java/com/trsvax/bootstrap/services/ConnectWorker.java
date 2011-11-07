@@ -45,17 +45,22 @@ public class ConnectWorker implements ComponentClassTransformWorker2 {
 
 		return new ComputedValue<FieldConduit<Object>>() {
 			public FieldConduit<Object> get(InstanceContext context) {
+				
 				return  new FieldConduit<Object>() {
 					
 					public void set(Object instance, InstanceContext context, Object value) {
 						ComponentResources resources = context.get(ComponentResources.class);
-						Binding binding = bindingSource.newBinding("default", resources, "prop", expression);
+						String toString = String.format("ConnectBinding[%s %s(%s)]", "set", resources
+				                .getCompleteId(), expression);
+						Binding binding = bindingSource.newBinding(toString, resources, "prop", expression);
 						binding.set(value);
 					}
 					
 					public Object get(Object instance, InstanceContext context) {
 						ComponentResources resources = context.get(ComponentResources.class);
-						Binding binding = bindingSource.newBinding("default", resources, "prop", expression);
+						String toString = String.format("ConnectBindingBinding[%s %s(%s)]", "get", resources
+				                .getCompleteId(), expression);
+						Binding binding = bindingSource.newBinding(toString, resources, "prop", expression);
 						return binding.get();
 					}
 				};

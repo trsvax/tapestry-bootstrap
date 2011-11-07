@@ -31,7 +31,7 @@ public class SessionBindingFactory implements BindingFactory {
 	        String toString = String.format("SessionBinding[%s %s(%s)]", description, container
 	                .getCompleteId(), expression);
 	        return new SessionBinding(location,conduit,toString,state,stateClass);
-		} catch (ClassNotFoundException ex) {
+		} catch (Exception ex) {
 			throw new TapestryException(ex.getMessage(), location, ex);
 		}
 	}

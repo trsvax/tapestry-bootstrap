@@ -5,9 +5,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class ExcludeValues implements ExcludeEnvironment {
 	private Map<String,List<String>> excludeMap = new HashMap<String, List<String>>();
+	private Map<String,String> scripts = new HashMap<String, String>();
 
 	public List<String> getExcludes(String mode) {
 		if ( mode == null ) {
@@ -30,6 +33,15 @@ public class ExcludeValues implements ExcludeEnvironment {
 			excludeMap.put(mode, excludes);
 		}
 		excludes.add(pattern);
+	}
+
+	public void addScriptOnce(String script) {
+		scripts.put(script, null);
+		
+	}
+
+	public Set<Entry<String, String>> getOnceScripts() {
+		return scripts.entrySet();
 	}
 
 }

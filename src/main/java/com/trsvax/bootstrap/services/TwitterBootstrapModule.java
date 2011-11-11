@@ -1,5 +1,7 @@
 package com.trsvax.bootstrap.services;
 
+import java.util.Map.Entry;
+
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.dom.Element;
@@ -17,6 +19,7 @@ import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
+import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 import org.slf4j.Logger;
 
@@ -55,8 +58,9 @@ public class TwitterBootstrapModule
     } 
    
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
-    		final Environment environment, @Symbol(SymbolConstants.EXECUTION_MODE) final String mode) {
-    	MarkupRendererFilter filter = new MarkupRendererFilter() {
+    		final Environment environment, @Symbol(SymbolConstants.EXECUTION_MODE) final String mode,
+    		final JavaScriptSupport javaScriptSupport) {
+    	MarkupRendererFilter excludeFilter = new MarkupRendererFilter() {
 			
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				final ExcludeValues values = new ExcludeValues();
@@ -88,7 +92,21 @@ public class TwitterBootstrapModule
 				}
 			
 		};
-		configuration.add("ExcludeCSS", filter,"before:*");
+		
+		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {
+			
+			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
+				renderer.renderMarkup(writer);
+				ExcludeEnvironment values = environment.peek(ExcludeEnvironment.class);
+				for ( Entry<String, String> script : values.getOnceScripts()) {
+					javaScriptSupport.addScript(script.getKey());
+				}
+			}
+		};
+		
+		
+		configuration.add("JavaScriptFilter", javaScriptFilter,"after:JavaScriptSupport");
+		configuration.add("ExcludeCSS", excludeFilter,"before:*");
     }
    
 }

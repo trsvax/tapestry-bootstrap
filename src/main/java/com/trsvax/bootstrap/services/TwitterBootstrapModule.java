@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.dom.Element;
-import org.apache.tapestry5.dom.Node;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
@@ -21,7 +20,6 @@ import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
-import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.environment.ExcludeEnvironment;
 import com.trsvax.bootstrap.environment.ExcludeValues;
@@ -31,12 +29,12 @@ import com.trsvax.bootstrap.environment.ExcludeValues;
  * This module is automatically included as part of the Tapestry IoC Registry, it's a good place to
  * configure and extend Tapestry, or to place your own service definitions.
  */
-public class TwitterBootstrapModule
-{
+public class TwitterBootstrapModule {
 	
     public static void bind(ServiceBinder binder) {
     	binder.bind(BindingFactory.class,SessionBindingFactory.class).withId("SessionBindingFactory");
     	binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
+    	binder.bind(StringTemplateParser.class,StringTemplateParserImpl.class);
     }
     
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {

@@ -60,26 +60,19 @@ public class TwitterBootstrapModule
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
     		final Environment environment, @Symbol(SymbolConstants.EXECUTION_MODE) final String mode,
     		final JavaScriptSupport javaScriptSupport) {
-    	MarkupRendererFilter excludeFilter = new MarkupRendererFilter() {
-			
+    	
+    	MarkupRendererFilter excludeFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
-				final ExcludeValues values = new ExcludeValues();
-				environment.push(ExcludeEnvironment.class, values);
+				environment.push(ExcludeEnvironment.class, new ExcludeValues());
 				renderer.renderMarkup(writer);				
-				environment.pop(ExcludeEnvironment.class);
+				final ExcludeEnvironment values = environment.pop(ExcludeEnvironment.class);
 				
 				Element head = writer.getDocument().getRootElement().find("head");
-				head.visit( new Visitor() {
-					
+				head.visit( new Visitor() {					
 						public void visit(Element element) {
 							String type = element.getAttribute("type");
 							String href = element.getAttribute("href");
 							if ( type != null && href != null && type.equals("text/css")) {
-								for ( String pattern : values.getExcludes(null)) {
-									if ( href.contains(pattern)) {
-										element.remove();
-									}
-								}
 								for ( String pattern : values.getExcludes(mode)) {
 									if ( href.contains(pattern)) {
 										element.remove();
@@ -89,12 +82,10 @@ public class TwitterBootstrapModule
 							
 						}
 					});
-				}
-			
+				}			
 		};
 		
-		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {
-			
+		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				renderer.renderMarkup(writer);
 				ExcludeEnvironment values = environment.peek(ExcludeEnvironment.class);
@@ -107,6 +98,11 @@ public class TwitterBootstrapModule
 		
 		configuration.add("JavaScriptFilter", javaScriptFilter,"after:JavaScriptSupport");
 		configuration.add("ExcludeCSS", excludeFilter,"before:*");
+    }
+    
+    public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration)
+    {
+        configuration.add("tap-bootstrap", "com/trsvax/bootstrap");
     }
    
 }

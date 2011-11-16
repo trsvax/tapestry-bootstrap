@@ -32,12 +32,12 @@ public class Twipsy extends BootstrapComponent {
 	@BeginRender
 	void beginRender() {
 		if ( getTitleIsString() ) {
-			environment.addScriptOnce(String.format("%s('a[rel=twipsy]').twipsy({live: true})",jqueryAlias));
+			environment.addScriptOnce(String.format("%s('a[rel=twipsy]').twipsy({live: true});",jqueryAlias));
 		} else {
 			// Will this work in a zone?
 			javaScriptSupport.addScript(
 					"%s('#%s').twipsy({html: true, " +
-					"title:function() {return %s('#%s span').html()}})", jqueryAlias, getClientId(),jqueryAlias, getClientId());
+					"title:function() {return %s('#%s span').html()}});", jqueryAlias, getClientId(),jqueryAlias, getClientId());
 		}
 	}
 	

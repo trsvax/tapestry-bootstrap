@@ -3,7 +3,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
-	<t:tb.bootstrapbeaneditform cancel="true" submitLabel="message:submit-label" object="address" 
+	<t:tb.bootstrapbeaneditform  cancel="true" submitLabel="message:submit-label" object="address" 
       	 reorder="honorific,firstName,lastName,street1,street2,city,state,zip,email,phone"/>
       
       

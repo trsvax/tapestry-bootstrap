@@ -5,6 +5,9 @@ import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 
+import com.trsvax.bootstrap.annotations.Exclude;
+
+@Exclude(stylesheet={"core"})
 @Import(stylesheet={"classpath:/com/trsvax/bootstrap/bootstrap.css"},
 library={"classpath:/com/trsvax/bootstrap/bootstrap-scrollspy.js","classpath:/com/trsvax/bootstrap/bootstrap-twipsy.js"})
 public class ContainerLayout {

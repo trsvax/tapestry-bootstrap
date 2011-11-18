@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" t:type="containerLayout"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      	<t:tb.bootstrapbeaneditform clientValidation="true" cancel="true" submitLabel="Create" object="address" reorder="honorific,firstName,lastName,street1,street2,city,state,zip,email,phone"/>
+      
+      
+</html>

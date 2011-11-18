@@ -747,6 +747,9 @@ form div.clearfix.error .input-prepend span.add-on, form div.clearfix.error .inp
   border-color: #c87872;
   color: #b9554d;
 }
+form .clearfix.success > label, form .clearfix.success .help-block, form .clearfix.success .help-inline {
+  color: #468847;
+}
 .input-mini,
 input.mini,
 textarea.mini,

@@ -1,5 +1,8 @@
 package com.trsvax.bootstrap.components;
 
-public class Layout {
+import com.trsvax.bootstrap.annotations.Exclude;
+
+@Exclude(stylesheet={"core"})
+public class Layout extends ContainerLayout {
 
 }

@@ -19,6 +19,7 @@ public class Address {
 
 	  public String state;
 
+	  @Validate("required,regexp=^\\d{5}(-\\d{4})?$")
 	  public String zip;
 
 	  public String email;

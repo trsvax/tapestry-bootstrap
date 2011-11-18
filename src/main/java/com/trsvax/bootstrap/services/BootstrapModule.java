@@ -4,20 +4,28 @@ import java.util.Map.Entry;
 
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.beaneditor.DataTypeConstants;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
+import org.apache.tapestry5.internal.services.ValidationDecoratorFactoryImpl;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
+import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Symbol;
+import org.apache.tapestry5.ioc.services.ServiceOverride;
+import org.apache.tapestry5.services.BeanBlockContribution;
+import org.apache.tapestry5.services.BeanBlockOverrideSource;
 import org.apache.tapestry5.services.BindingFactory;
+import org.apache.tapestry5.services.EditBlockContribution;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
+import org.apache.tapestry5.services.ValidationDecoratorFactory;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 
@@ -29,12 +37,13 @@ import com.trsvax.bootstrap.environment.ExcludeValues;
  * This module is automatically included as part of the Tapestry IoC Registry, it's a good place to
  * configure and extend Tapestry, or to place your own service definitions.
  */
-public class TwitterBootstrapModule {
+public class BootstrapModule {
 	
     public static void bind(ServiceBinder binder) {
     	binder.bind(BindingFactory.class,SessionBindingFactory.class).withId("SessionBindingFactory");
     	binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
     	binder.bind(StringTemplateParser.class,StringTemplateParserImpl.class);
+    	binder.bind(ValidationDecoratorFactory.class,BootStrapValidationDecoratorFactoryImpl.class).withId("BootStrapValidation");
     }
     
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
@@ -101,6 +110,24 @@ public class TwitterBootstrapModule {
     public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration)
     {
         configuration.add("tap-bootstrap", "com/trsvax/bootstrap");
+    }
+    
+    @Contribute(BeanBlockOverrideSource.class)
+    public static void provideBootStrapBeanBlocks(Configuration<BeanBlockContribution> configuration) {
+    	configuration.add(new EditBlockContribution(DataTypeConstants.TEXT, "BootStrapEditBlocks", DataTypeConstants.TEXT));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.NUMBER, "BootStrapEditBlocks", DataTypeConstants.NUMBER));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.ENUM, "BootStrapEditBlocks", DataTypeConstants.ENUM));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.BOOLEAN, "BootStrapEditBlocks", DataTypeConstants.BOOLEAN));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.DATE, "BootStrapEditBlocks", DataTypeConstants.DATE));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.PASSWORD, "BootStrapEditBlocks", DataTypeConstants.PASSWORD));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.CALENDAR, "BootStrapEditBlocks", DataTypeConstants.CALENDAR));
+    	configuration.add(new EditBlockContribution(DataTypeConstants.LONG_TEXT, "BootStrapEditBlocks", DataTypeConstants.LONG_TEXT));
+    }
+    
+    @Contribute(ServiceOverride.class)
+    public static void setupApplicationServiceOverrides(MappedConfiguration<Class,Object> configuration, @Local ValidationDecoratorFactory override )
+    {
+    	configuration.add(ValidationDecoratorFactory.class, override);
     }
    
 }

@@ -1,0 +1,5 @@
+<tr xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+    <t:loop t:source="model.propertyNames" formState="ITERATION" t:value="propertyName">
+        <th>${propertyModel.label}</th>
+    </t:loop>
+</tr>

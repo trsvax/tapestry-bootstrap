@@ -8,16 +8,13 @@ import org.slf4j.Logger;
 
 public class BootStrapValidationDecoratorFactoryImpl implements ValidationDecoratorFactory {
 	private final Environment environment;
-	private final Logger logger;
 	
-	public BootStrapValidationDecoratorFactoryImpl(Environment environment, Logger logger) {
+	public BootStrapValidationDecoratorFactoryImpl(Environment environment) {
 		this.environment = environment;
-		this.logger = logger;
-		logger.info("bootstrap decorator");
 	}
 
 	public ValidationDecorator newInstance(MarkupWriter writer) {
-		return new BootStrapValidationDecorator(writer,environment,logger);
+		return new BootStrapValidationDecorator(writer,environment);
 	}
 
 }

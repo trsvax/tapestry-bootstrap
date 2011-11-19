@@ -12,11 +12,8 @@ $.extend(Tapestry.Initializer, {
                 highlight: function(element, errorClass, validClass) {
                     $(element).addClass("error");
                     $(element).parent().parent().addClass("error").removeClass("success");
-                    //$(element.form).find(element.id).addClass(errorClass);
-                    //$(element.form).find(element.id + ":parent").addClass(errorClass);
-                 },
+                  },
                  unhighlight: function(element, errorClass, validClass) {
-                	 //$(element).addClass(validClass).removeClass("error");
                      $(element).parent().parent().addClass("success").removeClass("error");
                   }
             });

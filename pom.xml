@@ -147,10 +147,6 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <!-- This repository is only needed when the Tapestry version is a preview release, rather
              than a final release. -->
         <repository>
-            <id>apache-staging</id>
-            <url>https://repository.apache.org/content/groups/staging/</url>
-        </repository>
-        <repository>
         <id>devlab722-repo</id>
         <url>http://nexus.devlab722.net/nexus/content/repositories/releases
         </url>
@@ -170,7 +166,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     </repositories>
 
     <properties>
-        <tapestry-release-version>5.3-rc-2</tapestry-release-version>
+        <tapestry-release-version>5.3</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.9</testng-release-version>
         <easymock-release-version>3.0</easymock-release-version>

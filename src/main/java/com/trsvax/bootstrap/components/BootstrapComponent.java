@@ -5,6 +5,11 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
+/**
+ * Abstract component from which most/all components of this module should inherit.
+ * The purpose of this class is to make sure all components have a client-side ID.
+ * @tapestrydoc
+ */
 public abstract class BootstrapComponent implements ClientElement {
 	@Inject
 	private ComponentResources resources;

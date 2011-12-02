@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Generated site for tapestry-bootstrap">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId>
+    </skin>
 
     <publishDate format="dd MMM yyyy"/>
 

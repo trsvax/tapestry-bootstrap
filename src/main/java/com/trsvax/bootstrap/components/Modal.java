@@ -4,9 +4,14 @@ import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 
+/**
+ * Modal dialog
+ * @tapestrydoc
+ * @see <a href="http://twitter.github.com/bootstrap/#popovers">Bootstrap Popovers Modals</a>
+ */
 @SuppressWarnings("unused")
 public class Modal extends BootstrapComponent {
-	
+
 
 	@Parameter
 	@Property

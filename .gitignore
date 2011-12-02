@@ -16,3 +16,5 @@ pom-internal.xml
 "/var/*
 maven-eclipse.xml
 .externalToolBuilders
+.idea
+*.i??

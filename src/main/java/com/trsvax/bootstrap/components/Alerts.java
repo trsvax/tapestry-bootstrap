@@ -11,6 +11,7 @@ import org.apache.tapestry5.annotations.SessionState;
 import com.trsvax.bootstrap.environment.AlertType;
 
 /**
+ * Display all Tapestry {@link Alert}s using <a href="http://twitter.github.com/bootstrap/#alerts">Bootstrap alerts</a>.
  * @tapestrydoc
  */
 public class Alerts {

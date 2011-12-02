@@ -169,7 +169,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.0-beta-3</version>
+                <version>3.0</version>
                 <configuration>
                     <reportPlugins>
                         <plugin>
@@ -196,6 +196,14 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                                 <links>
                                     <link>http://tapestry.apache.org/5.3/apidocs/</link>
                                 </links>
+                                <detectLinks>ture</detectLinks>
+                                <detectJavaApiLink>true</detectJavaApiLink>
+                                <linksource>true</linksource>
+                                <quiet>true</quiet>
+                                <!--<includeDependencySources>true</includeDependencySources>-->
+                                <!--<dependencySourceIncludes>-->
+                                    <!--<dependencySourceInclude>org.apache.tapestry5:*</dependencySourceInclude>-->
+                                <!--</dependencySourceIncludes>-->
                             </configuration>
                         </plugin>
                         <!--<plugin>-->

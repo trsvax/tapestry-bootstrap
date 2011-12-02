@@ -7,6 +7,8 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 
 /**
+ * {@link org.apache.tapestry5.corelib.components.BeanEditForm} customized for better use of
+ * <a href="http://twitter.github.com/bootstrap/#forms">Bootstrap Forms</a>.
  * @tapestrydoc
  */
 @SupportsInformalParameters

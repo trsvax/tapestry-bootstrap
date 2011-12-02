@@ -11,15 +11,27 @@ import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
+ * Display a list of beans in a table.<br/>
  * @tapestrydoc
+ * @see BeanDisplay
+ * @see BeanDisplayLabel
+ * @see Pagination
+ * @see <a href="http://trsvax.com/blog/BeanGrid">Blog post</a>
+ * @see <a href="http://twitter.github.com/bootstrap/#tables">Bootstrap Tables</a>
  */
 @SupportsInformalParameters
 @SuppressWarnings("unused")
 public class BeanGrid<T> extends BootstrapComponent {
+    /**
+     * The source of data for the BeanGrid to display.
+     */
 	@Parameter(autoconnect=true,required=true,allowNull=false)
 	@Property
 	private List<?> source;
-	
+
+    /**
+     * Used to store the current object being rendered (for the current row).
+     */
 	@Parameter
 	@Property
 	private Object value;

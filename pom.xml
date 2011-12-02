@@ -6,7 +6,20 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>tapestry-bootstrap Tapestry 5 Application</name>
-        <dependencies>
+    <url>https://github.com/trsvax/tapestry-bootstrap</url>
+
+    <distributionManagement>
+        <repository>
+            <id>gh-pages</id>
+            <url>file:///${basedir}/../${project.artifactId}-pages/repository/</url>
+        </repository>
+        <site>
+            <id>gh-pages</id>
+            <url>file:///${basedir}/../${project.artifactId}-pages/</url>
+        </site>
+    </distributionManagement>
+
+    <dependencies>
         <!-- Too set up an application with a database, change the artifactId below to
              tapestry-hibernate, and add a dependency on your JDBC driver. You'll also
              need to add Hibernate configuration files, such as hibernate.cfg.xml. -->
@@ -35,16 +48,16 @@
         
         
         <dependency>
-        <groupId>org.got5</groupId>
-        <artifactId>tapestry5-jquery</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-        <exclusions>
-        		<exclusion>
-          		<groupId>org.apache.tapestry</groupId>
-          		<artifactId>tapestry-func</artifactId>
-        		</exclusion>
-        	</exclusions>
-    	</dependency>
+            <groupId>org.got5</groupId>
+            <artifactId>tapestry5-jquery</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tapestry</groupId>
+                    <artifactId>tapestry-func</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     	
     	
 
@@ -82,14 +95,15 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </dependency>
 
         <!-- Provide dependency to the Tapestry javadoc taglet which replaces the Maven component report -->
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-javadoc</artifactId>
-            <version>${tapestry-release-version}</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tapestry</groupId>-->
+            <!--<artifactId>tapestry-javadoc</artifactId>-->
+            <!--<version>${tapestry-release-version}</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
 
     </dependencies>
+
     <build>
         <finalName>tapestry-bootstrap</finalName>
         <plugins>
@@ -115,6 +129,20 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 </configuration>
             </plugin>
 
+            <!-- Enable auto-discovery of the Tapestry module -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>com.trsvax.bootstrap.services.BootstrapModule</Tapestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
             <!-- Run the application using "mvn jetty:run" -->
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
@@ -137,10 +165,62 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 					<webAppSourceDirectory>src/test/webapp</webAppSourceDirectory>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0-beta-3</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.2</version>
+                            <configuration>
+                                <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                            </configuration>
+                        </plugin>
+                        <!-- Generate JavaDoc & Tapestry Components Report -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.8</version>
+                            <configuration>
+                                <taglet>org.apache.tapestry5.javadoc.TapestryDocTaglet</taglet>
+                                <tagletArtifact>
+                                    <groupId>org.apache.tapestry</groupId>
+                                    <artifactId>tapestry-javadoc</artifactId>
+                                    <version>${tapestry-release-version}</version>
+                                </tagletArtifact>
+                                <links>
+                                    <link>http://tapestry.apache.org/5.3/apidocs/</link>
+                                </links>
+                            </configuration>
+                        </plugin>
+                        <!--<plugin>-->
+                            <!--<groupId>org.apache.maven.plugins</groupId>-->
+                            <!--<artifactId>maven-changelog-plugin</artifactId>-->
+                            <!--<version>2.2</version>-->
+                        <!--</plugin>-->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+                            <version>2.6</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pmd-plugin</artifactId>
+                            <version>2.5</version>
+                            <configuration>
+                                <targetJdk>1.5</targetJdk>
+                            </configuration>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <reporting/>
 
     <repositories>
 

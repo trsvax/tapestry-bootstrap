@@ -8,6 +8,9 @@ import org.apache.tapestry5.annotations.Parameter;
 
 import com.trsvax.bootstrap.environment.AlertEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 @Import(library="classpath:/com/trsvax/bootstrap/bootstrap-alerts.js")
 public class BasicAlert extends BootstrapComponent {
 	

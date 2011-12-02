@@ -7,6 +7,9 @@ import org.apache.tapestry5.annotations.Parameter;
 
 import com.trsvax.bootstrap.environment.LabelEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 public class Label extends BootstrapComponent {
 	
 	@Parameter(value=LabelEnvironment.type,defaultPrefix="literal")

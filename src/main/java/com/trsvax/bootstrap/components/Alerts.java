@@ -10,6 +10,9 @@ import org.apache.tapestry5.annotations.SessionState;
 
 import com.trsvax.bootstrap.environment.AlertType;
 
+/**
+ * @tapestrydoc
+ */
 public class Alerts {
 	
 	@Property

@@ -7,6 +7,9 @@ import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.annotations.Exclude;
 
+/**
+ * @tapestrydoc
+ */
 @Exclude(stylesheet={"core"})
 @Import(stylesheet={"classpath:/com/trsvax/bootstrap/bootstrap.css"},
 library={"classpath:/com/trsvax/bootstrap/bootstrap-scrollspy.js","classpath:/com/trsvax/bootstrap/bootstrap-twipsy.js"})

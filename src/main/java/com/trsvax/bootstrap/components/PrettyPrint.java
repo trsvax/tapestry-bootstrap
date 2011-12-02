@@ -8,6 +8,9 @@ import org.apache.tapestry5.annotations.Parameter;
 
 import com.trsvax.bootstrap.environment.PrettyPrintEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 @Import(stylesheet="classpath:/com/trsvax/bootstrap/google-code-prettify/prettify.css",
 library="classpath:/com/trsvax/bootstrap/google-code-prettify/prettify.js")
 public class PrettyPrint extends BootstrapComponent {

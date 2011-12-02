@@ -8,6 +8,9 @@ import org.apache.tapestry5.annotations.Property;
 import com.trsvax.bootstrap.environment.BlockMessageEnvironment;
 
 
+/**
+ * @tapestrydoc
+ */
 @Import(library="classpath:/com/trsvax/bootstrap/bootstrap-alerts.js")
 public class BlockMessage extends BootstrapComponent {
 	@Parameter(value=BlockMessageEnvironment.type,defaultPrefix="literal")

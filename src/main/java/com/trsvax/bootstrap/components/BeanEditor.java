@@ -4,6 +4,9 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
+/**
+ * @tapestrydoc
+ */
 public class BeanEditor extends org.apache.tapestry5.corelib.components.BeanEditor {
 	
 	@Inject

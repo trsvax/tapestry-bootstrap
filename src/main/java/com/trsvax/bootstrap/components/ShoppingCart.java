@@ -7,6 +7,9 @@ import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.environment.ShoppingCartEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 @SuppressWarnings("unused")
 public class ShoppingCart<T> {
 

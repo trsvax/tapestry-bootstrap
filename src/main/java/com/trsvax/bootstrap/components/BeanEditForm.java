@@ -6,6 +6,9 @@ import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 
+/**
+ * @tapestrydoc
+ */
 @SupportsInformalParameters
 @Import(library="classpath:/com/trsvax/bootstrap/validation.js")
 public class BeanEditForm extends org.apache.tapestry5.corelib.components.BeanEditForm {

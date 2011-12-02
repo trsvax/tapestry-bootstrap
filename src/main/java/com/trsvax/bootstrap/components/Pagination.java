@@ -9,6 +9,9 @@ import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.environment.PaginationEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 public class Pagination extends BootstrapComponent {
 	
 	@Property

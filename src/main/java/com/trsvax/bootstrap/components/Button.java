@@ -7,6 +7,9 @@ import org.apache.tapestry5.annotations.Parameter;
 
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 public class Button extends BootstrapComponent {
 	
 	@Parameter(value=ButtonEnvironment.type,defaultPrefix="literal")

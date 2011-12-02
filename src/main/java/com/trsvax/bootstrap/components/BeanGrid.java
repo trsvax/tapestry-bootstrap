@@ -10,6 +10,9 @@ import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
+/**
+ * @tapestrydoc
+ */
 @SupportsInformalParameters
 @SuppressWarnings("unused")
 public class BeanGrid<T> extends BootstrapComponent {

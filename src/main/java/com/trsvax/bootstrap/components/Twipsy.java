@@ -12,6 +12,9 @@ import org.got5.tapestry5.jquery.JQuerySymbolConstants;
 
 import com.trsvax.bootstrap.environment.ExcludeEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 @Import(library="classpath:/com/trsvax/bootstrap/bootstrap-twipsy.js")
 public class Twipsy extends BootstrapComponent {
 	@Parameter(defaultPrefix="literal")

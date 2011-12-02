@@ -5,6 +5,9 @@ import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 
+/**
+ * @tapestrydoc
+ */
 public abstract class BootstrapComponent implements ClientElement {
 	@Inject
 	private ComponentResources resources;

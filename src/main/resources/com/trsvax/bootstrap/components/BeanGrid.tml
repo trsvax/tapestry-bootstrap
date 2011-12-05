@@ -1,5 +1,7 @@
 <t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">          
 <t:any id="${clientId}" t:mixins="tb/pager" source="source" parameterName="parameterName" >
+    <t:delegate to="blockForGrid"/>
+    <t:block id="grid">
       <table t:type="any" class="${tableType}" t:mixins="tb/infiniteScroll"
       	options='{navSelector: "#${clientId} .pagination", 
       		nextSelector: "#${clientId} a.next:last", 
@@ -12,5 +14,7 @@
 	      </tbody>
       </table>     
       <t:tb.pagination/>
+    </t:block>
+    <t:block id="empty">${message:no-grid-data-to-display}</t:block>
 </t:any>
 </t:container>

@@ -1,7 +1,7 @@
 package com.trsvax.bootstrap.components;
 
-import java.util.List;
-
+import org.apache.tapestry5.BindingConstants;
+import org.apache.tapestry5.Block;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Parameter;
@@ -9,6 +9,7 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import java.util.List;
 
 /**
  * Display a list of beans in a table.<br/>
@@ -53,11 +54,30 @@ public class BeanGrid<T> extends BootstrapComponent {
 	
 	@Component(parameters={"value=value","index=index"})
 	private Loop<T> loop;
+    
+    @Inject
+    private Block grid;
+    
+    /**
+     * A Block to render instead of the table (and pager, etc.) when the source is empty. The default is simply the text
+     * "There is no data to display". This parameter is used to customize that message, possibly including components to
+     * allow the user to create new objects.
+     */
+    @Parameter(value = "block:empty", defaultPrefix = BindingConstants.LITERAL)
+    private Block empty;
 	
 	@SetupRender
 	private void setupRender() {
-		value = source.get(0);
+        if (source.size() > 0)
+            value = source.get(0);
 		tableType = resources.getInformalParameter("class", String.class);
 	}
+    
+    public Block getBlockForGrid() {
+        if (value == null)
+            return empty;
+        else
+            return grid;
+    }
 
 }

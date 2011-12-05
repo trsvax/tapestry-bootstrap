@@ -9,6 +9,9 @@ import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.environment.LoopEnvironment;
 
+/**
+ * @tapestrydoc
+ */
 @SuppressWarnings("unused")
 public class Loop<T> {	
 	@Parameter(value=LoopEnvironment.source,required=true)

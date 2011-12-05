@@ -6,7 +6,15 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>tapestry-bootstrap Tapestry 5 Application</name>
-        <dependencies>
+    <url>https://github.com/trsvax/tapestry-bootstrap</url>
+
+    <scm>
+        <url>https://github.com/trsvax/tapestry-bootstrap</url>
+        <connection>scm:git:git://github.com/trsvax/tapestry-bootstrap.git</connection>
+        <developerConnection>scm:git:git@github.com:trsvax/tapestry-bootstrap.git</developerConnection>
+    </scm>
+
+    <dependencies>
         <!-- Too set up an application with a database, change the artifactId below to
              tapestry-hibernate, and add a dependency on your JDBC driver. You'll also
              need to add Hibernate configuration files, such as hibernate.cfg.xml. -->
@@ -35,16 +43,16 @@
         
         
         <dependency>
-        <groupId>org.got5</groupId>
-        <artifactId>tapestry5-jquery</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
-        <exclusions>
-        		<exclusion>
-          		<groupId>org.apache.tapestry</groupId>
-          		<artifactId>tapestry-func</artifactId>
-        		</exclusion>
-        	</exclusions>
-    	</dependency>
+            <groupId>org.got5</groupId>
+            <artifactId>tapestry5-jquery</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tapestry</groupId>
+                    <artifactId>tapestry-func</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     	
     	
 
@@ -82,14 +90,15 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </dependency>
 
         <!-- Provide dependency to the Tapestry javadoc taglet which replaces the Maven component report -->
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-javadoc</artifactId>
-            <version>${tapestry-release-version}</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tapestry</groupId>-->
+            <!--<artifactId>tapestry-javadoc</artifactId>-->
+            <!--<version>${tapestry-release-version}</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
 
     </dependencies>
+
     <build>
         <finalName>tapestry-bootstrap</finalName>
         <plugins>
@@ -115,6 +124,46 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 </configuration>
             </plugin>
 
+            <!-- Enable auto-discovery of the Tapestry module -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Tapestry-Module-Classes>com.trsvax.bootstrap.services.BootstrapModule</Tapestry-Module-Classes>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Run the application using "mvn jetty:run" -->
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
@@ -137,38 +186,117 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 					<webAppSourceDirectory>src/test/webapp</webAppSourceDirectory>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-project-info-reports-plugin</artifactId>
+                            <version>2.2</version>
+                            <configuration>
+                                <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                                <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                            </configuration>
+                        </plugin>
+                        <!-- Generate JavaDoc & Tapestry Components Report -->
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>2.8</version>
+                            <configuration>
+                                <taglet>org.apache.tapestry5.javadoc.TapestryDocTaglet</taglet>
+                                <tagletArtifact>
+                                    <groupId>org.apache.tapestry</groupId>
+                                    <artifactId>tapestry-javadoc</artifactId>
+                                    <version>${tapestry-release-version}</version>
+                                </tagletArtifact>
+                                <links>
+                                    <link>http://tapestry.apache.org/5.3/apidocs/</link>
+                                </links>
+                                <detectLinks>ture</detectLinks>
+                                <detectJavaApiLink>true</detectJavaApiLink>
+                                <linksource>true</linksource>
+                                <quiet>true</quiet>
+                                <!--<includeDependencySources>true</includeDependencySources>-->
+                                <!--<dependencySourceIncludes>-->
+                                    <!--<dependencySourceInclude>org.apache.tapestry5:*</dependencySourceInclude>-->
+                                <!--</dependencySourceIncludes>-->
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-changelog-plugin</artifactId>
+                            <version>2.2</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-checkstyle-plugin</artifactId>
+                            <version>2.6</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-pmd-plugin</artifactId>
+                            <version>2.5</version>
+                            <configuration>
+                                <targetJdk>1.5</targetJdk>
+                            </configuration>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.2</version>
+                <configuration>
+                    <message>Building site for ${project.version}</message>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>site</phase>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
-    <reporting/>
 
     <repositories>
 
         <!-- This repository is only needed when the Tapestry version is a preview release, rather
              than a final release. -->
         <repository>
-        <id>devlab722-repo</id>
-        <url>http://nexus.devlab722.net/nexus/content/repositories/releases
-        </url>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-	    </repository>
+            <id>devlab722-repo</id>
+            <url>http://nexus.devlab722.net/nexus/content/repositories/releases</url>
+            <snapshots> <enabled>false</enabled> </snapshots>
+        </repository>
 	
 	    <repository>
 	        <id>devlab722-snapshot-repo</id>
-	        <url>http://nexus.devlab722.net/nexus/content/repositories/snapshots
-	        </url>
-	        <releases>
-	            <enabled>false</enabled>
-	        </releases>
+	        <url>http://nexus.devlab722.net/nexus/content/repositories/snapshots</url>
+            <releases> <enabled>false</enabled> </releases>
 	    </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>oss-sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <properties>
         <tapestry-release-version>5.3</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.9</testng-release-version>
         <easymock-release-version>3.0</easymock-release-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>

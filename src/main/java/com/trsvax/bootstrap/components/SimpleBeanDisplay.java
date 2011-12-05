@@ -4,6 +4,9 @@ import org.apache.tapestry5.Block;
 import org.apache.tapestry5.corelib.components.BeanDisplay;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
+ /**
+  * @tapestrydoc
+  */
 public class SimpleBeanDisplay extends BeanDisplay {
 	
 	@Inject

@@ -22,7 +22,7 @@ public class BasicAlert extends BootstrapComponent {
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
-		writer.element("div", "class", String.format("alert-message%s", formatClass(type)));
+		writer.element("div", "class", String.format("alert-message%s", formatClass(type)),"data-alert","alert");
 		writer.element("a", "class","close","href","#");
 		writer.write("x");
 		writer.end();

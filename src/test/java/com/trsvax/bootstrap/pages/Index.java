@@ -28,14 +28,14 @@ public class Index {
 	
     public ButtonValues getButtonValues() {
     	ButtonValues values = new ButtonValues(null);
-    	values.setType(ButtonType.danger);
-    	values.setSize(ButtonSize.small);
+    	values.setButtonType(ButtonType.danger);
+    	values.setButtonSize(ButtonSize.small);
     	return values;
     }
     
     public LabelValues getLabelValues() {
     	LabelValues values = new LabelValues(null);
-    	values.setType(LabelType.warning);
+    	values.setLabelType(LabelType.warning);
     	return values;
     }
 

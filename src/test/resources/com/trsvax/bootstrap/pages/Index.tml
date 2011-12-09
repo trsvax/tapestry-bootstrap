@@ -65,26 +65,26 @@
       
       <section id="button">
        <h3>Button</h3>
-       <t:tb.button type="primary">Primary</t:tb.button>
-       <t:tb.button>Default</t:tb.button>
-       <t:tb.button type="info">Info</t:tb.button>
-       <t:tb.button type="success">Success</t:tb.button>
-       <t:tb.button type="danger">Danger</t:tb.button>
+       <t:pagelink page="index" t:mixins="tb/button" buttonType="primary">Primary</t:pagelink>
+       <t:pagelink page="index" t:mixins="tb/button">Default</t:pagelink>
+       <t:pagelink page="index" t:mixins="tb/button" buttonType="info">Info</t:pagelink>
+       <t:pagelink page="index" t:mixins="tb/button" buttonType="success">Success</t:pagelink>
+       <t:pagelink page="index" t:mixins="tb/button" buttonType="danger">Danger</t:pagelink>
        <h4>Alternate sizes</h4>
-       <t:tb.button type="primary" size="large">Primary action</t:tb.button>
-        <t:tb.button  size="large">Action</t:tb.button>
+       <t:pagelink page="index" t:mixins="tb/button"  buttonType="primary" buttonSize="large">Primary action</t:pagelink>
+        <t:pagelink page="index" t:mixins="tb/button" buttonSize="large">Action</t:pagelink>
         <br/>
-        <t:tb.button type="primary" size="small">Primary action</t:tb.button>
-        <t:tb.button  size="small">Action</t:tb.button>
+        <t:pagelink page="index" t:mixins="tb/button" buttonType="primary" buttonSize="small">Primary action</t:pagelink>
+        <t:pagelink page="index" t:mixins="tb/button" buttonSize="small">Action</t:pagelink>
       </section>
       
       <section id="label">
        <h3>Label</h3>
-       <t:tb.label>Default</t:tb.label>
-       <t:tb.label type="success">New</t:tb.label>
-       <t:tb.label type="warning">Warning</t:tb.label>
-       <t:tb.label type="important">Important</t:tb.label>
-       <t:tb.label type="notice">Notice</t:tb.label>
+       <span t:type="any" t:mixins="tb/label">Default</span>
+       <span t:type="any" t:mixins="tb/label" labelType="success">New</span>
+       <span t:type="any" t:mixins="tb/label" labelType="warning">Warning</span>
+       <span t:type="any" t:mixins="tb/label" labelType="important">Important</span>
+       <span t:type="any" t:mixins="tb/label" labelType="notice">Notice</span>
       </section>
       
       <section id="media-grid">
@@ -135,8 +135,8 @@ private PrettyPrintEnvironment prettyPrint;
 	<section id="environment">
 		<h3>Environment</h3>
 		<t:any t:mixins="tb/pushEnvironment" environments="values">
-			<t:tb.button>Environment Button</t:tb.button>
-			<t:tb.label>Environment Label</t:tb.label>
+			<t:pagelink page="index" t:mixins="tb/button">Environment Button</t:pagelink>
+			<span t:type="any" t:mixins="tb/label">Environment Label</span>
 		</t:any>
 	</section>
 	

@@ -1,9 +1,9 @@
 package com.trsvax.bootstrap.environment;
 
 public interface ButtonEnvironment {
-	public static final String size = "env:com.trsvax.bootstrap.environment.ButtonEnvironment.size";
-	public static final String type = "env:com.trsvax.bootstrap.environment.ButtonEnvironment.type";
+	public static final String buttonSize = "env:com.trsvax.bootstrap.environment.ButtonEnvironment.buttonSize";
+	public static final String buttonType = "env:com.trsvax.bootstrap.environment.ButtonEnvironment.buttonType";
 
-	public ButtonSize getSize();
-	public ButtonType getType();
+	public ButtonSize getButtonSize();
+	public ButtonType getButtonType();
 }

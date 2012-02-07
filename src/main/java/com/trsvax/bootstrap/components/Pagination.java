@@ -12,7 +12,7 @@ import com.trsvax.bootstrap.environment.PaginationEnvironment;
 /**
  * @tapestrydoc
  */
-public class Pagination extends BootstrapComponent {
+public class Pagination  {
 	
 	@Property
 	@Environmental(false)

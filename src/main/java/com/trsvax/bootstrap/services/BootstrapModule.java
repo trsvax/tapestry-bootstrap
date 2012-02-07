@@ -7,7 +7,6 @@ import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.beaneditor.DataTypeConstants;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
-import org.apache.tapestry5.internal.services.ValidationDecoratorFactoryImpl;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
@@ -28,9 +27,13 @@ import org.apache.tapestry5.services.MarkupRendererFilter;
 import org.apache.tapestry5.services.ValidationDecoratorFactory;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
+import org.slf4j.Logger;
 
+import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.ExcludeEnvironment;
 import com.trsvax.bootstrap.environment.ExcludeValues;
+import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor;
+import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapVisitor;
 
 
 /**
@@ -44,6 +47,9 @@ public class BootstrapModule {
     	binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
     	binder.bind(StringTemplateParser.class,StringTemplateParserImpl.class);
     	binder.bind(ValidationDecoratorFactory.class,BootStrapValidationDecoratorFactoryImpl.class).withId("BootStrapValidation");
+    	binder.bind(FrameworkVisitor.class, BootstrapVisitor.class).withId(BootstrapVisitor.id);
+    	binder.bind(FrameworkVisitor.class,BootstrapFrameworkVisitor.class).withId(BootstrapFrameworkVisitor.id);
+
     }
     
     public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
@@ -62,11 +68,12 @@ public class BootstrapModule {
     public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {    
         workers.addInstance("ConnectWorker", ConnectWorker.class);
         workers.addInstance("ExcludeWorker", ExcludeWorker.class);
+        workers.addInstance("FrameworkMixinWorker", FrameworkMixinWorker.class);
     } 
    
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
     		final Environment environment, @Symbol(SymbolConstants.EXECUTION_MODE) final String mode,
-    		final JavaScriptSupport javaScriptSupport) {
+    		final JavaScriptSupport javaScriptSupport, final Logger logger, @InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
     	
     	MarkupRendererFilter excludeFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
@@ -75,21 +82,35 @@ public class BootstrapModule {
 				final ExcludeEnvironment values = environment.pop(ExcludeEnvironment.class);
 				
 				Element head = writer.getDocument().getRootElement().find("head");
+				if ( head == null ) {
+					return;
+				}
 				head.visit( new Visitor() {					
 						public void visit(Element element) {
+							if ( ! element.getName().equals("link") ) {
+								return;
+							}
 							String type = element.getAttribute("type");
 							String href = element.getAttribute("href");
 							if ( type != null && href != null && type.equals("text/css")) {
 								for ( String pattern : values.getExcludes(mode)) {
 									if ( href.contains(pattern)) {
+										logger.info("name {}",element.getAttribute("href"));
+										try {
 										element.remove();
+										} catch (Exception e) {
+											logger.info("error {}",element.getAttribute("href"));
+										}
 									}
 								}
 							}
 							
 						}
 					});
-				}			
+				writer.getDocument().getRootElement().find("body").visit(frameworkVisitor.visit());
+				}
+			
+			
 		};
 		
 		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {		
@@ -112,22 +133,19 @@ public class BootstrapModule {
         configuration.add("tap-bootstrap", "com/trsvax/bootstrap");
     }
     
-    @Contribute(BeanBlockOverrideSource.class)
-    public static void provideBootStrapBeanBlocks(Configuration<BeanBlockContribution> configuration) {
-    	configuration.add(new EditBlockContribution(DataTypeConstants.TEXT, "BootStrapEditBlocks", DataTypeConstants.TEXT));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.NUMBER, "BootStrapEditBlocks", DataTypeConstants.NUMBER));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.ENUM, "BootStrapEditBlocks", DataTypeConstants.ENUM));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.BOOLEAN, "BootStrapEditBlocks", DataTypeConstants.BOOLEAN));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.DATE, "BootStrapEditBlocks", DataTypeConstants.DATE));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.PASSWORD, "BootStrapEditBlocks", DataTypeConstants.PASSWORD));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.CALENDAR, "BootStrapEditBlocks", DataTypeConstants.CALENDAR));
-    	configuration.add(new EditBlockContribution(DataTypeConstants.LONG_TEXT, "BootStrapEditBlocks", DataTypeConstants.LONG_TEXT));
+    @Contribute(FrameworkVisitor.class)
+    public static void provideBootStrapVisitors(MappedConfiguration<String, FrameworkVisitor> configuration,
+    		@InjectService(BootstrapFrameworkVisitor.id) FrameworkVisitor fw) {
+    	configuration.add(BootstrapFrameworkVisitor.id,fw);
     }
+    
+    
     
     @Contribute(ServiceOverride.class)
     public static void setupApplicationServiceOverrides(MappedConfiguration<Class,Object> configuration, @Local ValidationDecoratorFactory override )
     {
     	configuration.add(ValidationDecoratorFactory.class, override);
     }
+    
    
 }

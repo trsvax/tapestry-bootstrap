@@ -1,9 +1,0 @@
-<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
-<div class="alert-message block-message ${type}">
-  <a class="close" href="#">x</a>
-  <p><t:body/></p>
-  <div class="alert-actions">
-    <t:delegate to="actions"/>
-  </div>
-</div>
-</t:container>

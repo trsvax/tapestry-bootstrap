@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Form"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:beaneditform t:id="address"  >
+      </t:beaneditform>
+      
+</html>

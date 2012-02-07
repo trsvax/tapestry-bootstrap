@@ -1,7 +1,0 @@
-<tr xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
-    <t:loop t:source="model.propertyNames" formState="ITERATION" t:value="propertyName">
-         <td t:type="any" t:mixins="NotEmpty" >
-            <t:propertydisplay model="propertyModel" overrides="overrides" object="object"/>
-        </td>
-    </t:loop>
-</tr>

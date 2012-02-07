@@ -1,8 +1,0 @@
-<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">
-<t:if test="titleIsString">
-	<a id="${clientId}" href="#" rel="twipsy" data-original-title="${title}"><t:body/></a>
-<p:else>
-	<a id="${clientId}" href="#" ><span style="display:none"><t:delegate to="title"/></span><t:body/></a>	
-</p:else>
-</t:if>
-</t:container>

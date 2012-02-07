@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Buttons"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:tb.comboButton>
+      	<t:pagelink  page="" >Action</t:pagelink>
+      	<t:tb.dropdown>
+      		<t:pagelink page="">Action</t:pagelink>
+      		<t:pagelink page=""><b>Another Action</b></t:pagelink>
+      		<t:eventlink t:id="Event">Event</t:eventlink>
+      	</t:tb.dropdown>
+      </t:tb.comboButton>
+      
+      <t:tb.nav fw.type="tabs">
+      	<t:pagelink page="" active="true" >Action44</t:pagelink>
+      	<t:pagelink page=""><b>Another Action</b></t:pagelink>
+      	<t:eventlink t:id="Event1">Event</t:eventlink>
+      </t:tb.nav>
+      
+       <t:tb.nav fw.type="pills">
+      	<t:pagelink page="" active="true">Action</t:pagelink>
+      	<t:pagelink page=""><b>Another Action</b></t:pagelink>
+      	<t:eventlink t:id="Event2">Event</t:eventlink>
+      </t:tb.nav>
+      
+	 <t:tb.nav fw.type="tabs stacked">
+      	<t:pagelink page="" active="true">Action</t:pagelink>
+      	<t:pagelink page=""><b>Another Action</b></t:pagelink>
+      	<t:eventlink t:id="Event3">Event</t:eventlink>
+      </t:tb.nav>
+      
+       <t:tb.nav fw.type="pills stacked">
+      	<t:pagelink page="" active="true">Action</t:pagelink>
+      	<t:pagelink page=""><b>Another Action</b></t:pagelink>
+      	<t:eventlink t:id="Event4">Event</t:eventlink>
+      </t:tb.nav>
+      
+       <t:tb.nav fw.type="tabs">
+      	<t:pagelink page="" active="true" >Action</t:pagelink>
+      	<t:pagelink page="" >Action2</t:pagelink>
+      	<t:tb.comboButton>
+	      	<t:pagelink page="">Action</t:pagelink>
+	      	<t:tb.dropdown >
+	      		<t:pagelink page="">Action</t:pagelink>
+	      		<t:pagelink page=""><b>Another Action</b></t:pagelink>
+	      		<t:eventlink t:id="Event5">Event</t:eventlink>
+	      	</t:tb.dropdown>
+      </t:tb.comboButton>
+      </t:tb.nav>
+      
+      <t:tb.nav fw.type="pills">
+      	<t:pagelink page="" active="true">Action</t:pagelink>
+      	<t:pagelink page="" >Action2</t:pagelink>
+      	<t:tb.comboButton >
+	      	<t:pagelink page="">Action</t:pagelink>
+	      	<t:tb.dropdown >
+	      		<t:pagelink page="">Action</t:pagelink>
+	      		<t:pagelink page=""><b>Another Action</b></t:pagelink>
+	      		<t:eventlink t:id="Event6">Event</t:eventlink>
+	      	</t:tb.dropdown>
+      </t:tb.comboButton>
+      </t:tb.nav>
+      
+       <t:tb.nav fw.type="list">
+        <li class="nav-header">List header</li>
+      	<t:pagelink page="" class="active">Action</t:pagelink>
+      	<t:pagelink page="" ><i class="icon book"/>Action2</t:pagelink>
+      </t:tb.nav>
+      
+      <t:tb.nav fw.type="tabs tabbable tabs-left">
+      	<t:pagelink page="" >Action</t:pagelink>
+      	<t:pagelink page="" active="true"><b>Another Action</b></t:pagelink>
+      	<t:tb.content >
+      		<div>
+      			 <p>I'm in Section 1.</p>
+      		</div>
+      		<div>
+      		 	<p>I'm in Section 2.</p>
+      		</div>
+      	</t:tb.content>
+      </t:tb.nav>
+	
+</html>

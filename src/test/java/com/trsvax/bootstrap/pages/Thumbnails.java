@@ -1,5 +1,5 @@
 package com.trsvax.bootstrap.pages;
 
-public class DivTest {
+public class Thumbnails {
 
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Thumbnails"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+
+<div class="row">
+<div class="span6">   
+<t:tb.Thumbnails>
+<img src="http://placehold.it/260x180" alt="" span="3"/>
+<img src="http://placehold.it/260x180" alt="" span="3"/>
+<img src="http://placehold.it/260x180" alt="" span="3"/>
+<img src="http://placehold.it/260x180" alt="" span="3"/>
+<img src="http://placehold.it/260x180" alt="" span="3"/>
+</t:tb.Thumbnails>
+</div>
+</div>
+
+<div class="row">
+<div class="span6">
+<t:tb.Thumbnails>
+<img src="http://placehold.it/260x180" alt="" span="4"/>
+<img src="http://placehold.it/260x180" alt="" span="2"/>
+<img src="http://placehold.it/260x180" alt="" span="2"/>
+<img src="http://placehold.it/260x180" alt="" span="2"/>
+<img src="http://placehold.it/260x180" alt="" span="2"/>
+<img src="http://placehold.it/260x180" alt="" span="2"/>
+</t:tb.Thumbnails>
+</div>
+</div>  
+
+<div class="row">
+<div class="span6">
+<t:tb.Thumbnails>
+<t:tb.Thumbnail span="2">
+<img src="http://placehold.it/260x180" alt="" />
+<h5>Thumbnail Label</h5>
+<p>Thumbnail caption right here...</p>
+</t:tb.Thumbnail>
+<t:tb.Thumbnail span="2">
+<img src="http://placehold.it/260x180" alt="" />
+<h5>Thumbnail Label</h5>
+<p>Thumbnail caption right here...</p>
+</t:tb.Thumbnail>
+</t:tb.Thumbnails>
+</div>
+</div> 
+  
+</html>

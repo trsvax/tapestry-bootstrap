@@ -4,21 +4,7 @@
 - Barry Books as trsvax
 
 ## Features
-Provide a set of components and css to use Tapestry with Bootstrap
+Provides a framework that allows Tapestry to be used with various HTML/CSS frameworks. Support is provided
+for Twitter Bootstrap.
 
-Components
 
-**Alerts**
-**Basic Alert**
-**Block Message**
-**Button**
-**>Label**
-**Media Grid**
-**Modal**
-**Pagination**
-**Pretty Print**
-
-Mixins
-**Infinite Scroll**
-**Pager**
-**Push Environment**

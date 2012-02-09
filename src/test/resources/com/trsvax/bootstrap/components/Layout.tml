@@ -28,7 +28,7 @@
        <!-- Navbar
     ================================================== -->
     
-    <t:tb.navbar fw.type="navbar-fixed" projectName="Tapestry Bootstrap">
+    <t:tb.navbar fw.type="navbar-fixed" fw.projectName="Tapestry Bootstrap">
       		<t:tb.nav>
 			   <t:pagelink page="ComboButtons">ComboButtons</t:pagelink>
 			    <t:pagelink page="Form">Form</t:pagelink>

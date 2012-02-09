@@ -79,9 +79,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		};
 	}
 	
-	interface Transform {
-		void visit(Element element);
+	interface Transform {		
 		void beginRender(FrameworkMixin component, MarkupWriter writer);
+		void visit(Element element);
 	}
 	
 	class BeanEditForm implements Transform {
@@ -402,16 +402,49 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		}
 	}
 	
-	class Content implements Transform {
-
-		public void visit(Element element) {
-			// TODO Auto-generated method stub
-			
+	class Thumbnails implements Transform {
+		Element root;
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 
-		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-			// TODO Auto-generated method stub
-			
+		public void visit(Element element) {
+			root = element;
+			root.wrap("ul","class","thumbnails");
+			root.visit(thumbnails());			
+		}
+
+		Visitor thumbnails() {
+			return new Visitor() {
+				
+				public void visit(Element element) {
+					if ( img(element) || hasName("fw.Thumbnail",element)) {
+						String span = element.getAttribute("span");
+						if ( span != null ) {
+							element.wrap("a","href","#","class","thumbnail")
+								.wrap("li","class","span" + span);
+						}
+					}					
+				}
+			};
+		}	
+	}
+	
+	class Thumbnail implements Transform {
+
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
+
+		public void visit(Element element) {			
+		}
+		
+	}
+	
+	class Content implements Transform {
+
+		public void visit(Element element) {			
+		}
+
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 		
 	}
@@ -445,6 +478,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			transform = new Dropdown();
 		} else if ("Content".equals(name)) {
 			transform = new Content();
+		} else if ("Thumbnails".equals(name)) {
+			transform = new Thumbnails();
+		} else if ("Thumbnail".equals(name)) {
+			transform = new Thumbnails();
 		}
 		
 		return transform;

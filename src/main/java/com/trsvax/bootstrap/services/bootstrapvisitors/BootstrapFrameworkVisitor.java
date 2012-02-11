@@ -1,5 +1,7 @@
 package com.trsvax.bootstrap.services.bootstrapvisitors;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.tapestry5.Asset;
@@ -66,9 +68,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		return new Visitor() {
 			public void visit(Element element) {
 				if ( ns.equals(element.getNamespace())) {				
-					String name = element.getName().replace(prefix, "");			
-					logger.info("visit {}",name);
+					String name = element.getName().replace(prefix, "");							
 					Transform transform = getTransformer(name);
+					logger.info("visit {} {}",name,transform);
 					if ( transform != null ) {
 						transform.visit(element);	
 						element.pop();
@@ -109,7 +111,16 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						element.forceAttributes("class", "control-group");
 					}
 					if ( input(element)) {
-						element.wrap("div", "class", "control");
+						
+						String type= element.getAttribute("type");
+						String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
+						if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
+							element.addClassName("btn btn-primary");
+						} else if ( value.equals("Cancel")) {
+							element.addClassName("btn");
+						} else {
+							element.wrap("div", "class", "control");
+						}
 					}
 					if ( label(element)) {
 						element.addClassName("control-label");
@@ -144,7 +155,11 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						if ( className != null ) {
 							element.addClassName(className);
 						}
-					}			
+					}
+					if ( hasName("fw.PageLink", element) || hasName("fw.EventLink",element)) {
+						new Link().visit(element);
+						element.pop();
+					}
 				}
 			};
 		}
@@ -152,6 +167,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 
 	class Nav implements Transform {
 		Element root;
+		List<Element> poplist = new ArrayList<Element>();
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
@@ -162,6 +178,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void visit(Element element) {
 			this.root = element;
 			root.visit(nav());
+			for ( Element e : poplist ) {
+				e.pop();
+			}
 		}
 		
 		Visitor nav() {
@@ -170,6 +189,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				Integer linkCounter = 1;
 				boolean tabbable = false;
 				Element ul;
+
 				public void visit(Element element) {
 					if (hasName("fw.Nav", element)) {
 						String type = element.getAttribute("type");
@@ -203,6 +223,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						div.moveAfter(ul);
 						element.pop();
 						
+					}
+					if ( hasName("fw.PageLink",element) ) {
+						poplist.add(element);
 					}
 				}
 			};
@@ -448,6 +471,30 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		}
 		
 	}
+	
+	class Link implements Transform {
+		Element root;
+
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
+
+			
+		}
+
+		public void visit(Element element) {
+			root = element;	
+			root.visit( new Visitor() {				
+				public void visit(Element element) {
+					if ( anchor(element) ) {
+						String type = root.getAttribute("type");
+						if ( type != null ) {
+							element.addClassName(type);
+						}
+					}
+					
+				}
+			});
+		}		
+	}
 		
 	
 	Transform getTransformer(String name) {
@@ -455,26 +502,21 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		
 		if ( "BeanEditForm".equals(name) ) {
 			transform = new BeanEditForm();
-		}
-		else if ("Grid".equals(name)) {
+		} else if ("Grid".equals(name)) {
 			transform = new Grid();
-		}
-		else if ("Nav".equals(name)) {
+		} else if ("EventLink".equals(name) || "PageLink".equals(name)) {
+			transform = new Link();
+		} else if ("Nav".equals(name)) {
 			transform = new Nav();
-		}
-		else if ("ButtonGroup".equals(name)) {
+		} else if ("ButtonGroup".equals(name)) {
 			transform = new ButtonGroup();
-		}
-		else if ( "ComboButton".equals(name)) {
+		} else if ( "ComboButton".equals(name)) {
 			transform = new ComboButton();
-		}
-		else if ( "NavBar".equals(name)) {
+		} else if ( "NavBar".equals(name)) {
 			transform = new NavBar();
-		}
-		else if ( "Breadcrumb".equals(name)) {
+		} else if ( "Breadcrumb".equals(name)) {
 			transform = new Breadcrumb();
-		}	
-		else if ( "DropDown".equals(name)) {
+		} else if ( "DropDown".equals(name)) {
 			transform = new Dropdown();
 		} else if ("Content".equals(name)) {
 			transform = new Content();
@@ -482,7 +524,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			transform = new Thumbnails();
 		} else if ("Thumbnail".equals(name)) {
 			transform = new Thumbnails();
-		}
+		} 
 		
 		return transform;
 		

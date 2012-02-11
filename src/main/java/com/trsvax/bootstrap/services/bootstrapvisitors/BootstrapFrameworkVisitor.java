@@ -1,5 +1,7 @@
 package com.trsvax.bootstrap.services.bootstrapvisitors;
 
+import java.util.Map.Entry;
+
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
@@ -36,16 +38,16 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 		//component.getComponentResources().renderInformalParameters(writer);
-		ComponentResources container = component.getComponentResources().getContainerResources();
+		//ComponentResources container = component.getComponentResources().getContainerResources();
 		String simpleName = component.getComponentResources().getContainer().getClass().getSimpleName();
 		//logger.info("Component class {}",simpleName);
 		Transform transform = getTransformer(simpleName);
 		if ( transform != null ) {
 			Element tag = writer.elementNS(ns, prefix + simpleName);
-			component.getComponentResources().renderInformalParameters(writer);
+			//component.getComponentResources().renderInformalParameters(writer);
 			//logger.info("type {}",container.getInformalParameter("type", String.class));
-			for ( String name : container.getInformalParameterNames() ) {
-				//tag.attribute(name, container.getInformalParameter(name, String.class));
+			for ( Entry<String, String> param : component.getParms().entrySet() ) {
+				tag.attribute(param.getKey(),param.getValue());
 			}
 			transform.beginRender(component, writer);	
 		}

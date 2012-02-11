@@ -31,8 +31,8 @@ public class FrameworkMixinWorker implements ComponentClassTransformWorker2 {
 	    if ( ! hasFW(model.getMixinClassNames())) {
 	    	
 			if ( model.getSupportsInformalParameters() ) {
-				logger.info("add sip {}", model.getComponentClassName());
-				model.addMixinClassName(AW.class.getName(),"before:*");
+				//logger.info("add sip {}", model.getComponentClassName());
+				//model.addMixinClassName(AW.class.getName(),"before:*");
 			}
 			model.addMixinClassName(FW.class.getName());
 	    }

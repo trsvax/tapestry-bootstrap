@@ -1,17 +1,20 @@
 package com.trsvax.bootstrap.mixins;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
+import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Service;
-import org.apache.tapestry5.annotations.SupportsInformalParameters;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkVisitor;
 
-@SupportsInformalParameters
+//@SupportsInformalParameters
 public class FW implements FrameworkMixin {
 	
 	@Inject
@@ -20,6 +23,12 @@ public class FW implements FrameworkMixin {
 
 	@Inject
 	private ComponentResources componentResources;
+	
+	@Parameter(defaultPrefix="literal")
+	private String type;
+	
+	@Parameter(defaultPrefix="literal")
+	private String projectName;
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
@@ -33,6 +42,14 @@ public class FW implements FrameworkMixin {
 
 	public ComponentResources getComponentResources() {
 		return componentResources;
+	}
+	
+	public Map<String,String> getParms() {
+		Map<String,String> parms = new HashMap<String, String>();
+		
+		parms.put("type", type);
+		parms.put("projectName", projectName);
+		return parms;
 	}
 
 }

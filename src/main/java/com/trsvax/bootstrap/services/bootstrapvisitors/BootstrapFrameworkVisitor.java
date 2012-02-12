@@ -70,7 +70,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				if ( ns.equals(element.getNamespace())) {				
 					String name = element.getName().replace(prefix, "");							
 					Transform transform = getTransformer(name);
-					logger.info("visit {} {}",name,transform);
+					logger.info("visit {} ",name);
 					if ( transform != null ) {
 						transform.visit(element);	
 						element.pop();
@@ -446,7 +446,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 							element.wrap("a","href","#","class","thumbnail")
 								.wrap("li","class","span" + span);
 						}
-					}					
+					}
+					if ( hasName("fw.Thumbnail",element)) {
+						element.pop();
+					}
 				}
 			};
 		}	
@@ -523,7 +526,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		} else if ("Thumbnails".equals(name)) {
 			transform = new Thumbnails();
 		} else if ("Thumbnail".equals(name)) {
-			transform = new Thumbnails();
+			transform = new Thumbnail();
 		} 
 		
 		return transform;

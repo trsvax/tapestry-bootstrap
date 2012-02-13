@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.tapestry5.Asset;
-import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
@@ -70,7 +69,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				if ( ns.equals(element.getNamespace())) {				
 					String name = element.getName().replace(prefix, "");							
 					Transform transform = getTransformer(name);
-					logger.info("visit {} ",name);
+					//logger.info("visit {} ",name);
 					if ( transform != null ) {
 						transform.visit(element);	
 						element.pop();
@@ -154,6 +153,13 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						element.forceAttributes("class","table");
 						if ( className != null ) {
 							element.addClassName(className);
+						}
+
+					}
+					if ( hasName("tbody",element)) {
+						String sortable = root.getAttribute("sortable");
+						if ( sortable != null && sortable.equals("true")) {
+							element.addClassName("sortable");
 						}
 					}
 					if ( hasName("fw.PageLink", element) || hasName("fw.EventLink",element)) {
@@ -432,7 +438,15 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 
 		public void visit(Element element) {
 			root = element;
-			root.wrap("ul","class","thumbnails");
+			String sortable = element.getAttribute("sortable");
+			String id = element.getAttribute("id");
+			Element ul = root.wrap("ul","class","thumbnails");
+			if ( sortable != null && sortable.equals("true")) {
+				ul.addClassName("sortable");
+			}
+			if ( sortable != null ) {
+				ul.attribute("id", id);
+			}
 			root.visit(thumbnails());			
 		}
 
@@ -442,9 +456,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				public void visit(Element element) {
 					if ( img(element) || hasName("fw.Thumbnail",element)) {
 						String span = element.getAttribute("span");
+						String id = element.getAttribute("id");
 						if ( span != null ) {
 							element.wrap("a","href","#","class","thumbnail")
-								.wrap("li","class","span" + span);
+								.wrap("li","class","span" + span,"id",id);
 						}
 					}
 					if ( hasName("fw.Thumbnail",element)) {

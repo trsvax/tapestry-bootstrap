@@ -10,6 +10,7 @@ import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Service;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.testng.annotations.Parameters;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkVisitor;
@@ -29,6 +30,9 @@ public class FW implements FrameworkMixin {
 	
 	@Parameter(defaultPrefix="literal")
 	private String projectName;
+	
+	@Parameter(defaultPrefix="literal")
+	private String sortable;
 	
 	
 	@BeginRender
@@ -50,6 +54,7 @@ public class FW implements FrameworkMixin {
 		
 		parms.put("type", type);
 		parms.put("projectName", projectName);
+		parms.put("sortable", sortable);
 		return parms;
 	}
 

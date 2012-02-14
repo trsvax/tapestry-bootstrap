@@ -3,10 +3,7 @@ package com.trsvax.bootstrap.services;
 import java.util.Map.Entry;
 
 import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.beaneditor.DataTypeConstants;
 import org.apache.tapestry5.dom.Element;
-import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
@@ -14,12 +11,8 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
-import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ServiceOverride;
-import org.apache.tapestry5.services.BeanBlockContribution;
-import org.apache.tapestry5.services.BeanBlockOverrideSource;
 import org.apache.tapestry5.services.BindingFactory;
-import org.apache.tapestry5.services.EditBlockContribution;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.MarkupRenderer;
@@ -27,7 +20,6 @@ import org.apache.tapestry5.services.MarkupRendererFilter;
 import org.apache.tapestry5.services.ValidationDecoratorFactory;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
-import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.ExcludeEnvironment;
@@ -49,6 +41,7 @@ public class BootstrapModule {
     	binder.bind(ValidationDecoratorFactory.class,BootStrapValidationDecoratorFactoryImpl.class).withId("BootStrapValidation");
     	binder.bind(FrameworkVisitor.class, BootstrapVisitor.class).withId(BootstrapVisitor.id);
     	binder.bind(FrameworkVisitor.class,BootstrapFrameworkVisitor.class).withId(BootstrapFrameworkVisitor.id);
+    	binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
 
     }
     
@@ -72,8 +65,10 @@ public class BootstrapModule {
     } 
    
     public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
-    		final Environment environment, @Symbol(SymbolConstants.EXECUTION_MODE) final String mode,
-    		final JavaScriptSupport javaScriptSupport, final Logger logger, @InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
+    		final Environment environment, 
+    		final JavaScriptSupport javaScriptSupport, 
+    		final ExcludeVisitor excludeVistior,
+    		@InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
     	
     	MarkupRendererFilter excludeFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
@@ -82,35 +77,14 @@ public class BootstrapModule {
 				final ExcludeEnvironment values = environment.pop(ExcludeEnvironment.class);
 				
 				Element head = writer.getDocument().getRootElement().find("head");
-				if ( head == null ) {
-					return;
+				if ( head != null ) {
+					head.visit(excludeVistior.visit(values));
 				}
-				head.visit( new Visitor() {					
-						public void visit(Element element) {
-							if ( ! element.getName().equals("link") ) {
-								return;
-							}
-							String type = element.getAttribute("type");
-							String href = element.getAttribute("href");
-							if ( type != null && href != null && type.equals("text/css")) {
-								for ( String pattern : values.getExcludes(mode)) {
-									if ( href.contains(pattern)) {
-										logger.info("name {}",element.getAttribute("href"));
-										try {
-										element.remove();
-										} catch (Exception e) {
-											logger.info("error {}",element.getAttribute("href"));
-										}
-									}
-								}
-							}
-							
-						}
-					});
-				writer.getDocument().getRootElement().find("body").visit(frameworkVisitor.visit());
-				}
-			
-			
+				Element body = writer.getDocument().getRootElement().find("body");
+				if ( body != null) {
+					body.visit(frameworkVisitor.visit());
+				}				
+			}		
 		};
 		
 		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {		

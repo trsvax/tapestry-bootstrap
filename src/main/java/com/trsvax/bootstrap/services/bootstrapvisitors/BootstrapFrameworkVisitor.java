@@ -134,6 +134,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	class Grid implements Transform {
 		Element root;
+		List<Element> poplist = new ArrayList<Element>();
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
@@ -142,6 +143,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void visit(Element element) {
 			this.root = element;
 			root.visit(grid());
+			for ( Element e : poplist ) {
+				e.pop();
+			}
 		}
 				
 		Visitor grid() {
@@ -150,7 +154,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				public void visit(Element element) {
 					String className = root.getAttribute("tabletype");
 					if ( table(element)) {
-						element.forceAttributes("class","table");
+						//element.forceAttributes("class","table");
 						if ( className != null ) {
 							element.addClassName(className);
 						}
@@ -164,7 +168,14 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					}
 					if ( hasName("fw.PageLink", element) || hasName("fw.EventLink",element)) {
 						new Link().visit(element);
-						element.pop();
+						poplist.add(element);
+					}
+					if ( img(element) ) {
+						String c = element.getAttribute("class");
+						if ( c != null && c.equals("t-sort-icon") ) {
+							element.elementBefore("span").text("^");
+							element.remove();
+						}
 					}
 				}
 			};

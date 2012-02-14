@@ -26,8 +26,7 @@ library={
 		"classpath:/com/trsvax/bootstrap/pages/twitter/js/bootstrap-collapse.js",
 		"classpath:/com/trsvax/bootstrap/pages/twitter/js/bootstrap-carousel.js",
 		"classpath:/com/trsvax/bootstrap/pages/twitter/js/bootstrap-typeahead.js",
-
-		"context:assets/js/application.js",
+		"context:assets/js/application.js"
 		}
 )
 public class Layout  {

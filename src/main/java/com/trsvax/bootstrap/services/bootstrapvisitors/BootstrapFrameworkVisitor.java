@@ -152,30 +152,34 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			return new Visitor() {
 				
 				public void visit(Element element) {
-					String className = root.getAttribute("tabletype");
+					String className = root.getAttribute("type");
 					if ( table(element)) {
-						//element.forceAttributes("class","table");
 						if ( className != null ) {
 							element.addClassName(className);
 						}
-
 					}
-					if ( hasName("tbody",element)) {
-						String sortable = root.getAttribute("sortable");
-						if ( sortable != null && sortable.equals("true")) {
-							element.addClassName("sortable");
-						}
+					if ( div(element) && hasClass("t-data-grid", element)) {
+						poplist.add(element);
 					}
 					if ( hasName("fw.PageLink", element) || hasName("fw.EventLink",element)) {
 						new Link().visit(element);
 						poplist.add(element);
 					}
-					if ( img(element) ) {
-						String c = element.getAttribute("class");
-						if ( c != null && c.equals("t-sort-icon") ) {
+					if ( img(element) && hasClass("t-sort-icon", element) ) {
 							element.elementBefore("span").text("^");
-							element.remove();
+							element.remove();						
+					}
+					
+					// Tapestry puts property names on cells
+					// add fw- to avoid css name conflicts
+					if ( hasClass(element) && (td(element) || th(element)) ) {
+						String[] classes = element.getAttribute("class").split(" ");
+						String newClass = "";
+						for ( String s : classes ) {
+							newClass += " fw-" + s;
 						}
+						element.forceAttributes("class",newClass);
+						
 					}
 				}
 			};
@@ -448,16 +452,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		}
 
 		public void visit(Element element) {
-			root = element;
-			String sortable = element.getAttribute("sortable");
-			String id = element.getAttribute("id");
-			Element ul = root.wrap("ul","class","thumbnails");
-			if ( sortable != null && sortable.equals("true")) {
-				ul.addClassName("sortable");
-			}
-			if ( sortable != null ) {
-				ul.attribute("id", id);
-			}
+			root = element;			
+			wrap(root,"ul").addClassName("thumbnails");
 			root.visit(thumbnails());			
 		}
 
@@ -584,6 +580,12 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	boolean form(Element element) {
 		return hasName("form", element);
 	}
+	boolean th(Element element) {
+		return hasName("th", element);
+	}
+	boolean td(Element element) {
+		return hasName("td", element);
+	}
 
 	boolean hasName(String name, Element element) {
 		if ( isPopped(element) ) {
@@ -593,6 +595,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			return true;
 		}
 		return false;
+	}
+	
+	boolean hasClass(Element element) {
+		return element.getAttribute("class") != null;
 	}
 
 	boolean hasClass(String className, Element element) {
@@ -642,6 +648,18 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			li.addClassName("class", "active");
 		}
 		return li;
+	}
+	
+	Element wrap(Element root, String elementName) {
+		Element element = root.wrap(elementName);
+		if ( hasClass(root)) {
+			element.addClassName(root.getAttribute("class"));
+		}
+		String id = root.getAttribute("id");
+		if ( id != null ) {
+			element.forceAttributes("id",id);
+		}
+		return element;
 	}
 	
 	void addHelp(Element element, final Messages messages) {

@@ -114,6 +114,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						String type= element.getAttribute("type");
 						String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
 						if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
+							element.getContainer().forceAttributes("class","form-actions");
 							element.addClassName("btn btn-primary");
 						} else if ( value.equals("Cancel")) {
 							element.addClassName("btn");
@@ -394,6 +395,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	class Breadcrumb implements Transform {
 		Element root;
+		Element lastLi = null;
 
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
@@ -403,14 +405,17 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			this.root = element;
 			root.wrap("ul", "class","breadcrumb");
 			root.visit(breadCrumb());
+			if ( lastLi != null ) {
+				lastLi.addClassName("active");
+			}
 		}
 		
 		Visitor breadCrumb() {
 			return new Visitor() {
-				Element lastLi = null;
+
 				public void visit(Element element) {
 					if ( anchor(element) ) {
-						Element li = wrapLI(element);
+						Element li = element.wrap("li");
 						if ( lastLi != null  ) {
 							lastLi.element("span", "class","divider").text("/");
 						}

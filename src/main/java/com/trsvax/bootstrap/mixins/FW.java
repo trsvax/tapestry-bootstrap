@@ -3,10 +3,12 @@ package com.trsvax.bootstrap.mixins;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
+import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Service;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -33,6 +35,9 @@ public class FW implements FrameworkMixin {
 	@Parameter(defaultPrefix="literal")
 	private String sortable;
 	
+	@Parameter(defaultPrefix="literal")
+	private String buttons;
+	
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
@@ -54,6 +59,7 @@ public class FW implements FrameworkMixin {
 		parms.put("type", type);
 		parms.put("projectName", projectName);
 		parms.put("sortable", sortable);
+		parms.put("buttons",buttons);
 		return parms;
 	}
 

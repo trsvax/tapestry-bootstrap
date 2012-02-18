@@ -76,14 +76,17 @@ public class BootstrapModule {
 				renderer.renderMarkup(writer);				
 				final ExcludeEnvironment values = environment.pop(ExcludeEnvironment.class);
 				
-				Element head = writer.getDocument().getRootElement().find("head");
-				if ( head != null ) {
-					head.visit(excludeVistior.visit(values));
+				Element root = writer.getDocument().getRootElement();
+				if ( root != null ) {
+					Element head = root.find("head");
+					if ( head != null ) {
+						head.visit(excludeVistior.visit(values));
+					}
+					Element body = root.find("body");
+					if ( body != null) {
+						body.visit(frameworkVisitor.visit());
+					}	
 				}
-				Element body = writer.getDocument().getRootElement().find("body");
-				if ( body != null) {
-					body.visit(frameworkVisitor.visit());
-				}				
 			}		
 		};
 		

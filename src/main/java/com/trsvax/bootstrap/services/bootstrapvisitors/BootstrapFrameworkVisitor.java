@@ -87,6 +87,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	class BeanEditForm implements Transform {
 		Element root;
+		Element buttonContainer;
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
@@ -95,6 +96,15 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void visit(Element element) {
 			this.root = element;
 			root.visit(beanEditForm());
+			if ( buttonContainer != null && root.getAttribute("buttons") != null ) {
+				String[] buttons = root.getAttribute("buttons").split(",");
+				for ( String button : buttons ) {
+					Element buttonElement = root.getDocument().getElementById(button);
+					buttonElement.moveToBottom(buttonContainer);
+				}
+
+				
+			}
 		}
 			
 		Visitor beanEditForm() {	
@@ -114,7 +124,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						String type= element.getAttribute("type");
 						String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
 						if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
-							element.getContainer().forceAttributes("class","form-actions");
+							buttonContainer = element.getContainer();
+							buttonContainer.forceAttributes("class","form-actions");
 							element.addClassName("btn btn-primary");
 						} else if ( value.equals("Cancel")) {
 							element.addClassName("btn");

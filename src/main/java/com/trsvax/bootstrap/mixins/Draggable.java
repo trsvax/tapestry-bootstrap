@@ -4,16 +4,20 @@ import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.got5.tapestry5.jquery.ImportJQueryUI;
 
 @ImportJQueryUI(value = {"jquery.ui.widget", "jquery.ui.mouse", "jquery.ui.draggable"})
+@Import(library = { "classpath:com/trsvax/bootstrap/assets/mixins/draggable/draggable.js" })
+
 @MixinAfter
 public class Draggable {
 	
@@ -79,12 +83,15 @@ public class Draggable {
 			//element.addClassName("sortable");
 		}
 		
-		javaScriptSupport.addScript("$(function() { " +
-				"$('#%s %s').draggable({" +
-					"appendTo: 'body'," +
-					"helper: 'clone'" + 
-				"});" +
-		"});",id,draggableName);
+		JSONObject params = new JSONObject();
+		params.put("appendTo","body");
+		params.put("helper","clone");
+		
+		JSONObject spec = new JSONObject();
+		spec.put("params",params);
+		spec.put("selector",String.format("#%s %s",id,draggableName));
+		
+		javaScriptSupport.addInitializerCall("jqDraggable", spec);
 		
 	}
 }

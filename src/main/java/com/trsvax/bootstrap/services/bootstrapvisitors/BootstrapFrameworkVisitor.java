@@ -38,15 +38,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	}
 	
 	public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-		//component.getComponentResources().renderInformalParameters(writer);
-		//ComponentResources container = component.getComponentResources().getContainerResources();
 		String simpleName = component.getComponentResources().getContainer().getClass().getSimpleName();
-		//logger.info("Component class {}",simpleName);
 		Transform transform = getTransformer(simpleName);
 		if ( transform != null ) {
 			Element tag = writer.elementNS(ns, prefix + simpleName);
-			//component.getComponentResources().renderInformalParameters(writer);
-			//logger.info("type {}",container.getInformalParameter("type", String.class));
 			for ( Entry<String, String> param : component.getParms().entrySet() ) {
 				tag.attribute(param.getKey(),param.getValue());
 			}
@@ -69,7 +64,6 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				if ( ns.equals(element.getNamespace())) {				
 					String name = element.getName().replace(prefix, "");							
 					Transform transform = getTransformer(name);
-					//logger.info("visit {} ",name);
 					if ( transform != null ) {
 						transform.visit(element);	
 						element.pop();

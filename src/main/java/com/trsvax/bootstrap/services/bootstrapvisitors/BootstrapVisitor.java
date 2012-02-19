@@ -20,9 +20,6 @@ public class BootstrapVisitor  implements FrameworkVisitor {
 	public BootstrapVisitor(Logger logger, Map<String, FrameworkVisitor> configuration) {
 		this.logger = logger;
 		this.visitors = configuration;
-		for ( String name : visitors.keySet() ) {
-			logger.info("visitor: {}",name);
-		}
 	}
 
 	public Visitor visit() {

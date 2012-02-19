@@ -4,22 +4,28 @@ import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.got5.tapestry5.jquery.ImportJQueryUI;
 
+
 @ImportJQueryUI(value = {"jquery.ui.widget", "jquery.ui.mouse", "jquery.ui.droppable"})
+@Import(library = { "classpath:com/trsvax/bootstrap/assets/mixins/droppable/droppable.js" })
 @MixinAfter
 public class Droppable {	
 	@Parameter
 	Object context;
-	@Parameter
+	@Parameter(defaultPrefix="literal")
 	String event;
+	@Parameter(defaultPrefix="literal")
+	String zoneSelector;
 	
 	@Inject
 	JavaScriptSupport javaScriptSupport;
@@ -77,24 +83,30 @@ public class Droppable {
 			} else {
 				element.forceAttributes("id",id);
 			}	
-			//element.addClassName("sortable");
 		}
 		String link = resources.getContainerResources().createEventLink(event).toAbsoluteURI();
 		if ( context != null ) {
 				resources.getContainerResources().createEventLink(event,context).toAbsoluteURI();
 		}
+		JSONObject params = new JSONObject();
+		//spec.put("disabled",false);
+		//spec.put("accept", "*");
+		params.put("activeClass", "ui-state-default");
+		//spec.put("addClasses",true);
+		//spec.put("greedy",false);
+		params.put("hoverClass","ui-state-hover");
+		//spec.put("scope","default");
+		//spec.put("tolerance","intersect");
 		
-		javaScriptSupport.addScript("$(function() { " +
-				"$('#%s').droppable({" +
-					"activeClass: 'ui-state-default'," +
-					"hoverClass: 'ui-state-hover'," + 
-					"accept: ':not(.ui-sortable-helper)'," +
-					"drop: function(event,ui) {" +
-					"$('<li></li>').text(ui.draggable.text()).appendTo(this);" +
-					"$.get('%s',{drop:ui.draggable.attr('id')});" +
-					"}" +
-				"});" +
-		"});",id,link);
+		JSONObject spec = new JSONObject();
+
+		if ( zoneSelector != null ) {
+			spec.put("zoneSelector", zoneSelector);
+		}
+		spec.put("params", params);
+		spec.put("selector", "#"+id);
+		spec.put("BaseURL",link);
+		javaScriptSupport.addInitializerCall("jqDroppable", spec);
 		
 	}
 

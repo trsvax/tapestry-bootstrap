@@ -4,17 +4,21 @@ import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.got5.tapestry5.jquery.ImportJQueryUI;
 import org.slf4j.Logger;
 
 @ImportJQueryUI(value = {"jquery.ui.widget", "jquery.ui.mouse", "jquery.ui.sortable"})
+@Import(library = { "classpath:com/trsvax/bootstrap/assets/mixins/sortable/sortable.js" })
+
 @MixinAfter
 public class Sortable {
 		
@@ -85,9 +89,17 @@ public class Sortable {
 		}
 		String link = resources.createEventLink(event).toAbsoluteURI();
 		if ( context != null ) {
-				resources.createEventLink(event,context).toAbsoluteURI();
+				link = resources.createEventLink(event,context).toAbsoluteURI();
 		}
+		
+		JSONObject params = new JSONObject();
+		JSONObject spec = new JSONObject();
+		spec.put("parmas", params);
+		spec.put("selector", "#"+id);
+		spec.put("BaseURL",link);
+		javaScriptSupport.addInitializerCall("jqSortable", spec);
 				
+		/*
 		javaScriptSupport.addScript("$(function() { " +
 				"$('#%s').sortable({" +
 					" update: function(event, ui) { " +
@@ -96,6 +108,7 @@ public class Sortable {
 					" }" + 
 				"});" +
 		"});",id,link );
+		*/
 		
 	}
 	

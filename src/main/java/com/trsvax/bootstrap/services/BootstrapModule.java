@@ -12,11 +12,14 @@ import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.services.ServiceOverride;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.BindingFactory;
 import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
 import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
+import org.apache.tapestry5.services.PartialMarkupRenderer;
+import org.apache.tapestry5.services.PartialMarkupRendererFilter;
 import org.apache.tapestry5.services.ValidationDecoratorFactory;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
@@ -70,7 +73,7 @@ public class BootstrapModule {
     		final ExcludeVisitor excludeVistior,
     		@InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
     	
-    	MarkupRendererFilter excludeFilter = new MarkupRendererFilter() {		
+    	MarkupRendererFilter bootstrapFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				environment.push(ExcludeEnvironment.class, new ExcludeValues());
 				renderer.renderMarkup(writer);				
@@ -102,7 +105,33 @@ public class BootstrapModule {
 		
 		
 		configuration.add("JavaScriptFilter", javaScriptFilter,"after:JavaScriptSupport");
-		configuration.add("ExcludeCSS", excludeFilter,"before:*");
+		configuration.add("BootstrapFilter", bootstrapFilter,"before:*");
+    }
+    
+    public void contributePartialMarkupRenderer(OrderedConfiguration<PartialMarkupRendererFilter> configuration,
+    		final Environment environment,
+    		final JavaScriptSupport javaScriptSupport, 
+    		final ExcludeVisitor excludeVistior,
+    		@InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
+    	PartialMarkupRendererFilter bootstrapFilter = new PartialMarkupRendererFilter() {
+			
+			public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
+				environment.push(ExcludeEnvironment.class, new ExcludeValues());
+				renderer.renderMarkup(writer,reply);				
+				final ExcludeEnvironment values = environment.pop(ExcludeEnvironment.class);
+				
+				Element root = writer.getDocument().getRootElement();
+				if ( root != null ) {
+					Element body = root.find("ajax-partial");
+					if ( body != null) {
+						body.visit(frameworkVisitor.visit());
+					}	
+					//This does not seem right
+					reply.put("content", body.toString());
+				}
+			}					
+		};
+		configuration.add("BootstrapAJAXFilter", bootstrapFilter,"before:*");
     }
     
     public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration)

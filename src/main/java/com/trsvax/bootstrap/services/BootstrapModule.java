@@ -127,7 +127,7 @@ public class BootstrapModule {
 						body.visit(frameworkVisitor.visit());
 					}	
 					//This does not seem right
-					reply.put("content", body.toString());
+					reply.put("content", body.getChildMarkup());
 				}
 			}					
 		};

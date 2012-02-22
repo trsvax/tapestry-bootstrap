@@ -65,6 +65,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					String name = element.getName().replace(prefix, "");							
 					Transform transform = getTransformer(name);
 					if ( transform != null ) {
+						
+						logger.info("visit {}",element.getName());
+
 						transform.visit(element);	
 						element.pop();
 					}
@@ -208,10 +211,21 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			for ( Element e : poplist ) {
 				e.pop();
 			}
+			root.visit( new Visitor() {
+				
+				public void visit(Element element) {
+					if ( hasName("fw.PageLink", element)) {
+						element.pop();
+					}
+				}
+			});
 		}
 		
 		Visitor nav() {
+			logger.info("nav");
 			return new Visitor() {
+				
+
 				Integer activeLink = 0;
 				Integer linkCounter = 1;
 				boolean tabbable = false;
@@ -251,7 +265,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						element.pop();
 						
 					}
-					if ( hasName("fw.PageLink",element) ) {
+					if ( hasName("fw.PageLink",element) || hasName("fw.EventLink", element)) {
+						logger.info("pop {}",element.getName());
 						poplist.add(element);
 					}
 				}
@@ -288,7 +303,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						element.attribute("data-toggle", "dropdown");
 						element.element("b", "class","caret");
 						first = false;
-					}					
+					}	
+
 				}
 			};
 		}
@@ -442,6 +458,14 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void visit(Element element) {
 			this.root = element;
 			root.visit(dropdown());
+			root.visit( new Visitor() {
+				
+				public void visit(Element element) {
+					if ( hasName("fw.PageLink", element)) {
+						element.pop();
+					}
+				}
+			});
 		}
 		
 		Visitor dropdown() {
@@ -450,7 +474,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				public void visit(Element element) {
 					if ( anchor(element)) {
 						wrapLI(element);
-					}	
+					}
 				}
 			};
 		}
@@ -601,7 +625,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		if ( isPopped(element) ) {
 			return false;
 		}
-		if (element.getName().equals(name)) {
+		if (element.getName().toLowerCase().equals(name.toLowerCase())) {
 			return true;
 		}
 		return false;

@@ -26,6 +26,8 @@ public class Droppable {
 	String event;
 	@Parameter(defaultPrefix="literal")
 	String zoneSelector;
+	@Parameter(defaultPrefix="literal")
+	JSONObject params;
 	
 	@Inject
 	JavaScriptSupport javaScriptSupport;
@@ -88,7 +90,9 @@ public class Droppable {
 		if ( context != null ) {
 				resources.getContainerResources().createEventLink(event,context).toAbsoluteURI();
 		}
-		JSONObject params = new JSONObject();
+		if ( params == null ) {
+			params = new JSONObject();
+		}
 		//spec.put("disabled",false);
 		//spec.put("accept", "*");
 		params.put("activeClass", "ui-state-default");

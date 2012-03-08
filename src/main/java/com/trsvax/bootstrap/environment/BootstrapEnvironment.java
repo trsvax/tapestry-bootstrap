@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public interface ExcludeEnvironment {
+public interface BootstrapEnvironment {
 	
 	public List<String> getExcludes(String mode);
 	public void addExclude(String mode, String pattern);	

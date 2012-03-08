@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class ExcludeValues implements ExcludeEnvironment {
+public class BootstrapValues implements BootstrapEnvironment {
 	private Map<String,List<String>> excludeMap = new HashMap<String, List<String>>();
 	private Map<String,String> scripts = new HashMap<String, String>();
 	
-	public ExcludeValues() {
+	public BootstrapValues() {
 		excludeMap.put("ALL",new ArrayList<String>());
 	}
 

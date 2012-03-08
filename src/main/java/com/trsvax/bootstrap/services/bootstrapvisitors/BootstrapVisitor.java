@@ -26,6 +26,7 @@ public class BootstrapVisitor  implements FrameworkVisitor {
 		return new Visitor() {			
 			public void visit(Element element) {
 				if ( isNameSpace(element,namespace)) {
+					//logger.info("element {}",element.getName());
 					FrameworkVisitor visitor = getVisitor(element.getName());
 					element.visit(visitor.visit());				
 				}

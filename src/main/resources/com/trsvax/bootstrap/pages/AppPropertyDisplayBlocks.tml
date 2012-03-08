@@ -1,0 +1,10 @@
+<t:container xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+<t:block id="image">
+<img src="${convertedImageValue}"/>
+</t:block>
+
+
+<t:block id="money">
+${convertedMoneyValue}
+</t:block>
+</t:container>

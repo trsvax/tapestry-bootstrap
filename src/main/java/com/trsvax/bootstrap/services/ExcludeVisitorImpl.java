@@ -6,7 +6,7 @@ import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.slf4j.Logger;
 
-import com.trsvax.bootstrap.environment.ExcludeEnvironment;
+import com.trsvax.bootstrap.environment.BootstrapEnvironment;
 
 public class ExcludeVisitorImpl implements ExcludeVisitor {
 	private final Logger logger;
@@ -17,7 +17,7 @@ public class ExcludeVisitorImpl implements ExcludeVisitor {
 		this.mode = mode;
 	}
 	
-	public Visitor visit(final ExcludeEnvironment values) {
+	public Visitor visit(final BootstrapEnvironment values) {
 		return new Visitor() {					
 			public void visit(Element element) {
 				if ( element.getName().equals("link") ) {

@@ -6,6 +6,7 @@ import java.util.List;
 public class LoopValues<T> implements LoopEnvironment<T> {
 	private List<T> source;
 	private List<T> view;
+	private boolean bound = false;
 	
 	public LoopValues(LoopEnvironment<T> values) {
 		if ( values != null ) {
@@ -30,6 +31,17 @@ public class LoopValues<T> implements LoopEnvironment<T> {
 	
 	public void setView(Integer fromIndex, Integer toIndex) {
 		this.view = source.subList(fromIndex, toIndex);
+	}
+
+
+	public boolean isBound() {
+		return bound;
+	}
+
+
+	public List<T> bindSource() {
+		bound = true;
+		return getSource();
 	}
 
 	

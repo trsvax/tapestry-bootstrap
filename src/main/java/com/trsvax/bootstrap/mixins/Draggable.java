@@ -7,6 +7,7 @@ import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
@@ -14,6 +15,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.got5.tapestry5.jquery.ImportJQueryUI;
+import org.slf4j.Logger;
 
 @ImportJQueryUI(value = {"jquery.ui.widget", "jquery.ui.mouse", "jquery.ui.draggable"})
 @Import(library = { "classpath:com/trsvax/bootstrap/assets/mixins/draggable/draggable.js" })
@@ -33,16 +35,41 @@ public class Draggable {
 	ComponentResources resources;
 	
 	private Element element;
+	
+	private JSONObject spec;
+	
+	@Inject
+	private Logger logger;
+	
+	@SetupRender
+	void beginRender() {
+		JSONObject params = new JSONObject();
+		params.put("appendTo","body");
+		params.put("helper","clone");
+		
+		spec = new JSONObject();
+		spec.put("params",params);
+		//logger.info("spe1c {}",spec);
+
+		
+	}
 
 	@AfterRender
-	void afterRender(MarkupWriter writer) {
+	public void afterRender(MarkupWriter writer) {
 		String id = null;
-		if ( draggableName == null ) {
-			draggableName = "li";
-		}
 		if ( elementName == null ) {
-			elementName = "ul";
+			elementName = resources.getElementName();
+			if ( elementName == null ) {
+				elementName = "ul";
+			}
 		}
+		if ( draggableName == null ) {
+			draggableName = "div";
+			if ( elementName.equals("ul")) {
+					draggableName = "li";
+			}
+		}
+
 		Object compoment =  resources.getContainer();
 		if ( ClientElement.class.isAssignableFrom(compoment.getClass()) ) {
 			id = ((ClientElement)compoment).getClientId();
@@ -82,16 +109,16 @@ public class Draggable {
 			}	
 			//element.addClassName("sortable");
 		}
-		
-		JSONObject params = new JSONObject();
-		params.put("appendTo","body");
-		params.put("helper","clone");
-		
-		JSONObject spec = new JSONObject();
-		spec.put("params",params);
-		spec.put("selector",String.format("#%s %s",id,draggableName));
+		//logger.info("spec {}",spec);
+		if ( ! spec.has("selector")) {
+			spec.put("selector",String.format("#%s %s",id,draggableName));
+		}
 		
 		javaScriptSupport.addInitializerCall("jqDraggable", spec);
 		
+	}
+	
+	public JSONObject getSpec() {
+		return spec;
 	}
 }

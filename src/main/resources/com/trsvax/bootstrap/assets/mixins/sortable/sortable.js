@@ -5,7 +5,19 @@
     		$( specs.selector ).sortable(specs.params);
     		$( specs.selector  ).bind( "sortupdate", function(event, ui) {
 				var order = $(this).sortable('toArray').toString();
-				$.get(specs.BaseURL,{order:order});
+				var target = event.currentTarget.id;
+				$.get(specs.BaseURL,{order:order, target:target}).success(
+						function(data) {
+							if (data.redirectURL) {
+				                // Check for complete URL.
+				                if (/^https?:/.test(data.redirectURL)) {
+				                    window.location = redirectURL;
+				                    return;
+				                }				                
+				                window.location.pathname = data.redirectURL;
+				            }
+						}
+						);
     		});
         }
     });

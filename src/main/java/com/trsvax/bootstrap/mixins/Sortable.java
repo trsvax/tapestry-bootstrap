@@ -4,6 +4,7 @@ import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.annotations.Parameter;
@@ -28,8 +29,14 @@ public class Sortable {
 	@Parameter
 	private String elementName;
 	
-	@Parameter
+	@Parameter(defaultPrefix="literal")
 	private String event;
+	
+	@Parameter(defaultPrefix="literal")
+	private String connectWith;
+	
+	@Parameter(defaultPrefix="literal")
+	private String containment;
 	
 	private Element element;
 	
@@ -41,31 +48,60 @@ public class Sortable {
 	
 	@Inject
 	Logger logger;
+	
+	private JSONObject spec;
 			
 		
-	@AfterRender
-	void afterRender(MarkupWriter writer) {
-		String id = null;
+	@BeginRender
+	void beginRender() {
 		if ( event == null ) {
 			event = "sort";
 		}
+
+		String link = resources.createEventLink(event).toAbsoluteURI();
+		if ( context != null ) {
+				link = resources.createEventLink(event,context).toAbsoluteURI();
+		}
+		
+		JSONObject params = new JSONObject();
+		if ( containment != null ) {
+			params.put("containment", containment);
+		}
+		if ( connectWith != null ) {
+			params.put("connectWith",connectWith);
+		}
+		spec = new JSONObject();
+		spec.put("params", params);
+		spec.put("BaseURL",link);		
+	}
+	
+	@AfterRender
+	public void afterRender(MarkupWriter writer) {
+		String id = null;
 		Object compoment =  resources.getContainer();
-		if ( ClientElement.class.isAssignableFrom(compoment.getClass()) ) {
+		if (  ClientElement.class.isAssignableFrom(compoment.getClass()) ) {
 			id = ((ClientElement)compoment).getClientId();
 		} else {
 			id = javaScriptSupport.allocateClientId(resources);
 		}
+		if ( elementName == null ) {
+			elementName = resources.getElementName();
+		}
 		if ( Grid.class.isAssignableFrom(compoment.getClass()) ) {
 			elementName = "tbody";
 		}
-		element = writer.getElement();
+		
+		//element = writer.getElement();
 		
 		if ( elementName != null ) {
-			element.visit( new Visitor() {
-				
+			writer.getElement().visit( new Visitor() {
+				boolean first = true;
 				public void visit(Element e) {
 					if ( e.getName().equals(elementName)) {
-						element = e;
+						if ( first ) {
+							first = false;
+							element = e;
+						}
 					}
 					if ( e.getName().equals("tr"))  {
 						String c = e.getAttribute("class");
@@ -77,7 +113,6 @@ public class Sortable {
 				}
 			});
 		}
-
 		if ( element != null ) {
 			String currentID = element.getAttribute("id");
 			if ( currentID != null ) {
@@ -87,29 +122,15 @@ public class Sortable {
 			}	
 			element.addClassName("sortable");
 		}
-		String link = resources.createEventLink(event).toAbsoluteURI();
-		if ( context != null ) {
-				link = resources.createEventLink(event,context).toAbsoluteURI();
+		if ( ! spec.has("selector")) {
+			spec.put("selector", "#"+id);
 		}
-		
-		JSONObject params = new JSONObject();
-		JSONObject spec = new JSONObject();
-		spec.put("parmas", params);
-		spec.put("selector", "#"+id);
-		spec.put("BaseURL",link);
+
 		javaScriptSupport.addInitializerCall("jqSortable", spec);
-				
-		/*
-		javaScriptSupport.addScript("$(function() { " +
-				"$('#%s').sortable({" +
-					" update: function(event, ui) { " +
-					"    var order = $(this).sortable('toArray').toString(); " +
-					"    $.get('%s',{order:order});" +
-					" }" + 
-				"});" +
-		"});",id,link );
-		*/
-		
+	}
+	
+	public JSONObject getSpec() {
+		return spec;
 	}
 	
  

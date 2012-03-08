@@ -22,7 +22,7 @@ import com.trsvax.bootstrap.environment.PaginationValues;
 
 public class Pager<T> {
 	
-		@Parameter(required=true)
+		@Parameter(required=true,allowNull=false)
 		private List<T> source;
 		
 		@Parameter
@@ -33,6 +33,9 @@ public class Pager<T> {
 		
 		@Parameter
 		private Integer currentPage;
+		
+		@Parameter(defaultPrefix="literal")
+		private Integer rowsPerPage;
 		
 	 	@Inject
 	  	private Environment environment;
@@ -55,6 +58,9 @@ public class Pager<T> {
 		void setupRender()  {			
 			PaginationValues paginationValues = values(event,parameterName);
 	    	paginationValues.setCurrentPage(currentPage());
+	    	if ( rowsPerPage != null ) {
+	    		paginationValues.setRowsPerPage(rowsPerPage);
+	    	}
 	    	paginationValues.setItemCount(source.size());
 			@SuppressWarnings("unchecked")
 			LoopValues<T> loopValues = new LoopValues<T>(environment.peek(LoopEnvironment.class));
@@ -76,9 +82,10 @@ public class Pager<T> {
 			if ( toIndex > paginationValues.getItemCount()) {
 				toIndex = paginationValues.getItemCount();
 			}
-			if ( fromIndex >= toIndex ) {
+			if ( fromIndex < 0 || fromIndex > toIndex || toIndex > source.size() ) {
 				return Collections.emptyList();
 			}
+			
 			return source.subList(fromIndex, toIndex);
 		}
 		

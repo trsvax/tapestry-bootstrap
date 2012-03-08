@@ -7,11 +7,22 @@
     			 var contexte=$(ui.draggable).attr('id');
     			 if ( specs.zoneSelector ) {
 	    			 var element = $(specs.zoneSelector);
-	    			 var urlWithContexte =specs.BaseURL + "&drop=" + contexte;
+	    			 var urlWithContexte =specs.BaseURL + "&drop=" + contexte + "&target=" + event.currentTarget.id;
 	    			 element.tapestryZone("update" , {url : urlWithContexte});
     			 } else {
-    				 var urlWithContexte =specs.BaseURL + "&drop=" + contexte;
-    				 $.get(urlWithContexte);
+    				 var urlWithContexte =specs.BaseURL + "&drop=" + contexte + "&target=" + event.currentTarget.id;
+    				 $.get(urlWithContexte).success(
+    							function(data) {
+    								if (data.redirectURL) {
+    					                // Check for complete URL.
+    					                if (/^https?:/.test(data.redirectURL)) {
+    					                    window.location = redirectURL;
+    					                    return;
+    					                }				                
+    					                window.location.pathname = data.redirectURL;
+    					            }
+    							}
+    					);
     			 }
     		});
         }

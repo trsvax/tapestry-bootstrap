@@ -2,6 +2,8 @@ package com.trsvax.bootstrap.services;
 
 import java.util.List;
 
+
+import org.apache.tapestry5.corelib.components.Loop;
 import org.apache.tapestry5.model.MutableComponentModel;
 import org.apache.tapestry5.plastic.PlasticClass;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
@@ -10,6 +12,7 @@ import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.mixins.FW;
 import com.trsvax.bootstrap.mixins.AW;
+import com.trsvax.bootstrap.mixins.LoopEnvironmentMixin;
 
 /**
  * @since 5.2.6
@@ -27,7 +30,7 @@ public class FrameworkMixinWorker implements ComponentClassTransformWorker2 {
 		if ( exclude(model)) {
 			return;
 		}
-	
+		logger.info("check {}",model.getComponentClassName());
 	    if ( ! hasFW(model.getMixinClassNames())) {
 	    	
 			if ( model.getSupportsInformalParameters() ) {
@@ -35,6 +38,11 @@ public class FrameworkMixinWorker implements ComponentClassTransformWorker2 {
 				//model.addMixinClassName(AW.class.getName(),"before:*");
 			}
 			model.addMixinClassName(FW.class.getName());
+	    }
+	    
+	    if ( model.getComponentClassName().equals(Loop.class.getName())) {
+	    	logger.info("add mixin {} to {}",LoopEnvironmentMixin.class.getName(),Loop.class);
+	    	model.addMixinClassName(LoopEnvironmentMixin.class.getName());
 	    }
 		
 	}

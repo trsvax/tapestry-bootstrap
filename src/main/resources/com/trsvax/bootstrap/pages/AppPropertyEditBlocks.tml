@@ -1,0 +1,8 @@
+<div xml:space="default" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+ <t:block id="image">
+    <t:label for="image"/>
+    <t:textfield t:id="image" />
+  </t:block>
+  
+</div>

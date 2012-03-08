@@ -4,6 +4,7 @@ import org.apache.tapestry5.ClientElement;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.annotations.Parameter;
@@ -12,6 +13,7 @@ import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
+import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.got5.tapestry5.jquery.ImportJQueryUI;
 
@@ -38,13 +40,48 @@ public class Droppable {
 	@Inject
 	ComponentResources resources;
 	
+	@Inject
+	Request request;
+	
 	private Element element;
 	
+	private JSONObject spec;
+	
+	@BeginRender
+	void beginRender() {
+		if ( event == null ) {
+			event = "drop";
+		}
+		String link = resources.getContainerResources().createEventLink(event).toAbsoluteURI();
+		if ( context != null ) {
+				resources.getContainerResources().createEventLink(event,context).toAbsoluteURI();
+		}
+		if ( params == null ) {
+			params = new JSONObject();
+		}
+		//spec.put("disabled",false);
+		//spec.put("accept", "*");
+		params.put("activeClass", "ui-state-default");
+		//spec.put("addClasses",true);
+		//spec.put("greedy",false);
+		params.put("hoverClass","ui-state-hover");
+		//spec.put("scope","default");
+		//spec.put("tolerance","intersect");
+		
+		spec = new JSONObject();
+
+		if ( zoneSelector != null ) {
+			spec.put("zoneSelector", zoneSelector);
+		}
+		spec.put("params", params);
+		spec.put("BaseURL",link);
+	}
+	
 	@AfterRender
-	void afterRender(MarkupWriter writer) {
+	public void afterRender(MarkupWriter writer) {
 		String id = null;
 		if ( elementName == null ) {
-			elementName = "ul";
+			elementName = resources.getElementName();
 		}
 		if ( event == null ) {
 			event = "drop";
@@ -63,10 +100,13 @@ public class Droppable {
 		
 		if ( elementName != null ) {
 			element.visit( new Visitor() {
-				
+				boolean first = true;
 				public void visit(Element e) {
 					if ( e.getName().equals(elementName)) {
-						element = e;
+						if ( first ) {
+							first = false;
+							element = e;
+						}
 					}
 					if ( e.getName().equals("tr"))  {
 						String c = e.getAttribute("class");
@@ -86,32 +126,18 @@ public class Droppable {
 				element.forceAttributes("id",id);
 			}	
 		}
-		String link = resources.getContainerResources().createEventLink(event).toAbsoluteURI();
-		if ( context != null ) {
-				resources.getContainerResources().createEventLink(event,context).toAbsoluteURI();
+		if ( ! spec.has("selector")) {
+			spec.put("selector", "#"+id);
 		}
-		if ( params == null ) {
-			params = new JSONObject();
-		}
-		//spec.put("disabled",false);
-		//spec.put("accept", "*");
-		params.put("activeClass", "ui-state-default");
-		//spec.put("addClasses",true);
-		//spec.put("greedy",false);
-		params.put("hoverClass","ui-state-hover");
-		//spec.put("scope","default");
-		//spec.put("tolerance","intersect");
-		
-		JSONObject spec = new JSONObject();
 
-		if ( zoneSelector != null ) {
-			spec.put("zoneSelector", zoneSelector);
+		if ( !(request.isXHR() && zoneSelector != null) ) {
+			javaScriptSupport.addInitializerCall("jqDroppable", spec);
 		}
-		spec.put("params", params);
-		spec.put("selector", "#"+id);
-		spec.put("BaseURL",link);
-		javaScriptSupport.addInitializerCall("jqDroppable", spec);
 		
+	}
+	
+	public JSONObject getSpec() {
+		return spec;
 	}
 
 }

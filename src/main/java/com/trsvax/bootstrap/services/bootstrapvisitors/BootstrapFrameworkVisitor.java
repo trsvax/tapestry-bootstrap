@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkVisitor;
-import com.trsvax.bootstrap.environment.ExcludeEnvironment;
+import com.trsvax.bootstrap.environment.BootstrapEnvironment;
 
 public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	public final static String id = "fw";
@@ -66,7 +66,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					Transform transform = getTransformer(name);
 					if ( transform != null ) {
 						
-						logger.info("visit {}",element.getName());
+						//logger.info("visit {}",element.getName());
 
 						transform.visit(element);	
 						element.pop();
@@ -155,6 +155,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			for ( Element e : poplist ) {
 				e.pop();
 			}
+			GridPager gridPager = new GridPager();
+			gridPager.visit(root);
 		}
 				
 		Visitor grid() {
@@ -194,6 +196,59 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			};
 		}
 	}
+	
+	class GridPager implements Transform {
+		Element root;
+		Element ul;
+		Element div;
+		
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
+			
+		}
+
+		public void visit(Element element) {
+			element.visit(new Visitor() {
+				
+				public void visit(Element element) {
+					if ( hasName("fw.gridpager", element)) {
+						root = element;
+					}				
+				}
+			});
+			if ( root != null ) {
+				root.visit(gridPager());
+				if ( ul != null ) {
+					ul.moveToBottom(div);
+				}
+				root.pop();
+			}
+		}
+		
+		Visitor gridPager() {
+			return new Visitor() {
+				
+				public void visit(Element element) {
+					if ( hasClass("t-data-grid-pager", element)) {
+						div = element;
+						element.forceAttributes("class","pagination");
+						ul = element.elementBefore("ul");
+					}
+					if ( anchor(element) ) {
+						Element li = element.wrap("li");
+						li.moveToBottom(ul);
+					}
+					if ( span(element)) {
+						Element a = element.wrap("a","href","#");
+						Element li = a.wrap("li");
+						li.moveToBottom(ul);
+					}
+					
+					
+				}
+			};
+		}
+		
+	}
 
 	class Nav implements Transform {
 		Element root;
@@ -222,7 +277,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		}
 		
 		Visitor nav() {
-			logger.info("nav");
+			//logger.info("nav");
 			return new Visitor() {
 				
 
@@ -266,7 +321,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						
 					}
 					if ( hasName("fw.PageLink",element) || hasName("fw.EventLink", element)) {
-						logger.info("pop {}",element.getName());
+						//logger.info("pop {}",element.getName());
 						poplist.add(element);
 					}
 				}
@@ -583,7 +638,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			transform = new Thumbnails();
 		} else if ("Thumbnail".equals(name)) {
 			transform = new Thumbnail();
-		} 
+		} else if ( "GridPager".equals(name)) {
+			transform = new GridPager();
+		}
 		
 		return transform;
 		
@@ -592,7 +649,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	
 	
-
+	boolean span(Element element) {
+		return hasName("span", element);
+	}
 	boolean anchor(Element element) {
 		return hasName("a", element);
 	}
@@ -717,7 +776,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	}
 	
 	void scriptOnce(String script) {
-		ExcludeEnvironment excludeEnvironment = environment.peek(ExcludeEnvironment.class);
+		BootstrapEnvironment excludeEnvironment = environment.peek(BootstrapEnvironment.class);
 		excludeEnvironment.addScriptOnce(script);
 	}
 

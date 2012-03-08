@@ -39,7 +39,7 @@ public class Pagination  {
 		}
 		int min = currentPage - range;
 		int max = currentPage + range;
-		if ( min < 0 ) {
+		if ( min <= 0 ) {
 			int offset = Math.abs(min) + 1;
 			min += offset;
 			max += offset;

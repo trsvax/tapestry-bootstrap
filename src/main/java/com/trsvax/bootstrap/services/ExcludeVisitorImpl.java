@@ -26,6 +26,7 @@ public class ExcludeVisitorImpl implements ExcludeVisitor {
 					if ( type != null && href != null && type.equals("text/css")) {
 						for ( String pattern : values.getExcludes(mode)) {
 							if ( href.contains(pattern)) {
+								//logger.info("remove {}",element);
 								element.remove();
 								
 							}

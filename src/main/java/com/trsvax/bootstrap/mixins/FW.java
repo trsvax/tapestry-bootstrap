@@ -3,12 +3,11 @@ package com.trsvax.bootstrap.mixins;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.tapestry5.ClientElement;
+import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeginRender;
-import org.apache.tapestry5.annotations.InjectContainer;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Service;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -26,17 +25,20 @@ public class FW implements FrameworkMixin {
 	@Inject
 	private ComponentResources componentResources;
 	
-	@Parameter(defaultPrefix="literal")
+	@Parameter(defaultPrefix=BindingConstants.LITERAL)
 	private String type;
 	
-	@Parameter(defaultPrefix="literal")
+	@Parameter(defaultPrefix=BindingConstants.LITERAL)
 	private String projectName;
 	
-	@Parameter(defaultPrefix="literal")
+	@Parameter(defaultPrefix=BindingConstants.LITERAL)
 	private String sortable;
 	
-	@Parameter(defaultPrefix="literal")
+	@Parameter(defaultPrefix=BindingConstants.LITERAL)
 	private String buttons;
+	
+	@Parameter(defaultPrefix=BindingConstants.LITERAL)
+	private String fwtype;
 	
 	
 	@BeginRender
@@ -56,6 +58,7 @@ public class FW implements FrameworkMixin {
 	public Map<String,String> getParms() {
 		Map<String,String> parms = new HashMap<String, String>();
 		
+		parms.put("fwtype", fwtype);
 		parms.put("type", type);
 		parms.put("projectName", projectName);
 		parms.put("sortable", sortable);

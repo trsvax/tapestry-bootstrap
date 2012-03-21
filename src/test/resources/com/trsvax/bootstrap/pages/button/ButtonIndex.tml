@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Buttons"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:pagelink id="default" page="button" fw.type="btn">Default</t:pagelink>
+      <t:eventlink id="defaulte" event="button" fw.type="btn" >Default</t:eventlink>
+      <a t:type="pagelink" id="default1" page="button" fw.type="btn">Default</a>
+      <button t:id="defaultButton" t:type="any" fw.type="abc" fwtype="btn" fw.buttons="foo">Default</button>
+      
+</html>

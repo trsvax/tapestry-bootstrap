@@ -122,11 +122,12 @@ public class Sortable {
 			}	
 			element.addClassName("sortable");
 		}
-		if ( ! spec.has("selector")) {
+		if ( spec != null && ! spec.has("selector")) {
 			spec.put("selector", "#"+id);
 		}
-
-		javaScriptSupport.addInitializerCall("jqSortable", spec);
+		if ( spec != null ) {
+			javaScriptSupport.addInitializerCall("jqSortable", spec);
+		}
 	}
 	
 	public JSONObject getSpec() {

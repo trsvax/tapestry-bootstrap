@@ -53,6 +53,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		String simpleName = component.getComponentResources().getContainer().getClass().getSimpleName();
 		Transform transform = getTransformer(simpleName);
 		if ( transform != null ) {
+			transform.afterRender(component, writer);
 			addHelp(writer.getElement(), component.getComponentResources().getPage().getComponentResources().getMessages());
 			writer.end();		
 		}
@@ -79,6 +80,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	interface Transform {		
 		void beginRender(FrameworkMixin component, MarkupWriter writer);
+		void afterRender(FrameworkMixin component, MarkupWriter writer);
 		void visit(Element element);
 	}
 	
@@ -88,6 +90,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 
 		public void visit(Element element) {
@@ -139,6 +144,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				}
 			};
 		}
+
+
 	}
 	
 	class Grid implements Transform {
@@ -147,6 +154,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 
 		public void visit(Element element) {
@@ -205,6 +215,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
 		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
 
 		public void visit(Element element) {
 			element.visit(new Visitor() {
@@ -259,6 +272,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 			scriptOnce(String.format("%s('.makeHash').attr('href','#');",jQueryAlias));
 		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
 
 		public void visit(Element element) {
 			this.root = element;
@@ -312,6 +328,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 							activeLink = linkCounter;
 						}
 						linkCounter++;
+						
 					}
 					if ( hasName("fw.Content", element)) {
 						element.visit(tabContent(activeLink));
@@ -371,6 +388,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			
 		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
 
 		public void visit(Element element) {
 			this.root = element;
@@ -396,6 +416,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 		
 		public void visit(Element element) {
@@ -435,6 +458,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-scrollspy.js");
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 		
 		public void visit(Element element) {
@@ -477,6 +503,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			
 		}
 		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
+		
 		public void visit(Element element) {
 			this.root = element;
 			root.wrap("ul", "class","breadcrumb");
@@ -509,6 +538,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
 			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
 
 		public void visit(Element element) {
 			this.root = element;
@@ -538,6 +570,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	class Thumbnails implements Transform {
 		Element root;
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
+		
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 
 		public void visit(Element element) {
@@ -570,6 +606,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
 
 		public void visit(Element element) {			
 		}
@@ -584,18 +623,20 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
 		}
 		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
+		
 	}
 	
 	class Link implements Transform {
 		Element root;
 
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-
 			
 		}
-
-		public void visit(Element element) {
-			root = element;	
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {	
+			root = writer.getElement();
 			root.visit( new Visitor() {				
 				public void visit(Element element) {
 					if ( anchor(element) ) {
@@ -607,7 +648,37 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					
 				}
 			});
+		}
+
+		public void visit(Element element) {
+			
 		}		
+	}
+	
+	class Any implements Transform {
+		Element root;
+
+		public void visit(Element element) {			
+		}
+
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {			
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {	
+			root = writer.getElement();
+			root.visit( new Visitor() {				
+				public void visit(Element element) {
+					if ( !hasName("fw.any", element) ) {
+						String type = root.getAttribute("type");
+						if ( type != null ) {
+							element.addClassName(type);
+						}
+					}
+					
+				}
+			});
+		}
+		
 	}
 		
 	
@@ -640,6 +711,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			transform = new Thumbnail();
 		} else if ( "GridPager".equals(name)) {
 			transform = new GridPager();
+		} else if ( "Any".equals(name)) {
+			transform = new Any();
 		}
 		
 		return transform;

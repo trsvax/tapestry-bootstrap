@@ -95,6 +95,18 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 
     <build>
         <finalName>tapestry-bootstrap</finalName>
+        <resources>
+            <resource>
+                <directory>src/test/conf</directory>
+                <filtering>true</filtering>
+                <targetPath>${basedir}/target/test-classes/</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+		</resources>
+		
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -107,16 +119,20 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.7.2</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <tapestry.execution-mode>Qa</tapestry.execution-mode>
+			<plugin>
+				
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<systemPropertyVariables>
+                        <tapestry.execution-mode>development</tapestry.execution-mode>
                     </systemPropertyVariables>
-                </configuration>
-            </plugin>
+					<suiteXmlFiles>
+						<suiteXmlFile>target/test-classes/testng.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+           
 
             <!-- Enable auto-discovery of the Tapestry module -->
             <plugin>
@@ -289,6 +305,19 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </pluginRepository>
     </pluginRepositories>
+    
+    <profiles>
+
+        <profile>
+            <id>mac-os-test</id>
+            <activation>
+                <os><family>mac</family></os>	
+            </activation>
+            <properties>
+                <browserStartCommand>*googlechrome /Applications/Google Chrome.app/Contents/MacOS/Google Chrome</browserStartCommand>
+            </properties>
+        </profile>
+	</profiles>
 
     <properties>
         <tapestry-release-version>5.3.2</tapestry-release-version>

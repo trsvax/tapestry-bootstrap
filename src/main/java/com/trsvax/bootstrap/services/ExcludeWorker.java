@@ -42,7 +42,7 @@ public class ExcludeWorker implements ComponentClassTransformWorker2 {
 				 BootstrapEnvironment excludeEnvironment = environment.peek(BootstrapEnvironment.class);
 					if ( excludeEnvironment != null ) {
 						for ( String pattern : exclude.stylesheet() ) {
-							excludeEnvironment.addExclude(exclude.mode(),pattern);
+							excludeEnvironment.addExclude(pattern);
 						}
 					}
 				 invocation.proceed();

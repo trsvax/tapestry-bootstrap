@@ -18,10 +18,9 @@ public class Table {
 		addresses = new ArrayList<Address>();
 		Address address = new Address();
 		address.firstName = "Barry";
-		addresses.add(address);
-		address = new Address();
-		address.firstName = "Judy";
-		addresses.add(address);
+		for ( int i = 0; i < 100; i++) {
+			addresses.add(address);
+		}
 	}
 
 }

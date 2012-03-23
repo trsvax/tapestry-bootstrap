@@ -1,5 +1,5 @@
 package com.trsvax.bootstrap.environment;
 
 public enum ButtonSize {
-	large,small;
+	large,small,mini;
 }

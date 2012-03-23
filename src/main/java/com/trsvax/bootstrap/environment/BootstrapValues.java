@@ -10,8 +10,11 @@ public class BootstrapValues implements BootstrapEnvironment {
 	private Set<String> excludes = new HashSet<String>();
 	private Map<String,String> scripts = new HashMap<String, String>();
 	
-	public BootstrapValues() {
-		
+	public BootstrapValues(BootstrapValues values) {
+		if ( values != null ) {
+			excludes = values.getExcludes();
+		}
+
 	}
 
 	public Set<String> getExcludes() {
@@ -19,8 +22,10 @@ public class BootstrapValues implements BootstrapEnvironment {
 	}
 	
 
-	public void addExclude(String pattern) {
+	public BootstrapValues addExclude(String pattern) {
 		excludes.add(pattern);
+		return this;
+		
 	}
 
 	public void addScriptOnce(String script) {

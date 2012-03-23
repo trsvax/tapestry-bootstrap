@@ -3,9 +3,94 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
-      <t:pagelink id="default" page="button" fw.type="btn">Default</t:pagelink>
-      <t:eventlink id="defaulte" event="button" fw.type="btn" >Default</t:eventlink>
-      <a t:type="pagelink" id="default1" page="button" fw.type="btn">Default</a>
-      <button t:id="defaultButton" t:type="any" fw.type="abc" fwtype="btn" fw.buttons="foo">Default</button>
+      <dl>
+      <dd>Action Link</dd>
+      <dt>
+      	<t:actionlink id="actionlink-btn"  fw.fwtype="btn">Standard</t:actionlink>
+		<t:actionlink id="actionlink-btn-primary"  fw.fwtype="btn-primary">Primary</t:actionlink>
+		<t:actionlink id="actionlink-btn-info" fw.fwtype="btn-info">Info</t:actionlink>
+		<t:actionlink id="actionlink-btn-success"  fw.fwtype="btn-success">Success</t:actionlink>
+		<t:actionlink id="actionlink-btn-warning"  fw.fwtype="btn-warning">Warning</t:actionlink>
+		<t:actionlink id="actionlink-btn-danger" fw.fwtype="btn-danger">Danger</t:actionlink>
+		<t:actionlink id="actionlink-btn-inverse"  fw.fwtype="btn-inverse">Inverse</t:actionlink>
+      </dt>
+      </dl>
+      
+      <dl>
+      <dd>Button</dd>
+      <dt>
+      	<button id="button-btn" t:type="any" fw.fwtype="btn">Standard</button>
+		<button id="button-btn-primary" t:type="any" fw.fwtype="btn-primary">Primary</button>
+		<button id="button-btn-info" t:type="any" fw.fwtype="btn-info">Info</button>
+		<button id="button-btn-success" t:type="any" fw.fwtype="btn-success">Success</button>
+		<button id="button-btn-warning" t:type="any" fw.fwtype="btn-warning">Warning</button>
+		<button id="button-btn-danger" t:type="any" fw.fwtype="btn-danger">Danger</button>
+		<button id="button-btn-inverse" t:type="any" fw.fwtype="btn-inverse">Inverse</button>
+      </dt>
+      </dl>
+      
+      <dl>
+      <dd>Event Link</dd>
+      <dt>
+      	<t:eventlink id="eventlink-btn" event="button" fw.fwtype="btn">Standard</t:eventlink>
+		<t:eventlink id="eventlink-btn-primary" event="button" fw.fwtype="btn-primary">Primary</t:eventlink>
+		<t:eventlink id="eventlink-btn-info" event="button" fw.fwtype="btn-info">Info</t:eventlink>
+		<t:eventlink id="eventlink-btn-success" event="button" fw.fwtype="btn-success">Success</t:eventlink>
+		<t:eventlink id="eventlink-btn-warning" event="button" fw.fwtype="btn-warning">Warning</t:eventlink>
+		<t:eventlink id="eventlink-btn-danger" event="button" fw.fwtype="btn-danger">Danger</t:eventlink>
+		<t:eventlink id="eventlink-btn-inverse" event="button" fw.fwtype="btn-inverse">Inverse</t:eventlink>
+      </dt>
+      </dl>
+      
+       <dl>
+      <dd>Link Submit</dd>
+      <dt>
+      	<t:form>
+	      	<t:linksubmit id="linksubmit-btn" fw.fwtype="btn">Standard</t:linksubmit>
+			<t:linksubmit id="linksubmit-btn-primary" event="button" fw.fwtype="btn-primary">Primary</t:linksubmit>
+			<t:linksubmit id="linksubmit-btn-info"  event="button" fw.fwtype="btn-info">Info</t:linksubmit>
+			<t:linksubmit id="linksubmit-btn-success"  event="button" fw.fwtype="btn-success">Success</t:linksubmit>
+			<t:linksubmit id="linksubmit-btn-warning"  event="button" fw.fwtype="btn-warning">Warning</t:linksubmit>
+			<t:linksubmit id="linksubmit-btn-danger" event="button" fw.fwtype="btn-danger">Danger</t:linksubmit>
+			<t:linksubmit id="linksubmit-btn-inverse"  event="button" fw.fwtype="btn-inverse">Inverse</t:linksubmit>
+		</t:form>
+      </dt>
+      </dl>
+      
+      <dl>
+      <dd>Submit</dd>
+      <dt>
+      	<t:form>
+	      	<t:submit id="submit-btn" value="Standard" fw.fwtype="btn"/>
+			<t:submit id="submit-btn-primary" value="Primary" event="button" fw.fwtype="btn-primary"/>
+			<t:submit id="submit-btn-info" value="Info" event="button" fw.fwtype="btn-info"/>
+			<t:submit id="submit-btn-success" value="Success" event="button" fw.fwtype="btn-success"/>
+			<t:submit id="submit-btn-warning" value="Warning" event="button" fw.fwtype="btn-warning"/>
+			<t:submit id="submit-btn-danger" value="Danger" event="button" fw.fwtype="btn-danger"/>
+			<t:submit id="submit-btn-inverse" value="Inverse" event="button" fw.fwtype="btn-inverse"/>
+		</t:form>
+      </dt>
+      </dl>
+      
+      <dl>
+      <dd>Page Link</dd>
+      <dt>
+      	<t:pagelink id="pagelink-btn" page="button" fw.fwtype="btn">Standard</t:pagelink>
+		<t:pagelink id="pagelink-btn-primary" page="button" fw.fwtype="btn-primary">Primary</t:pagelink>
+		<t:pagelink id="pagelink-btn-info" page="button" fw.fwtype="btn-info">Info</t:pagelink>
+		<t:pagelink id="pagelink-btn-success" page="button" fw.fwtype="btn-success">Success</t:pagelink>
+		<t:pagelink id="pagelink-btn-warning" page="button" fw.fwtype="btn-warning">Warning</t:pagelink>
+		<t:pagelink id="pagelink-btn-danger" page="button" fw.fwtype="btn-danger">Danger</t:pagelink>
+		<t:pagelink id="pagelink-btn-inverse" page="button" fw.fwtype="btn-inverse">Inverse</t:pagelink>
+      </dt>
+      </dl>
+      
+      
+      
+      
+      
+
+      
+     
       
 </html>

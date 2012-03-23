@@ -40,6 +40,9 @@ public class FW implements FrameworkMixin {
 	@Parameter(defaultPrefix=BindingConstants.LITERAL)
 	private String fwtype;
 	
+	@Parameter
+	private Map<String,Object> fwargs;
+	
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
@@ -55,11 +58,17 @@ public class FW implements FrameworkMixin {
 		return componentResources;
 	}
 	
-	public Map<String,String> getParms() {
-		Map<String,String> parms = new HashMap<String, String>();
+	public Map<String,Object> getParms() {
+		Map<String,Object> parms = new HashMap<String, Object>();
+		if ( fwargs != null ) {
+			parms.putAll(fwargs);
+		}
 		
-		parms.put("fwtype", fwtype);
+		
 		parms.put("type", type);
+		if ( fwtype != null ) {
+			parms.put("type", fwtype);
+		}
 		parms.put("projectName", projectName);
 		parms.put("sortable", sortable);
 		parms.put("buttons",buttons);

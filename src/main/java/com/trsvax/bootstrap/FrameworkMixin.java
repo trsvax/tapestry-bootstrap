@@ -7,5 +7,5 @@ import org.apache.tapestry5.ComponentResources;
 public interface FrameworkMixin {
 
 	public ComponentResources getComponentResources();
-	public Map<String,String> getParms();
+	public Map<String,Object> getParms();
 }

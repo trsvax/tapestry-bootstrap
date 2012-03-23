@@ -42,8 +42,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		Transform transform = getTransformer(simpleName);
 		if ( transform != null ) {
 			Element tag = writer.elementNS(ns, prefix + simpleName);
-			for ( Entry<String, String> param : component.getParms().entrySet() ) {
-				tag.attribute(param.getKey(),param.getValue());
+			for ( Entry<String, Object> param : component.getParms().entrySet() ) {
+				if ( param.getValue() != null ) {
+					tag.attribute(param.getKey(),param.getValue().toString());
+				}
 			}
 			transform.beginRender(component, writer);	
 		}
@@ -53,6 +55,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		String simpleName = component.getComponentResources().getContainer().getClass().getSimpleName();
 		Transform transform = getTransformer(simpleName);
 		if ( transform != null ) {
+			logger.info("visit {}",simpleName);
 			transform.afterRender(component, writer);
 			addHelp(writer.getElement(), component.getComponentResources().getPage().getComponentResources().getMessages());
 			writer.end();		
@@ -639,10 +642,67 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			root = writer.getElement();
 			root.visit( new Visitor() {				
 				public void visit(Element element) {
+					logger.info("link {}",element.getName());
 					if ( anchor(element) ) {
 						String type = root.getAttribute("type");
 						if ( type != null ) {
-							element.addClassName(type);
+							element.addClassName(getClassForType(type));
+						}
+					}
+					
+				}
+			});
+		}
+
+		public void visit(Element element) {
+			
+		}		
+	}
+	
+	class LinkSubmit implements Transform {
+		Element root;
+
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
+			
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {	
+			root = writer.getElement();
+			root.visit( new Visitor() {				
+				public void visit(Element element) {
+					logger.info("link {}",element.getName());
+					if ( span(element) ) {
+						String type = root.getAttribute("type");
+						if ( type != null ) {
+							element.addClassName(getClassForType(type));
+						}
+					}
+					
+				}
+			});
+		}
+
+		public void visit(Element element) {
+			
+		}		
+	}
+	
+	class Submit implements Transform {
+		Element root;
+
+		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
+			
+		}
+		
+		public void afterRender(FrameworkMixin component, MarkupWriter writer) {	
+			root = writer.getElement();
+			root.visit( new Visitor() {				
+				public void visit(Element element) {
+					logger.info("link {}",element.getName());
+					if ( input(element) ) {
+						String type = root.getAttribute("type");
+						if ( type != null ) {
+							element.addClassName(getClassForType(type));
 						}
 					}
 					
@@ -671,7 +731,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					if ( !hasName("fw.any", element) ) {
 						String type = root.getAttribute("type");
 						if ( type != null ) {
-							element.addClassName(type);
+							element.addClassName(getClassForType(type));
 						}
 					}
 					
@@ -679,6 +739,23 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			});
 		}
 		
+	}
+	
+	String getClassForType(String type) {
+		if ( type.startsWith("btn-")) {
+			boolean hasButton = false;
+			String[] types = type.split(" ");
+			for ( String t : types ) {
+				if ( t.equals("btn")) {
+					hasButton = true;
+				}
+			}
+			if ( ! hasButton ) {
+				type = "btn " + type;
+			}
+
+		}
+		return type;
 	}
 		
 	
@@ -689,8 +766,12 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			transform = new BeanEditForm();
 		} else if ("Grid".equals(name)) {
 			transform = new Grid();
-		} else if ("EventLink".equals(name) || "PageLink".equals(name)) {
+		} else if ("EventLink".equals(name) || "PageLink".equals(name) || "ActionLink".equals(name) ) {
 			transform = new Link();
+		} else if ("LinkSubmit".equals(name)) {
+			transform = new LinkSubmit();
+		} else if ("Submit".equals(name)) {
+			transform = new Submit();
 		} else if ("Nav".equals(name)) {
 			transform = new Nav();
 		} else if ("ButtonGroup".equals(name)) {

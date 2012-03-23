@@ -32,6 +32,8 @@ import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.BootstrapEnvironment;
 import com.trsvax.bootstrap.environment.BootstrapValues;
+import com.trsvax.bootstrap.environment.ButtonEnvironment;
+import com.trsvax.bootstrap.environment.ButtonValues;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapVisitor;
 
@@ -50,6 +52,7 @@ public class BootstrapModule {
 		binder.bind(FrameworkVisitor.class, BootstrapVisitor.class).withId(BootstrapVisitor.id);
 		binder.bind(FrameworkVisitor.class,BootstrapFrameworkVisitor.class).withId(BootstrapFrameworkVisitor.id);
 		binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
+		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
 
 	}
 
@@ -71,8 +74,15 @@ public class BootstrapModule {
 		workers.addInstance("ExcludeWorker", ExcludeWorker.class);
 		workers.addInstance("FrameworkMixinWorker", FrameworkMixinWorker.class);
 	} 
+	
+	@Contribute(EnvironmentSetup.class)
+	public static void provideEnvironmentSetup(MappedConfiguration<Class, Object> configuration) {
+		configuration.add(BootstrapEnvironment.class, new BootstrapValues(null).addExclude("core"));
+		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
+	}
 
 	public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
+			final EnvironmentSetup environmentSetup,
 			final Environment environment, 
 			final JavaScriptSupport javaScriptSupport, 
 			final ExcludeVisitor excludeVistior,
@@ -80,9 +90,10 @@ public class BootstrapModule {
 
 		MarkupRendererFilter bootstrapFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
-				environment.push(BootstrapEnvironment.class, new BootstrapValues());
+				environmentSetup.push();
 				renderer.renderMarkup(writer);				
-				final BootstrapEnvironment values = environment.pop(BootstrapEnvironment.class);
+				final BootstrapEnvironment values = environment.peek(BootstrapEnvironment.class);
+				environmentSetup.pop();
 
 				Element root = writer.getDocument().getRootElement();
 				if ( root != null ) {
@@ -114,6 +125,7 @@ public class BootstrapModule {
 	}
 
 	public void contributePartialMarkupRenderer(OrderedConfiguration<PartialMarkupRendererFilter> configuration,
+			final EnvironmentSetup environmentSetup,
 			final Environment environment,
 			final JavaScriptSupport javaScriptSupport, 
 			final ExcludeVisitor excludeVistior,
@@ -121,9 +133,10 @@ public class BootstrapModule {
 		PartialMarkupRendererFilter bootstrapFilter = new PartialMarkupRendererFilter() {
 
 			public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
-				environment.push(BootstrapEnvironment.class, new BootstrapValues());
+				environmentSetup.push();
 				renderer.renderMarkup(writer,reply);				
-				final BootstrapEnvironment values = environment.pop(BootstrapEnvironment.class);
+				final BootstrapEnvironment values = environment.peek(BootstrapEnvironment.class);
+				environmentSetup.pop();
 
 				Element root = writer.getDocument().getRootElement();
 				if ( root != null ) {

@@ -93,7 +93,7 @@ based on [Forms](http://twitter.github.com/bootstrap/base-css.html#forms)
 
 ## Customizing Bootstrap:
 There are two Tapestry configurations that allow you to customize Bootstrap. First the EnvironmentSetup.class defines
-a set of mapped objects that set defaults for most of the components/mixins. Secound is the BootstrapProvider chain.
+a set of mapped objects that set defaults for most of the components/mixins. Second is the BootstrapProvider chain.
 This contains an ordered list of provides that create the Bootstrap Provider. The chain is called by the FW mixin for
 every component. You can override existing providers or add your own.
 

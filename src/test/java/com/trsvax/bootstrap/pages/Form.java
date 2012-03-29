@@ -1,10 +1,10 @@
-package com.trsvax.bootstrap.pages.basecss.forms;
+package com.trsvax.bootstrap.pages;
 
 import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.Address;
 
-public class FormsIndex {
+public class Form {
 	@Property
 	private Address address;
 

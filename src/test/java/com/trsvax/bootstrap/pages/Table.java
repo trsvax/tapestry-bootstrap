@@ -1,4 +1,4 @@
-package com.trsvax.bootstrap.pages.basecss.tables;
+package com.trsvax.bootstrap.pages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.apache.tapestry5.annotations.Property;
 
 import com.trsvax.bootstrap.Address;
 
-public class TablesIndex {
+public class Table {
 	
 	@Property
 	private List<Address> addresses;
@@ -18,7 +18,7 @@ public class TablesIndex {
 		addresses = new ArrayList<Address>();
 		Address address = new Address();
 		address.firstName = "Barry";
-		for ( int i = 0; i < 2; i++) {
+		for ( int i = 0; i < 100; i++) {
 			addresses.add(address);
 		}
 	}

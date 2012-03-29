@@ -1,8 +1,10 @@
 package com.trsvax.bootstrap.services.bootstrapvisitors;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.MarkupWriter;
@@ -18,7 +20,7 @@ import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkVisitor;
-import com.trsvax.bootstrap.environment.BootstrapEnvironment;
+import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
 
 public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	public final static String id = "fw";
@@ -39,9 +41,11 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	
 	public void beginRender(FrameworkMixin component, MarkupWriter writer) {
 		String simpleName = component.getComponentResources().getContainer().getClass().getSimpleName();
+		logger.info("begin");
 		Transform transform = getTransformer(simpleName);
 		if ( transform != null ) {
 			Element tag = writer.elementNS(ns, prefix + simpleName);
+			tag.attribute("type", component.getType());
 			for ( Entry<String, Object> param : component.getParms().entrySet() ) {
 				if ( param.getValue() != null ) {
 					tag.attribute(param.getKey(),param.getValue().toString());
@@ -62,23 +66,29 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		}
 	}
 
-	public Visitor visit() {
-		return new Visitor() {
-			public void visit(Element element) {
-				if ( ns.equals(element.getNamespace())) {				
-					String name = element.getName().replace(prefix, "");							
-					Transform transform = getTransformer(name);
-					if ( transform != null ) {
-						
-						//logger.info("visit {}",element.getName());
-
-						transform.visit(element);	
-						element.pop();
+	public void visit(Element element) {
+		final Set<Element> pop = new HashSet<Element>();
+		element.visit(new Visitor() {
+				public void visit(Element element) {
+					if ( ns.equals(element.getNamespace())) {
+						pop.add(element);
+						String name = element.getName().replace(prefix, "");							
+						Transform transform = getTransformer(name);
+						if ( transform != null ) {
+							
+							//logger.info("visit {}",element.getName());
+	
+							transform.visit(element);	
+							
+						}
 					}
-					
 				}
-			}
-		};
+			});
+
+		for ( Element e : pop ) {
+			logger.info("pop {}",e.getName());
+				e.pop();
+		}
 	}
 	
 	interface Transform {		
@@ -164,6 +174,10 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 
 		public void visit(Element element) {
 			this.root = element;
+			String framework = root.getAttribute("fw");
+			if ( "tapestry".equals(framework)) {
+				return;
+			}
 			root.visit(grid());
 			for ( Element e : poplist ) {
 				e.pop();
@@ -236,7 +250,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 				if ( ul != null ) {
 					ul.moveToBottom(div);
 				}
-				root.pop();
+				//root.pop();
 			}
 		}
 		
@@ -250,13 +264,19 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 						ul = element.elementBefore("ul");
 					}
 					if ( anchor(element) ) {
+						if ( ul != null ) {
 						Element li = element.wrap("li");
-						li.moveToBottom(ul);
+						
+							li.moveToBottom(ul);
+						}
 					}
 					if ( span(element)) {
+						if ( ul != null ) {
 						Element a = element.wrap("a","href","#");
 						Element li = a.wrap("li");
-						li.moveToBottom(ul);
+						
+							li.moveToBottom(ul);
+						}
 					}
 					
 					
@@ -271,8 +291,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		List<Element> poplist = new ArrayList<Element>();
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 			scriptOnce(String.format("%s('.makeHash').attr('href','#');",jQueryAlias));
 		}
 		
@@ -417,8 +437,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 		Element root;
 		
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 		}
 		
 		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
@@ -458,8 +478,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	class NavBar implements Transform {
 		Element root;
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-scrollspy.js");
 		}
 		
@@ -538,8 +558,8 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	class Dropdown implements Transform {
 		Element root;
 		public void beginRender(FrameworkMixin component, MarkupWriter writer) {
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
-			importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-button.js");
+			//importJavaScript("/com/trsvax/bootstrap/pages/twitter/js/bootstrap-dropdown.js");
 		}
 		
 		public void afterRender(FrameworkMixin component, MarkupWriter writer) {			
@@ -930,7 +950,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	}
 	
 	void scriptOnce(String script) {
-		BootstrapEnvironment excludeEnvironment = environment.peek(BootstrapEnvironment.class);
+		FrameWorkEnvironment excludeEnvironment = environment.peek(FrameWorkEnvironment.class);
 		excludeEnvironment.addScriptOnce(script);
 	}
 

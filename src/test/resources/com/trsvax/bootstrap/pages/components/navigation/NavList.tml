@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Nav List"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+            <t:tb.nav fwtype="nav-list">
+            <li class="nav-header">list header</li>
+            <t:pagelink page="components/navigation/navlist">link1</t:pagelink>
+            <t:pagelink page="components/navigation/navlist">link2</t:pagelink>
+			<li class="divider"></li>
+            <t:pagelink page="components/navigation/navlist">link3</t:pagelink>          
+            </t:tb.nav>
+      
+</html>

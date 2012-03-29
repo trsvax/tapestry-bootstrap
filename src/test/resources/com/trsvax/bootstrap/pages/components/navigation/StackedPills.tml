@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Stacked Pills"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:nav fwtype="nav-pills nav-stacked">
+      	<t:pagelink page="components/navigation/tabs">Pill 1</t:pagelink>
+		<t:pagelink page="components/navigation/tabs">Pill 2</t:pagelink>
+		<t:pagelink page="components/navigation/tabs">Pill 3</t:pagelink>      	
+      </t:nav>
+      
+      Pill Content
+      
+</html>

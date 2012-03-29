@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="components/buttons"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <dl>
+      <dt>Button Group</dt>
+      <dd>
+           <t:tb.buttonGroup>
+	      	<t:pagelink page="components/buttons" >button1</t:pagelink>
+	      	<t:pagelink page="components/buttons" >button2</t:pagelink>
+	      	<t:pagelink page="components/buttons" >button3</t:pagelink>
+	      </t:tb.buttonGroup>
+      </dd>
+      <dt>Button Group with dropdown</dt>
+      <dd>            
+	      <t:tb.buttonGroup>
+	      	<a href="#">dropdown</a>
+	      	<t:tb.dropdown>
+	      		<t:pagelink page="components/buttons">Link1</t:pagelink>
+	      		<t:pagelink page="components/buttons">Link2</t:pagelink>
+	      		<t:pagelink page="components/buttons">Link3</t:pagelink>
+	      	</t:tb.dropdown>
+	      </t:tb.buttonGroup>
+      </dd>
+      <dt>Button Group with split dropdown</dt>
+      <dd>
+        <t:tb.buttonGroup>
+	      	<t:pagelink page="components/buttons">dropdown</t:pagelink>
+	      	<t:tb.dropdown>
+	      		<t:pagelink page="components/buttons">Link1</t:pagelink>
+	      		<t:pagelink page="components/buttons">Link2</t:pagelink>
+	      		<t:pagelink page="components/buttons">Link3</t:pagelink>
+	      	</t:tb.dropdown>
+     	 </t:tb.buttonGroup>
+      
+      </dd>
+      </dl>
+</html>

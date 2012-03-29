@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Nav"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+ 
+      <t:tb.nav fwtype="nav-tabs">
+      	 <t:tb.buttonGroup>
+      		<a href="#">dropdown</a>
+	      	<t:tb.dropdown>
+	      		<t:pagelink page="components/navigation/dropdowntabs">Link1</t:pagelink>
+	      		<t:pagelink page="components/navigation/dropdowntabs">Link2</t:pagelink>
+	      		<t:pagelink page="components/navigation/dropdowntabs">Link3</t:pagelink>
+	      	</t:tb.dropdown>
+		</t:tb.buttonGroup>
+      	<t:pagelink page="components/navigation/dropdowntabs">Tab 2</t:pagelink>
+      	 <t:tb.buttonGroup>
+      		<a href="#">dropdown2</a>
+	      	<t:tb.dropdown>
+	      		<t:pagelink page="components/navigation/dropdowntabs">2Link1</t:pagelink>
+	      		<t:pagelink page="components/navigation/dropdowntabs">3Link2</t:pagelink>
+	      		<t:pagelink page="components/navigation/dropdowntabs">2Link3</t:pagelink>
+	      	</t:tb.dropdown>
+		</t:tb.buttonGroup>
+      </t:tb.nav>
+      
+      content for tab
+      
+      </html>

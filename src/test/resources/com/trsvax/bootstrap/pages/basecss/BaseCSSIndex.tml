@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Base CSS"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <div class="subnav">
+      <t:tb.nav fwtype="nav-pills">
+      	<t:pagelink page="basecss/Typography">Typography</t:pagelink>
+      	<t:pagelink page="basecss/Code">Code</t:pagelink>
+      	<t:pagelink page="basecss/Tables">Tables</t:pagelink>
+      	<t:pagelink page="basecss/Forms">Forms</t:pagelink>
+      	<t:pagelink page="basecss/Buttons">Buttons</t:pagelink>
+      	<t:pagelink page="basecss/Icons">Icons by Glyphicons</t:pagelink>
+      </t:tb.nav>
+      </div>
+      
+</html>

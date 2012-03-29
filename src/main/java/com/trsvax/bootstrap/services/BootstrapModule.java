@@ -1,9 +1,9 @@
 package com.trsvax.bootstrap.services;
 
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.beaneditor.DataTypeConstants;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
@@ -12,6 +12,9 @@ import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.ioc.annotations.Marker;
+import org.apache.tapestry5.ioc.annotations.Primary;
+import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.ioc.services.ServiceOverride;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.BeanBlockContribution;
@@ -28,14 +31,26 @@ import org.apache.tapestry5.services.PartialMarkupRendererFilter;
 import org.apache.tapestry5.services.ValidationDecoratorFactory;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
+import org.slf4j.Logger;
 
+import com.trsvax.bootstrap.BootstrapProvider;
+import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.FrameworkVisitor;
-import com.trsvax.bootstrap.environment.BootstrapEnvironment;
-import com.trsvax.bootstrap.environment.BootstrapValues;
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
 import com.trsvax.bootstrap.environment.ButtonValues;
+import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameWorkValues;
+import com.trsvax.bootstrap.environment.NavEnvironment;
+import com.trsvax.bootstrap.environment.NavValues;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapVisitor;
+import com.trsvax.bootstrap.services.bootstrapvisitors.ButtonGroupProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.ButtonProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.DefaultProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.FormProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.LayoutProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.NavProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.TableProvider;
 
 
 /**
@@ -53,6 +68,19 @@ public class BootstrapModule {
 		binder.bind(FrameworkVisitor.class,BootstrapFrameworkVisitor.class).withId(BootstrapFrameworkVisitor.id);
 		binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
 		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
+		
+		
+		binder.bind(BootstrapProvider.class,ButtonProvider.class).withId("BootstrapButton");
+		binder.bind(BootstrapProvider.class,ButtonGroupProvider.class).withId("BootstrapButtonGroup");
+		binder.bind(BootstrapProvider.class,DefaultProvider.class).withId("BootstrapDefault");
+		binder.bind(BootstrapProvider.class,FormProvider.class).withId("BootstrapForm");
+		binder.bind(BootstrapProvider.class,LayoutProvider.class).withId("BootstrapLayout");	
+		binder.bind(BootstrapProvider.class,NavProvider.class).withId("BootstrapNav");
+		binder.bind(BootstrapProvider.class,TableProvider.class).withId("BootstrapTable");	
+		
+		
+		
+		binder.bind(FrameworkProvider.class,FrameworkProviderImpl.class).withId("FrameworkProvider");
 
 	}
 
@@ -67,6 +95,38 @@ public class BootstrapModule {
 		configuration.add("session", sessionBindingFactory);  
 		configuration.add("env", environmentBindingFactory);
 	}
+	
+	public static void contributeBootstrapProvider(OrderedConfiguration<BootstrapProvider> configuration,
+			@InjectService("BootstrapButton") BootstrapProvider buttonProvider,
+			@InjectService("BootstrapButtonGroup") BootstrapProvider buttonGroupProvider,
+			@InjectService("BootstrapDefault") BootstrapProvider defaultProvider,
+			@InjectService("BootstrapForm") BootstrapProvider formProvider,
+			@InjectService("BootstrapLayout") BootstrapProvider layoutProvider,
+			@InjectService("BootstrapNav") BootstrapProvider navProvider,
+			@InjectService("BootstrapTable") BootstrapProvider tableProvider) {
+		configuration.add("Button", buttonProvider);
+		configuration.add("ButtonGroup", buttonGroupProvider);
+		configuration.add("Default",defaultProvider);
+		configuration.add("Form", formProvider);
+		configuration.add("Layout", layoutProvider);
+		configuration.add("Nav", navProvider,"before:ButtonGroup");
+		configuration.add("Table", tableProvider);
+		
+	}
+	
+	@Marker(Primary.class)
+	public BootstrapProvider build(List<BootstrapProvider> configuration, ChainBuilder chainBuilder) {
+		return chainBuilder.build(BootstrapProvider.class, configuration);
+	}
+	
+	/*
+	@Contribute(FrameworkProvider.class)
+	public static void provideFrameworks(MappedConfiguration<String, FrameworkProvider> configuration,
+			@Primary BootstrapProvider bootstrapProvider) {
+		//configuration.add("Bootstrap", bootstrapProvider);
+		
+	}
+	*/
 
 	@Contribute(ComponentClassTransformWorker2.class)   
 	public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {    
@@ -77,24 +137,30 @@ public class BootstrapModule {
 	
 	@Contribute(EnvironmentSetup.class)
 	public static void provideEnvironmentSetup(MappedConfiguration<Class, Object> configuration) {
-		configuration.add(BootstrapEnvironment.class, new BootstrapValues(null).addExclude("core"));
+		configuration.add(FrameWorkEnvironment.class, new FrameWorkValues(null).withName("tb"));
 		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
+		configuration.add(NavEnvironment.class, new NavValues(null));
 	}
 
 	public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
+			final Logger logger,
 			final EnvironmentSetup environmentSetup,
 			final Environment environment, 
 			final JavaScriptSupport javaScriptSupport, 
 			final ExcludeVisitor excludeVistior,
-			@InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
+			@InjectService(BootstrapVisitor.id)  final FrameworkVisitor frameworkVisitor,
+			@InjectService("FrameworkProvider") final FrameworkProvider frameworkProvider) {
 
 		MarkupRendererFilter bootstrapFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				environmentSetup.push();
 				renderer.renderMarkup(writer);				
-				final BootstrapEnvironment values = environment.peek(BootstrapEnvironment.class);
+				final FrameWorkEnvironment values = environment.peek(FrameWorkEnvironment.class);
 				environmentSetup.pop();
 
+				frameworkProvider.renderMarkup(writer);
+				
+				/*
 				Element root = writer.getDocument().getRootElement();
 				if ( root != null ) {
 					Element head = root.find("head");
@@ -102,17 +168,19 @@ public class BootstrapModule {
 						head.visit(excludeVistior.visit(values));
 					}
 					Element body = root.find("body");
-					if ( body != null) {
-						body.visit(frameworkVisitor.visit());
+					if ( body != null) {				
+						frameworkVisitor.visit(body);
 					}	
 				}
+				*/
+				
 			}		
 		};
 
 		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				renderer.renderMarkup(writer);
-				BootstrapEnvironment values = environment.peek(BootstrapEnvironment.class);
+				FrameWorkEnvironment values = environment.peek(FrameWorkEnvironment.class);
 				for ( Entry<String, String> script : values.getOnceScripts()) {
 					javaScriptSupport.addScript(script.getKey());
 				}
@@ -135,14 +203,14 @@ public class BootstrapModule {
 			public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
 				environmentSetup.push();
 				renderer.renderMarkup(writer,reply);				
-				final BootstrapEnvironment values = environment.peek(BootstrapEnvironment.class);
+				final FrameWorkEnvironment values = environment.peek(FrameWorkEnvironment.class);
 				environmentSetup.pop();
 
 				Element root = writer.getDocument().getRootElement();
 				if ( root != null ) {
 					Element body = root.find("ajax-partial");
 					if ( body != null) {
-						body.visit(frameworkVisitor.visit());
+						frameworkVisitor.visit(body);
 					}	
 					//This does not seem right
 					reply.put("content", body.getChildMarkup());

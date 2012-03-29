@@ -3,7 +3,7 @@ package com.trsvax.bootstrap.environment;
 
 @Environment(environmentInterface=ButtonEnvironment.class)
 public class ButtonValues implements ButtonEnvironment {
-	private ButtonType buttonType;
+	private ButtonType buttonType = ButtonType.btn;
 	private ButtonSize buttonSize;
 	
 	public ButtonValues(ButtonEnvironment values) {

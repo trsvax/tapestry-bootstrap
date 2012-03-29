@@ -1,0 +1,11 @@
+<t:container
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter">
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<t:body />
+			</div>
+		</div>
+	</div>
+</t:container>

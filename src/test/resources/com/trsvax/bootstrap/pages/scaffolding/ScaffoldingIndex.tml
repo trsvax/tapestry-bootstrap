@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Scaffolding"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <div class="subnav">
+      	<t:tb.nav fwtype="nav-pills">
+      		<a href="#">Global Styles</a>
+      		<a href="#">Grid System</a>
+      		<a href="#">Fluid Grid System</a>
+      		<a href="#">Customizing</a>
+      		<a href="#">Layouts</a>
+      		<a href="#">Responsive design</a>
+      	</t:tb.nav>
+      </div>
+      
+      <a href="http://twitter.github.com/bootstrap/scaffolding.html">Twitter Scaffolding</a>
+</html>

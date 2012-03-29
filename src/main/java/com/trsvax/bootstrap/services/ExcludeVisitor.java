@@ -2,9 +2,9 @@ package com.trsvax.bootstrap.services;
 
 import org.apache.tapestry5.dom.Visitor;
 
-import com.trsvax.bootstrap.environment.BootstrapEnvironment;
+import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
 
 public interface ExcludeVisitor {
 
-	public Visitor visit(BootstrapEnvironment values);
+	public Visitor visit(FrameWorkEnvironment values);
 }

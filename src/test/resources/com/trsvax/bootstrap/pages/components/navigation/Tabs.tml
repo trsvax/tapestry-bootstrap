@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Tabs"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:nav fwtype="nav-tabs">
+      	<t:pagelink page="components/navigation/tabs">Tab 1</t:pagelink>
+		<t:pagelink page="components/navigation/tabs">Tab 2</t:pagelink>
+		<t:pagelink page="components/navigation/tabs">Tab 3</t:pagelink>      	
+      </t:nav>
+      
+      Tab Content
+      
+</html>

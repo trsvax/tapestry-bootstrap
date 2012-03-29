@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Typography"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <a href="http://twitter.github.com/bootstrap/components.html#typography">Twitter Typography</a>
+</html>

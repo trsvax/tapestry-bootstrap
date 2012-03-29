@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Navigation"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <ul>
+      <li><t:pagelink page="components/navigation/tabs">Tabs</t:pagelink></li>
+        <li><t:pagelink page="components/navigation/StackedTabs">Stacked Tabs</t:pagelink></li>
+        <li><t:pagelink page="components/navigation/DropdownTabs">Dropdown Tabs</t:pagelink></li>
+       
+       <li><t:pagelink page="components/navigation/pills">Pills</t:pagelink></li>
+      <li> <t:pagelink page="components/navigation/StackedPills">Stacked Pills</t:pagelink></li>
+       <li><t:pagelink page="components/navigation/DropdownPills">Dropdown Pills</t:pagelink></li>
+       
+       <li><t:pagelink page="components/navigation/navList">Nav Lists</t:pagelink></li>
+       <li><t:pagelink page="components/navigation/tabbableNav">Tabbable Nav</t:pagelink></li>
+       <li><t:pagelink page="components/navigation/navbar">Navbar</t:pagelink></li>
+        <li><t:pagelink page="components/navigation/breadcrumbs">Breadcrumbs</t:pagelink></li>
+        <li><t:pagelink page="components/navigation/pagination">Pagination</t:pagelink></li>
+      </ul>
+</html>

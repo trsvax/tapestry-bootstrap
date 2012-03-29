@@ -22,16 +22,18 @@ public class BootstrapVisitor  implements FrameworkVisitor {
 		this.visitors = configuration;
 	}
 
-	public Visitor visit() {
-		return new Visitor() {			
+	public void visit(Element element) {
+		/*
+		element.visit(new Visitor() {			
 			public void visit(Element element) {
 				if ( isNameSpace(element,namespace)) {
-					//logger.info("element {}",element.getName());
+					logger.info("element {}",element.getName());
 					FrameworkVisitor visitor = getVisitor(element.getName());
-					element.visit(visitor.visit());				
+					visitor.visit(element);				
 				}
 			}
-		};
+		});
+		*/
 	}
 	
 

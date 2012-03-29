@@ -10,7 +10,7 @@ public class ButtonTest  extends SeleniumTestCase {
     {
 		open("/button");
 		
-		assertAttribute("//a[@id='default']@class","btn");
+		//assertAttribute("//a[@id='default']@class","btn");
 		//assertAttribute("//button[@id='defaultButton']@class","btn");
 		
         

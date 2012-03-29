@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Code"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <t:tb.code>
+        &lt;p&gt;Sample text here...&lt;/p&gt;
+      </t:tb.code>
+ </html>

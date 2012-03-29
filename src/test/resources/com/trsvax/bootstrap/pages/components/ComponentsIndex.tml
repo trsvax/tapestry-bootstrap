@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Components"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+        <div class="subnav">
+      	<t:tb.nav fwtype="nav-pills">
+      		<t:pagelink page="components/Buttons">Buttons</t:pagelink>
+      		<t:pagelink page="components/Navigation">Navigation</t:pagelink>
+      		<t:pagelink page="components/Labels">Labels</t:pagelink>
+      		<t:pagelink page="components/Badges">Badges</t:pagelink>
+      		<t:pagelink page="components/Typography">Typography</t:pagelink>
+      		<t:pagelink page="components/Thumbnails">Thumbnails</t:pagelink>
+      		<t:pagelink page="components/Alerts">Alerts</t:pagelink>
+      		<t:pagelink page="components/Progressbars">Progress Bars</t:pagelink>
+      		<t:pagelink page="components/Miscellaneous">Miscellaneous</t:pagelink>
+      		
+      	</t:tb.nav>
+      	</div>
+      
+</html>

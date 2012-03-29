@@ -69,15 +69,15 @@ Bootstap Mixins
 
 ##Using Bootstrap:
 Just the jar file to your project add the following to your Layout
-@Exclude(stylesheet={"core"})
-@Import(stylesheet={
-		"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap.css",
-		"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap-responsive.css"
-		},
-library={
-		"classpath:/com/trsvax/bootstrap/assets/bootstrap/js/bootstrap.js"
-		}
-)
+	@Exclude(stylesheet={"core"})
+	@Import(stylesheet={
+			"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap.css",
+			"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap-responsive.css"
+			},
+	library={
+			"classpath:/com/trsvax/bootstrap/assets/bootstrap/js/bootstrap.js"
+			}
+	)
 and modify our Layout.tml [Layouts](http://twitter.github.com/bootstrap/scaffolding.html#layouts)
 
 ## Using Grid

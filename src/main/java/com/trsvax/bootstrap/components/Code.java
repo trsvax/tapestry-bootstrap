@@ -5,7 +5,7 @@ import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Environment;
 
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 @Import(
 library={
@@ -19,7 +19,7 @@ public class Code {
 	
 	@AfterRender
 	void afterRender() {
-		FrameWorkEnvironment frameWorkEnvironment = environment.peek(FrameWorkEnvironment.class);
+		FrameworkEnvironment frameWorkEnvironment = environment.peek(FrameworkEnvironment.class);
 		frameWorkEnvironment.addScriptOnce("prettyPrint();");
 	}
 

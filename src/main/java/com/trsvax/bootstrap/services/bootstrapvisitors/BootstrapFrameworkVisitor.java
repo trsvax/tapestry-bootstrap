@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkVisitor;
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	public final static String id = "fw";
@@ -950,7 +950,7 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	}
 	
 	void scriptOnce(String script) {
-		FrameWorkEnvironment excludeEnvironment = environment.peek(FrameWorkEnvironment.class);
+		FrameworkEnvironment excludeEnvironment = environment.peek(FrameworkEnvironment.class);
 		excludeEnvironment.addScriptOnce(script);
 	}
 

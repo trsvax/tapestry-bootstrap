@@ -17,7 +17,7 @@ import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.components.ButtonGroup;
 import com.trsvax.bootstrap.components.DropDown;
 import com.trsvax.bootstrap.environment.ButtonGroupEnvironment;
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 public class ButtonGroupProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {ButtonGroup.class, DropDown.class};
@@ -123,7 +123,7 @@ public class ButtonGroupProvider extends AbstractFrameworkProvider implements Bo
 	}
 	
 	void scriptOnce(String script) {
-		FrameWorkEnvironment excludeEnvironment = environment.peek(FrameWorkEnvironment.class);
+		FrameworkEnvironment excludeEnvironment = environment.peek(FrameworkEnvironment.class);
 		if ( excludeEnvironment != null ) {
 			excludeEnvironment.addScriptOnce(script);
 		}

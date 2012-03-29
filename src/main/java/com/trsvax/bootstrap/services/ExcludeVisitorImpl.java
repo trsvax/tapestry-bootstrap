@@ -4,7 +4,7 @@ import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.slf4j.Logger;
 
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 public class ExcludeVisitorImpl implements ExcludeVisitor {
 	private final Logger logger;
@@ -13,7 +13,7 @@ public class ExcludeVisitorImpl implements ExcludeVisitor {
 		this.logger = logger;
 	}
 	
-	public Visitor visit(final FrameWorkEnvironment values) {
+	public Visitor visit(final FrameworkEnvironment values) {
 		return new Visitor() {					
 			public void visit(Element element) {
 				if ( element.getName().equals("link") ) {

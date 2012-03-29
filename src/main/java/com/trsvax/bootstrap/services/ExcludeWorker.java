@@ -13,7 +13,7 @@ import org.apache.tapestry5.services.transform.TransformationSupport;
 import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.annotations.Exclude;
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 public class ExcludeWorker implements ComponentClassTransformWorker2 {
 	private final Environment environment;
@@ -39,7 +39,7 @@ public class ExcludeWorker implements ComponentClassTransformWorker2 {
 		setupRender.addAdvice(new MethodAdvice() {
 
 			public void advise(MethodInvocation invocation) {
-				 FrameWorkEnvironment excludeEnvironment = environment.peek(FrameWorkEnvironment.class);
+				 FrameworkEnvironment excludeEnvironment = environment.peek(FrameworkEnvironment.class);
 					if ( excludeEnvironment != null ) {
 						for ( String pattern : exclude.stylesheet() ) {
 							excludeEnvironment.addExclude(pattern);

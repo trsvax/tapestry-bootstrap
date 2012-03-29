@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.annotations.AfterRender;
 import org.apache.tapestry5.annotations.BeforeRenderBody;
 import org.apache.tapestry5.annotations.CleanupRender;
 import org.apache.tapestry5.annotations.Parameter;
@@ -15,12 +14,11 @@ import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Environment;
-import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.FrameworkVisitor;
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 //@SupportsInformalParameters
 //@MixinAfter
@@ -56,7 +54,7 @@ public class FW implements FrameworkMixin {
 	void setupRender(MarkupWriter writer) {
 		root = null;
 
-		FrameWorkEnvironment frameWorkEnvironment = environment.peek(FrameWorkEnvironment.class);
+		FrameworkEnvironment frameWorkEnvironment = environment.peek(FrameworkEnvironment.class);
 		if ( frameWorkEnvironment != null && fw == null ) {
 			fw = frameWorkEnvironment.getName();
 		}

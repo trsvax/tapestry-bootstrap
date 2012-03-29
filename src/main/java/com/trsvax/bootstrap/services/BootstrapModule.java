@@ -38,8 +38,8 @@ import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
 import com.trsvax.bootstrap.environment.ButtonValues;
-import com.trsvax.bootstrap.environment.FrameWorkEnvironment;
-import com.trsvax.bootstrap.environment.FrameWorkValues;
+import com.trsvax.bootstrap.environment.FrameworkEnvironment;
+import com.trsvax.bootstrap.environment.FrameworkValues;
 import com.trsvax.bootstrap.environment.NavEnvironment;
 import com.trsvax.bootstrap.environment.NavValues;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor;
@@ -137,7 +137,7 @@ public class BootstrapModule {
 	
 	@Contribute(EnvironmentSetup.class)
 	public static void provideEnvironmentSetup(MappedConfiguration<Class, Object> configuration) {
-		configuration.add(FrameWorkEnvironment.class, new FrameWorkValues(null).withName("tb"));
+		configuration.add(FrameworkEnvironment.class, new FrameworkValues(null).withName("tb"));
 		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
 		configuration.add(NavEnvironment.class, new NavValues(null));
 	}
@@ -155,7 +155,7 @@ public class BootstrapModule {
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				environmentSetup.push();
 				renderer.renderMarkup(writer);				
-				final FrameWorkEnvironment values = environment.peek(FrameWorkEnvironment.class);
+				final FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
 				environmentSetup.pop();
 
 				frameworkProvider.renderMarkup(writer);
@@ -180,7 +180,7 @@ public class BootstrapModule {
 		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {		
 			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
 				renderer.renderMarkup(writer);
-				FrameWorkEnvironment values = environment.peek(FrameWorkEnvironment.class);
+				FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
 				for ( Entry<String, String> script : values.getOnceScripts()) {
 					javaScriptSupport.addScript(script.getKey());
 				}
@@ -203,7 +203,7 @@ public class BootstrapModule {
 			public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
 				environmentSetup.push();
 				renderer.renderMarkup(writer,reply);				
-				final FrameWorkEnvironment values = environment.peek(FrameWorkEnvironment.class);
+				final FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
 				environmentSetup.pop();
 
 				Element root = writer.getDocument().getRootElement();

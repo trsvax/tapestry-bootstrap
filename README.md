@@ -80,7 +80,7 @@ Just the jar file to your project add the following to your Layout.
 			}
 	)
 	
-and modify our Layout.tml [Layouts](http://twitter.github.com/bootstrap/scaffolding.html#layouts)
+and modify your Layout.tml [Layouts](http://twitter.github.com/bootstrap/scaffolding.html#layouts)
 
 ## Using Grid
 The fw mixins adds an fwtype parameter to the Grid. If this value is null the Grid works as before. 

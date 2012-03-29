@@ -32,7 +32,7 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 		if ( ! Grid.class.getCanonicalName().equals(mixin.getComponentClassName())) {
 			return false;
 		}
-		TableEnvironment tableEnvironment = environment.peek(TableEnvironment.class);
+		final TableEnvironment tableEnvironment = environment.peekRequired(TableEnvironment.class);
 		String t = mixin.getType();
 		if ( tableEnvironment != null ) {
 			t = tableEnvironment.getType(mixin);
@@ -45,7 +45,6 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 		if ( ! type.startsWith(prefix)) {
 			return false;
 		}
-		logger.info("table {}",writer.getElement());
 		mixin.getRoot().visit(new Visitor() {
 			
 			public void visit(Element element) {
@@ -54,6 +53,10 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 				}
 				if ( table(element) && hasClass("t-data-grid",element)) {
 					element.forceAttributes("class", getClassForType(prefix, type));
+				}
+				if ( img(element) && hasClass("t-sort-icon",element)) {
+					element.elementBefore("i", "class",tableEnvironment.getSortIcon());
+					element.remove();
 				}
 				
 			}
@@ -68,7 +71,7 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 	public boolean instrument(FrameworkMixin mixin) {
 		String name = mixin.getComponentClassName();
 		String type = mixin.getType();
-		TableEnvironment tableEnvironment = environment.peek(TableEnvironment.class);
+		TableEnvironment tableEnvironment = environment.peekRequired(TableEnvironment.class);
 		if ( tableEnvironment != null ) {
 			type = tableEnvironment.getType(mixin);
 		}

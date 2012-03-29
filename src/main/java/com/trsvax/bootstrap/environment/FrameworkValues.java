@@ -6,11 +6,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class BootstrapValues implements BootstrapEnvironment {
+public class FrameworkValues implements FrameworkEnvironment {
+	private String name;
 	private Set<String> excludes = new HashSet<String>();
 	private Map<String,String> scripts = new HashMap<String, String>();
 	
-	public BootstrapValues(BootstrapValues values) {
+	public FrameworkValues(FrameworkValues values) {
 		if ( values != null ) {
 			excludes = values.getExcludes();
 		}
@@ -22,7 +23,7 @@ public class BootstrapValues implements BootstrapEnvironment {
 	}
 	
 
-	public BootstrapValues addExclude(String pattern) {
+	public FrameworkValues addExclude(String pattern) {
 		excludes.add(pattern);
 		return this;
 		
@@ -35,6 +36,14 @@ public class BootstrapValues implements BootstrapEnvironment {
 
 	public Set<Entry<String, String>> getOnceScripts() {
 		return scripts.entrySet();
+	}
+
+	public Object withName(String name) {
+		return this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

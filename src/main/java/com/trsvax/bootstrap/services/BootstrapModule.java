@@ -42,6 +42,8 @@ import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 import com.trsvax.bootstrap.environment.FrameworkValues;
 import com.trsvax.bootstrap.environment.NavEnvironment;
 import com.trsvax.bootstrap.environment.NavValues;
+import com.trsvax.bootstrap.environment.TableEnvironment;
+import com.trsvax.bootstrap.environment.TableValues;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor;
 import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapVisitor;
 import com.trsvax.bootstrap.services.bootstrapvisitors.ButtonGroupProvider;
@@ -49,6 +51,7 @@ import com.trsvax.bootstrap.services.bootstrapvisitors.ButtonProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.DefaultProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.FormProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.LayoutProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.NavBarProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.NavProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.TableProvider;
 
@@ -76,6 +79,7 @@ public class BootstrapModule {
 		binder.bind(BootstrapProvider.class,FormProvider.class).withId("BootstrapForm");
 		binder.bind(BootstrapProvider.class,LayoutProvider.class).withId("BootstrapLayout");	
 		binder.bind(BootstrapProvider.class,NavProvider.class).withId("BootstrapNav");
+		binder.bind(BootstrapProvider.class,NavBarProvider.class).withId("BootstrapNavBar");
 		binder.bind(BootstrapProvider.class,TableProvider.class).withId("BootstrapTable");	
 		
 		
@@ -103,6 +107,7 @@ public class BootstrapModule {
 			@InjectService("BootstrapForm") BootstrapProvider formProvider,
 			@InjectService("BootstrapLayout") BootstrapProvider layoutProvider,
 			@InjectService("BootstrapNav") BootstrapProvider navProvider,
+			@InjectService("BootstrapNavBar") BootstrapProvider navBarProvider,
 			@InjectService("BootstrapTable") BootstrapProvider tableProvider) {
 		configuration.add("Button", buttonProvider);
 		configuration.add("ButtonGroup", buttonGroupProvider);
@@ -110,6 +115,7 @@ public class BootstrapModule {
 		configuration.add("Form", formProvider);
 		configuration.add("Layout", layoutProvider);
 		configuration.add("Nav", navProvider,"before:ButtonGroup");
+		configuration.add("NavBar", navBarProvider);
 		configuration.add("Table", tableProvider);
 		
 	}
@@ -140,6 +146,7 @@ public class BootstrapModule {
 		configuration.add(FrameworkEnvironment.class, new FrameworkValues(null).withName("tb"));
 		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
 		configuration.add(NavEnvironment.class, new NavValues(null));
+		configuration.add(TableEnvironment.class, new TableValues(null));
 	}
 
 	public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,

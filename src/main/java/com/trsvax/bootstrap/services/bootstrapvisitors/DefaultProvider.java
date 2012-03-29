@@ -30,7 +30,7 @@ public class DefaultProvider extends AbstractFrameworkProvider implements Bootst
 			}
 		});
 		for ( Element element : pop ) {
-			//element.pop();
+			element.pop();
 		}
 		return false;
 	}

@@ -4,6 +4,9 @@
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="container">
+			<t:if test="project">
+				<a class="brand" href="#">${project}</a>
+			</t:if>
 				<t:body />
 			</div>
 		</div>

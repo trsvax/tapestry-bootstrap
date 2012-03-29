@@ -2,7 +2,6 @@ package com.trsvax.bootstrap.services;
 
 import java.util.List;
 
-
 import org.apache.tapestry5.corelib.components.Loop;
 import org.apache.tapestry5.model.MutableComponentModel;
 import org.apache.tapestry5.plastic.PlasticClass;
@@ -11,7 +10,6 @@ import org.apache.tapestry5.services.transform.TransformationSupport;
 import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.mixins.FW;
-import com.trsvax.bootstrap.mixins.AW;
 import com.trsvax.bootstrap.mixins.LoopEnvironmentMixin;
 
 /**

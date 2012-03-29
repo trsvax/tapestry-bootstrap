@@ -11,6 +11,7 @@ Tapestry is a Java based web framework.
 - Converts existing components such a BeanEditForm and Grid into Bootstrap Forms/Tables
 - Components such as ButtonGroup that make created Bootstrap HTML easier.
 - Uses Tapestry chain of command so functionality can be extended/overridden.
+- Extensive configuration via the environment
 
 ## Basic operation
 The module attaches a mixin called FW to all existing components. The mixin calls a chain of command with render events.

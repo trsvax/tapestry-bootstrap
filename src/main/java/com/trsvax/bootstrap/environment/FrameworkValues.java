@@ -38,8 +38,9 @@ public class FrameworkValues implements FrameworkEnvironment {
 		return scripts.entrySet();
 	}
 
-	public Object withName(String name) {
-		return this.name = name;
+	public FrameworkValues withName(String name) {
+		this.name = name;
+		return this;
 	}
 	
 	public String getName() {

@@ -6,15 +6,25 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public class BootstrapValues implements BootstrapEnvironment {
+public class FrameWorkValues implements FrameWorkEnvironment {
+	private String name = "";
 	private Set<String> excludes = new HashSet<String>();
 	private Map<String,String> scripts = new HashMap<String, String>();
 	
-	public BootstrapValues(BootstrapValues values) {
+	public FrameWorkValues(FrameWorkValues values) {
 		if ( values != null ) {
 			excludes = values.getExcludes();
 		}
 
+	}
+	
+	public FrameWorkValues withName(String name) {
+		this.name = name;
+		return this;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	public Set<String> getExcludes() {
@@ -22,7 +32,7 @@ public class BootstrapValues implements BootstrapEnvironment {
 	}
 	
 
-	public BootstrapValues addExclude(String pattern) {
+	public FrameWorkValues addExclude(String pattern) {
 		excludes.add(pattern);
 		return this;
 		

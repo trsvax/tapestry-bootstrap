@@ -4,8 +4,8 @@
       xmlns:p="tapestry:parameter">
       
       <dl>
-      <dd>Action Link</dd>
-      <dt>
+      <dt>Action Link</dt>
+      <dd>
       	<t:actionlink id="actionlink-btn"  fw.fwtype="btn">Standard</t:actionlink>
 		<t:actionlink id="actionlink-btn-primary"  fw.fwtype="btn-primary">Primary</t:actionlink>
 		<t:actionlink id="actionlink-btn-info" fw.fwtype="btn-info">Info</t:actionlink>
@@ -13,12 +13,12 @@
 		<t:actionlink id="actionlink-btn-warning"  fw.fwtype="btn-warning">Warning</t:actionlink>
 		<t:actionlink id="actionlink-btn-danger" fw.fwtype="btn-danger">Danger</t:actionlink>
 		<t:actionlink id="actionlink-btn-inverse"  fw.fwtype="btn-inverse">Inverse</t:actionlink>
-      </dt>
+      </dd>
       </dl>
       
       <dl>
-      <dd>Button</dd>
-      <dt>
+      <dt>Button</dt>
+      <dd>
       	<button id="button-btn" t:type="any" fw.fwtype="btn">Standard</button>
 		<button id="button-btn-primary" t:type="any" fw.fwtype="btn-primary">Primary</button>
 		<button id="button-btn-info" t:type="any" fw.fwtype="btn-info">Info</button>
@@ -26,12 +26,12 @@
 		<button id="button-btn-warning" t:type="any" fw.fwtype="btn-warning">Warning</button>
 		<button id="button-btn-danger" t:type="any" fw.fwtype="btn-danger">Danger</button>
 		<button id="button-btn-inverse" t:type="any" fw.fwtype="btn-inverse">Inverse</button>
-      </dt>
+      </dd>
       </dl>
       
       <dl>
-      <dd>Event Link</dd>
-      <dt>
+      <dt>Event Link</dt>
+      <dd>
       	<t:eventlink id="eventlink-btn" event="button" fw.fwtype="btn">Standard</t:eventlink>
 		<t:eventlink id="eventlink-btn-primary" event="button" fw.fwtype="btn-primary">Primary</t:eventlink>
 		<t:eventlink id="eventlink-btn-info" event="button" fw.fwtype="btn-info">Info</t:eventlink>
@@ -39,12 +39,12 @@
 		<t:eventlink id="eventlink-btn-warning" event="button" fw.fwtype="btn-warning">Warning</t:eventlink>
 		<t:eventlink id="eventlink-btn-danger" event="button" fw.fwtype="btn-danger">Danger</t:eventlink>
 		<t:eventlink id="eventlink-btn-inverse" event="button" fw.fwtype="btn-inverse">Inverse</t:eventlink>
-      </dt>
+      </dd>
       </dl>
       
        <dl>
-      <dd>Link Submit</dd>
-      <dt>
+      <dt>Link Submit</dt>
+      <dd>
       	<t:form>
 	      	<t:linksubmit id="linksubmit-btn" fw.fwtype="btn">Standard</t:linksubmit>
 			<t:linksubmit id="linksubmit-btn-primary" event="button" fw.fwtype="btn-primary">Primary</t:linksubmit>
@@ -54,12 +54,12 @@
 			<t:linksubmit id="linksubmit-btn-danger" event="button" fw.fwtype="btn-danger">Danger</t:linksubmit>
 			<t:linksubmit id="linksubmit-btn-inverse"  event="button" fw.fwtype="btn-inverse">Inverse</t:linksubmit>
 		</t:form>
-      </dt>
+      </dd>
       </dl>
       
       <dl>
-      <dd>Submit</dd>
-      <dt>
+      <dt>Submit</dt>
+      <dd>
       	<t:form>
 	      	<t:submit id="submit-btn" value="Standard" fw.fwtype="btn"/>
 			<t:submit id="submit-btn-primary" value="Primary" event="button" fw.fwtype="btn-primary"/>
@@ -69,28 +69,29 @@
 			<t:submit id="submit-btn-danger" value="Danger" event="button" fw.fwtype="btn-danger"/>
 			<t:submit id="submit-btn-inverse" value="Inverse" event="button" fw.fwtype="btn-inverse"/>
 		</t:form>
-      </dt>
+      </dd>
       </dl>
       
       <dl>
-      <dd>Page Link</dd>
-      <dt>
-      	<t:pagelink id="pagelink-btn" page="button" fw.fwtype="btn">Standard</t:pagelink>
-		<t:pagelink id="pagelink-btn-primary" page="button" fw.fwtype="btn-primary">Primary</t:pagelink>
-		<t:pagelink id="pagelink-btn-info" page="button" fw.fwtype="btn-info">Info</t:pagelink>
-		<t:pagelink id="pagelink-btn-success" page="button" fw.fwtype="btn-success">Success</t:pagelink>
-		<t:pagelink id="pagelink-btn-warning" page="button" fw.fwtype="btn-warning">Warning</t:pagelink>
-		<t:pagelink id="pagelink-btn-danger" page="button" fw.fwtype="btn-danger">Danger</t:pagelink>
-		<t:pagelink id="pagelink-btn-inverse" page="button" fw.fwtype="btn-inverse">Inverse</t:pagelink>
-      </dt>
+      <dt>Page Link</dt>
+      <dd>
+      	<t:pagelink id="pagelink-btn" page="components/buttons" fw.fwtype="btn">Standard</t:pagelink>
+		<t:pagelink id="pagelink-btn-primary" page="components/buttons" fw.fwtype="btn-primary">Primary</t:pagelink>
+		<t:pagelink id="pagelink-btn-info" page="components/buttons" fw.fwtype="btn-info">Info</t:pagelink>
+		<t:pagelink id="pagelink-btn-success" page="components/buttons" fw.fwtype="btn-success">Success</t:pagelink>
+		<t:pagelink id="pagelink-btn-warning" page="components/buttons" fw.fwtype="btn-warning">Warning</t:pagelink>
+		<t:pagelink id="pagelink-btn-danger" page="components/buttons" fw.fwtype="btn-danger">Danger</t:pagelink>
+		<t:pagelink id="pagelink-btn-inverse" page="components/buttons" fw.fwtype="btn-inverse">Inverse</t:pagelink>
+      </dd>
       </dl>
+      <dl>
       
-      
-      
-      
-      
-
-      
-     
+      <dt>Sizes</dt>
+      <dd>
+      	<t:pagelink id="pagelink-btn-mini" page="components/buttons" fw.fwtype="btn-mini">Mini</t:pagelink>
+		<t:pagelink id="pagelink-btn-small" page="components/buttons" fw.fwtype="btn-small">Small</t:pagelink>
+		<t:pagelink id="pagelink-btn-large" page="components/buttons" fw.fwtype="btn-large">Large</t:pagelink>
+      </dd>
+      </dl>
       
 </html>

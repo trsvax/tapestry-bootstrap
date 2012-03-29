@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Table"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      
+      <dl>
+      <dt>Tapestry Table</dt>
+      <dd><t:grid source="addresses"/></dd>
+      
+      <dt>Bootstrap Table</dt>
+      <dd><t:grid source="addresses" fwtype="table"/></dd>
+      
+      <dt>Bootstrap Table Bordered</dt>
+      <dd><t:grid source="addresses" fwtype="table-bordered"/></dd>
+      
+            <dt>Bootstrap Table Striped</dt>
+      <dd><t:grid source="addresses" fwtype="table-striped"/></dd>
+      
+            <dt>Bootstrap Table Condensed</dt>
+      <dd><t:grid source="addresses" fwtype="table-condensed"/></dd>
+      
+                  <dt>Bootstrap Table All</dt>
+      <dd><t:grid source="addresses" fwtype="table-bordered table-striped table-condensed"/></dd>
+      </dl>
+      
+            
+</html>

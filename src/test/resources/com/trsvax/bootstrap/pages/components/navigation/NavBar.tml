@@ -3,7 +3,7 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
-      <t:tb.navbar fw.type="navbar-static" projectName="Bootstrap">
+      <t:tb.navbar fwtype="navbar-static" projectName="Bootstrap">
 
       		<t:tb.nav>
 			    <a href="#" class="active">Home</a>
@@ -21,10 +21,6 @@
 			</t:tb.nav>
 	</t:tb.navbar>
 
-	<t:tb.breadcrumb>
-		<t:pagelink page="">Home</t:pagelink>
-		<t:pagelink page="">Library</t:pagelink>
-		<t:pagelink page="">Data</t:pagelink>
-	</t:tb.breadcrumb>
+
       
 </html>

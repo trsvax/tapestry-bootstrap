@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Forms"
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter">
+
+<dl>
+	<dt>Tapestry Form</dt>
+	<dd>
+		<t:beaneditform object="address" />
+	</dd>
+
+	<dt>Boostrap Vertical Form</dt>
+	<dd>
+		<t:beaneditform object="address" fwtype="form-vertical" />
+	</dd>
+
+	<dt>Bootstrap Horizontal Form</dt>
+	<dd>
+		<t:beaneditform object="address" fwtype="form-horizontal" />
+	</dd>
+
+</dl>
+
+</html>

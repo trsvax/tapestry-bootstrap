@@ -22,7 +22,7 @@ Bootstrap Components:
 - **Breadcrumb**
 	- format [Breadcrumbs](https://github.com/argoyle/tapestry-breadcrumbs)
 	
-= **ButtonGroup**
+- **ButtonGroup**
 	- Turns a set of links into a [ButtonGroup](http://twitter.github.com/bootstrap/components.html#buttonGroups)
 	
 - **Code**
@@ -67,7 +67,7 @@ Bootstap Mixins
   - makes elements [Sortable]http://jqueryui.com/demos/sortable/)
   
 
-Using Bootstrap:
+##Using Bootstrap:
 Just the jar file to your project add the following to your Layout
 @Exclude(stylesheet={"core"})
 @Import(stylesheet={
@@ -80,16 +80,16 @@ library={
 )
 and modify our Layout.tml [Layouts](http://twitter.github.com/bootstrap/scaffolding.html#layouts)
 
-Using Grid
+## Using Grid
 The fw mixins adds an fwtype parameter to the Grid. If this value is null the Grid works as before. 
 Providing a [Table Option](http://twitter.github.com/bootstrap/base-css.html#tables) will cause the
 table to be formated by Bootstrap
 
-Using BeanEditForm
+## Using BeanEditForm
 as with Grid an fwtype parameter will format the form with Boostrap. 
 based on [Forms](http://twitter.github.com/bootstrap/base-css.html#forms)
 
-Customizing Bootstrap:
+## Customizing Bootstrap:
 There are two Tapestry configurations that allow you to customize Bootstrap. First the EnvironmentSetup.class defines
 a set of mapped objects that set defaults for most of the components/mixins. Secound is the BootstrapProvider chain.
 This contains an ordered list of provides that create the Bootstrap Provider. The chain is called by the FW mixin for

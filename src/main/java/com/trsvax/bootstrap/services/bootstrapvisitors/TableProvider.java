@@ -13,7 +13,10 @@ import org.slf4j.Logger;
 import com.trsvax.bootstrap.AbstractFrameworkProvider;
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkMixin;
+import com.trsvax.bootstrap.environment.GridPagerEnvironment;
+import com.trsvax.bootstrap.environment.GridPagerValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
+import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor.GridPager;
 
 public class TableProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {Grid.class};
@@ -26,20 +29,22 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 		this.logger = logger;
 		this.environment = environment;
 	}
+	
+	public boolean setupRender(FrameworkMixin mixin, MarkupWriter writer) {
+		if ( handle(mixin) ) {
+			environment.push(GridPagerEnvironment.class, new GridPagerValues(null).withType("pagination"));
+		}
+		return false;
+	}
 
 
 	public boolean cleanupRender(FrameworkMixin mixin, MarkupWriter writer) {
-		if ( ! Grid.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+		if ( ! handle(mixin) ) {
 			return false;
 		}
+
 		final TableEnvironment tableEnvironment = environment.peekRequired(environmentClass);
 		final String type = tableEnvironment.getType(mixin);
-		if ( type == null ) {
-			return false;
-		}
-		if ( ! type.startsWith(tableEnvironment.getPrefix())) {
-			return false;
-		}
 		final Set<Element> pop = new HashSet<Element>();
 		mixin.getRoot().visit(new Visitor() {
 			
@@ -74,12 +79,28 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 		for ( Element element : pop ) {
 			element.pop();
 		}
+		environment.pop(GridPagerEnvironment.class);
 		return true;
 	}
 
 
 	public boolean instrument(FrameworkMixin mixin) {
 		return instrument(mixin, environment.peekRequired(environmentClass), handles);
+	}
+	
+	boolean handle(FrameworkMixin mixin) {
+		if ( ! Grid.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+			return false;
+		}
+		final TableEnvironment tableEnvironment = environment.peekRequired(environmentClass);
+		final String type = tableEnvironment.getType(mixin);
+		if ( type == null ) {
+			return false;
+		}
+		if ( ! type.startsWith(tableEnvironment.getPrefix())) {
+			return false;
+		}
+		return true;
 	}
 
 }

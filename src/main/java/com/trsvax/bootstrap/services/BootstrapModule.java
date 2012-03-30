@@ -42,6 +42,8 @@ import com.trsvax.bootstrap.environment.FormEnvironment;
 import com.trsvax.bootstrap.environment.FormValues;
 import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 import com.trsvax.bootstrap.environment.FrameworkValues;
+import com.trsvax.bootstrap.environment.GridPagerEnvironment;
+import com.trsvax.bootstrap.environment.GridPagerValues;
 import com.trsvax.bootstrap.environment.NavEnvironment;
 import com.trsvax.bootstrap.environment.NavValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
@@ -55,6 +57,7 @@ import com.trsvax.bootstrap.services.bootstrapvisitors.FormProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.LayoutProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.NavBarProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.NavProvider;
+import com.trsvax.bootstrap.services.bootstrapvisitors.PaginationProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.TableProvider;
 
 
@@ -82,6 +85,7 @@ public class BootstrapModule {
 		binder.bind(BootstrapProvider.class,LayoutProvider.class).withId("BootstrapLayout");	
 		binder.bind(BootstrapProvider.class,NavProvider.class).withId("BootstrapNav");
 		binder.bind(BootstrapProvider.class,NavBarProvider.class).withId("BootstrapNavBar");
+		binder.bind(BootstrapProvider.class,PaginationProvider.class).withId("BootstrapPagination");
 		binder.bind(BootstrapProvider.class,TableProvider.class).withId("BootstrapTable");	
 		
 		
@@ -110,6 +114,7 @@ public class BootstrapModule {
 			@InjectService("BootstrapLayout") BootstrapProvider layoutProvider,
 			@InjectService("BootstrapNav") BootstrapProvider navProvider,
 			@InjectService("BootstrapNavBar") BootstrapProvider navBarProvider,
+			@InjectService("BootstrapPagination") BootstrapProvider paginationProvider,
 			@InjectService("BootstrapTable") BootstrapProvider tableProvider) {
 		configuration.add("Button", buttonProvider);
 		configuration.add("ButtonGroup", buttonGroupProvider);
@@ -118,6 +123,7 @@ public class BootstrapModule {
 		configuration.add("Layout", layoutProvider);
 		configuration.add("Nav", navProvider,"before:ButtonGroup");
 		configuration.add("NavBar", navBarProvider);
+		configuration.add("Pagination", paginationProvider);
 		configuration.add("Table", tableProvider);
 		
 	}
@@ -149,6 +155,7 @@ public class BootstrapModule {
 		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
 		configuration.add(FormEnvironment.class, new FormValues(null));
 		configuration.add(NavEnvironment.class, new NavValues(null));
+		configuration.add(GridPagerEnvironment.class, new GridPagerValues(null));
 		configuration.add(TableEnvironment.class, new TableValues(null));
 	}
 

@@ -58,6 +58,15 @@
 				    <a href="#">Javascript plugins</a>
 				    <t:dropdown>
 				    	<t:pagelink page="JavascriptPlugins/modal">Modal</t:pagelink>	
+				    	<t:pagelink page="JavascriptPlugins/dropdown">Dropdown</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/tab">Tab</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/tooltip">Tooltip</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/popover">Popover</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/alert">Alert</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/button">Button</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/collapse">Collapse</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/carousel">Carousel</t:pagelink>
+				    	<t:pagelink page="JavascriptPlugins/typeahead">Typeahead</t:pagelink>
 				    </t:dropdown>
 				</t:buttongroup>
       			

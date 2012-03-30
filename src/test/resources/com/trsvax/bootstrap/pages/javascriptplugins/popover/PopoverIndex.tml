@@ -3,4 +3,10 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
+      <a t:type="any" href="#" class="btn btn-danger" rel="popover" t:mixins="popover" 
+		data-content="And here's some amazing content. It's very engaging. right?" 
+		data-original-title="A Title">hover for popover</a>
+		
+
+      
 </html>

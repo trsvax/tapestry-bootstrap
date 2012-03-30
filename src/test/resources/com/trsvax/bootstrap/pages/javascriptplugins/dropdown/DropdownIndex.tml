@@ -3,4 +3,13 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
+      	      <t:tb.buttonGroup>
+	      	<a href="#">dropdown</a>
+	      	<t:tb.dropdown>
+	      		<t:pagelink page="components/buttons">Link1</t:pagelink>
+	      		<t:pagelink page="components/buttons">Link2</t:pagelink>
+	      		<t:pagelink page="components/buttons">Link3</t:pagelink>
+	      	</t:tb.dropdown>
+	      </t:tb.buttonGroup>
+      
 </html>

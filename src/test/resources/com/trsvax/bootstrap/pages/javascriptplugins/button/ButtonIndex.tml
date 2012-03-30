@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" t:type="layout" title="Button"
-      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
-      xmlns:p="tapestry:parameter">
-      
+	xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+	xmlns:p="tapestry:parameter">
+
+<dl>
+	<dt>Single</dt>
+	<dd>
+		<button class="btn" data-toggle="button">Single Toggle</button>
+	</dd>
+	<dt>Checkbox</dt>
+	<dd>
+		<t:buttongroup data-toggle="buttons-checkbox">
+			<button class="btn">Left</button>
+			<button class="btn">Middle</button>
+			<button class="btn">Right</button>
+		</t:buttongroup>
+	</dd>
+	<dt>Radio</dt>
+	<dd>
+		<t:buttongroup data-toggle="buttons-radio">
+			<button class="btn">Left</button>
+			<button class="btn">Middle</button>
+			<button class="btn">Right</button>
+		</t:buttongroup>
+	</dd>
+</dl>
+
+
+
+
+
+
+
 </html>

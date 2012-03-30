@@ -96,7 +96,7 @@ Providing a [Table Option](http://twitter.github.com/bootstrap/base-css.html#tab
 table to be formated by Bootstrap
 
 ## Using BeanEditForm
-as with Grid an fwtype parameter will format the form with Boostrap. 
+as with Grid an fwtype parameter will format the form with Bootstrap. 
 based on [Forms](http://twitter.github.com/bootstrap/base-css.html#forms)
 
 ## Customizing Bootstrap:

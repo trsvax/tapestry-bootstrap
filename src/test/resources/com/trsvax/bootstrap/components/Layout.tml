@@ -31,16 +31,30 @@
 			   <t:buttongroup>
 			    	<a href="#">Base CSS</a>
 			    	<t:dropdown>
-			        <t:pagelink page="basecss/Typography">Typography</t:pagelink>
-			      	<t:pagelink page="basecss/Code">Code</t:pagelink>
-			      	<t:pagelink page="basecss/Tables">Tables</t:pagelink>
-			      	<t:pagelink page="basecss/Forms">Forms</t:pagelink>
-			      	<t:pagelink page="basecss/Buttons">Buttons</t:pagelink>
-			      	<t:pagelink page="basecss/Icons">Icons by Glyphicons</t:pagelink>
+				        <t:pagelink page="basecss/Typography">Typography</t:pagelink>
+				      	<t:pagelink page="basecss/Code">Code</t:pagelink>
+				      	<t:pagelink page="basecss/Tables">Tables</t:pagelink>
+				      	<t:pagelink page="basecss/Forms">Forms</t:pagelink>
+				      	<t:pagelink page="basecss/Buttons">Buttons</t:pagelink>
+				      	<t:pagelink page="basecss/Icons">Icons by Glyphicons</t:pagelink>
 			      	</t:dropdown>
       			</t:buttongroup>
       			
-			    <t:pagelink page="Components">Components</t:pagelink>
+	      		<t:buttongroup>
+				    <a href="#">Components</a>
+				    <t:dropdown>	
+			      		<t:pagelink page="components/Buttons">Buttons</t:pagelink>
+			      		<t:pagelink page="components/Navigation">Navigation</t:pagelink>
+			      		<t:pagelink page="components/Labels">Labels</t:pagelink>
+			      		<t:pagelink page="components/Badges">Badges</t:pagelink>
+			      		<t:pagelink page="components/Typography">Typography</t:pagelink>
+			      		<t:pagelink page="components/Thumbnails">Thumbnails</t:pagelink>
+			      		<t:pagelink page="components/Alerts">Alerts</t:pagelink>
+			      		<t:pagelink page="components/Progressbars">Progress Bars</t:pagelink>
+			      		<t:pagelink page="components/Miscellaneous">Miscellaneous</t:pagelink>
+		      		</t:dropdown>
+	      		</t:buttongroup>
+      			
 			    <t:pagelink page="JavascriptPlugins">Javascript plugins</t:pagelink>
 			</t:tb.nav>			
 	</t:tb.navbar>

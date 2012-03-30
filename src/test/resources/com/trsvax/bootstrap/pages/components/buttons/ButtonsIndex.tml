@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" t:type="layout" title="components/buttons"
+<html lang="en" t:type="layout" title="Button Groups"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       

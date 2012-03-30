@@ -54,6 +54,20 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 					element.elementBefore(tableEnvironment.getSortElement(), tableEnvironment.getSortElementAttributes());
 					element.remove();
 				}
+				if ( th(element)) {
+					String classes = element.getAttribute("class");
+					if ( classes != null ) {
+						String newClasses = "";
+						for ( String c : classes.split(" ")) {
+							if ( c.startsWith("t-")) {
+								newClasses += " " + c;
+							} else {
+								newClasses += " fw-" + c;
+							}
+						}
+						element.forceAttributes("class",newClasses);
+					}
+				}
 				
 			}
 		});

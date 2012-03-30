@@ -58,6 +58,7 @@ public class NavProvider extends AbstractFrameworkProvider implements BootstrapP
 		final String type = mixin.getType();
 		final List<Element> anchors = new ArrayList<Element>();
 
+		//TODO add support for Split button dropdowns
 		mixin.getRoot().visit(new Visitor() {
 			
 			public void visit(Element element) {

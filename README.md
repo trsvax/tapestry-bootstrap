@@ -9,7 +9,7 @@ Tapestry is a Java based web framework.
 
 ## Features
 - Converts existing components such a BeanEditForm and Grid into Bootstrap Forms/Tables
-- Components such as ButtonGroup that make created Bootstrap HTML easier.
+- Components such as ButtonGroup that make creating Bootstrap HTML easier.
 - Uses Tapestry chain of command so functionality can be extended/overridden.
 - Extensive configuration via the environment
 
@@ -69,9 +69,9 @@ Bootstap Mixins
   
 
 ##Using Bootstrap:
-Just the jar file to your project add the following to your Layout.
+Just include the jar file to your project, add the following to your Layout.
 
-	@Exclude(stylesheet={"core"})
+	@Exclude(stylesheet={"core"})  //If you do not want Tapestry CSS
 	@Import(stylesheet={
 			"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap.css",
 			"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap-responsive.css"
@@ -81,7 +81,14 @@ Just the jar file to your project add the following to your Layout.
 			}
 	)
 	
-and modify your Layout.tml [Layouts](http://twitter.github.com/bootstrap/scaffolding.html#layouts)
+then modify your Layout.tml [Layouts](http://twitter.github.com/bootstrap/scaffolding.html#layouts)
+
+	<body>
+	  <div class="container">
+	   <t:body/>
+	  </div>
+	</body>
+
 
 ## Using Grid
 The fw mixins adds an fwtype parameter to the Grid. If this value is null the Grid works as before. 

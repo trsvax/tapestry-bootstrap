@@ -15,8 +15,31 @@
     <t:tb.navbar fwtype="navbar-fixed" >
       		<t:tb.nav>
 			   <t:pagelink page="Overview">Overview</t:pagelink>
-			    <t:pagelink page="Scaffolding">Scaffolding</t:pagelink>
-			    <t:pagelink page="BaseCSS">Base CSS</t:pagelink>
+			   <t:buttongroup>
+			 	  <a href="#">Scaffolding</a>
+			 	  <t:dropdown>
+			 	    <t:pagelink page="Scaffolding">Index</t:pagelink>
+			 	  	<a href="#">Global Styles</a>
+		      		<a href="#">Grid System</a>
+		      		<a href="#">Fluid Grid System</a>
+		      		<a href="#">Customizing</a>
+		      		<a href="#">Layouts</a>
+		      		<a href="#">Responsive design</a>
+			 	  </t:dropdown>
+			   </t:buttongroup>
+			    
+			   <t:buttongroup>
+			    	<a href="#">Base CSS</a>
+			    	<t:dropdown>
+			        <t:pagelink page="basecss/Typography">Typography</t:pagelink>
+			      	<t:pagelink page="basecss/Code">Code</t:pagelink>
+			      	<t:pagelink page="basecss/Tables">Tables</t:pagelink>
+			      	<t:pagelink page="basecss/Forms">Forms</t:pagelink>
+			      	<t:pagelink page="basecss/Buttons">Buttons</t:pagelink>
+			      	<t:pagelink page="basecss/Icons">Icons by Glyphicons</t:pagelink>
+			      	</t:dropdown>
+      			</t:buttongroup>
+      			
 			    <t:pagelink page="Components">Components</t:pagelink>
 			    <t:pagelink page="JavascriptPlugins">Javascript plugins</t:pagelink>
 			</t:tb.nav>			

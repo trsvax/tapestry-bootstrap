@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="BeanEditForm"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+
+      <t:beaneditform object="object" />
+      <t:beaneditform object="object" fwtype="form-vertical"/>
+      <t:beaneditform object="object" fwtype="form-inline"/>
+      <t:beaneditform object="object" fwtype="form-horizontal"/>
+</html>

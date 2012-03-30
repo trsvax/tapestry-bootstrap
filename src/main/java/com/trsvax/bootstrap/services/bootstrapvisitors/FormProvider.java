@@ -82,6 +82,9 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 						element.wrap("div", "class", "controls");
 					}
 				}
+				if ( textarea(element) ) {
+					element.wrap("div", "class", "controls");
+				}
 				if ( label(element)) {
 					element.addClassName("control-label");
 				}

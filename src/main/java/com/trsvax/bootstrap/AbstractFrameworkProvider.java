@@ -65,6 +65,9 @@ public abstract class AbstractFrameworkProvider implements FrameworkProvider {
 	public boolean ul(Element element) {
 		return hasName("ul", element);
 	}
+	public boolean textarea(Element element) {
+		return hasName("textarea", element);
+	}
 
 	public boolean hasName(String name, Element element) {
 		if ( isPopped(element) ) {

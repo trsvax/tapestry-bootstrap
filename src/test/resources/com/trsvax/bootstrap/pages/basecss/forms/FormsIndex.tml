@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Forms"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+      <ul>
+      <li><t:pagelink page="basecss/forms/form">Form</t:pagelink></li>
+      <li><t:pagelink page="basecss/forms/beanEditForm">BeanEditForm</t:pagelink></li>
+      <li><t:pagelink page="basecss/forms/beanEditor">BeanEditor</t:pagelink></li>
+      </ul>
+          
+</html>

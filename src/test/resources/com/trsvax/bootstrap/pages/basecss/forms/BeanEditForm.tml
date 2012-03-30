@@ -3,9 +3,20 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
+	<dl>
+	<dt>Default</dt>
+	<dd><t:beaneditform object="object" /></dd>
+	<dt>form-vertical</dt>
+	<dd><t:beaneditform object="object" fwtype="form-vertical"/></dd>
+	<dt>form-inline</dt>
+	<dd><t:beaneditform object="object" fwtype="form-inline"/></dd>
+	<dt>form-horizontal</dt>
+	<dd><t:beaneditform object="object" fwtype="form-horizontal"/></dd>
 
-      <t:beaneditform object="object" />
-      <t:beaneditform object="object" fwtype="form-vertical"/>
-      <t:beaneditform object="object" fwtype="form-inline"/>
-      <t:beaneditform object="object" fwtype="form-horizontal"/>
+	</dl>
+
+      
+      
+      
+      
 </html>

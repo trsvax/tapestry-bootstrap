@@ -13,7 +13,8 @@ import com.trsvax.bootstrap.annotations.Exclude;
 		"classpath:/com/trsvax/bootstrap/assets/bootstrap/css/bootstrap-responsive.css"
 		},
 library={
-		"classpath:/com/trsvax/bootstrap/assets/bootstrap/js/bootstrap.js"
+		"classpath:/com/trsvax/bootstrap/assets/bootstrap/js/bootstrap.js",
+		"classpath:/com/trsvax/bootstrap/assets/components/datepicker/datefield.js"
 		}
 )
 public class Layout  {

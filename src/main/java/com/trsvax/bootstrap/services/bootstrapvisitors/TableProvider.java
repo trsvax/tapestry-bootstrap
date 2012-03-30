@@ -7,6 +7,9 @@ import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
+import org.apache.tapestry5.ioc.Resource;
+import org.apache.tapestry5.services.AssetFactory;
+import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Environment;
 import org.slf4j.Logger;
 
@@ -23,11 +26,13 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 	private final Class<TableEnvironment> environmentClass = TableEnvironment.class;
 	private final Environment environment;
 	private final Logger logger;
+	private final String sortIcon;
 
 	
-	public TableProvider(Environment environment, Logger logger) {
+	public TableProvider(Environment environment, Logger logger, AssetSource assetSource) {
 		this.logger = logger;
 		this.environment = environment;
+		sortIcon = assetSource.getClasspathAsset("/com/trsvax/bootstrap/assets/images/sortable.gif").toClientURL();
 	}
 	
 	public boolean setupRender(FrameworkMixin mixin, MarkupWriter writer) {
@@ -56,7 +61,8 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 					element.forceAttributes("class", getClassForType(tableEnvironment.getPrefix(), type));
 				}
 				if ( img(element) && hasClass("t-sort-icon",element)) {
-					element.elementBefore(tableEnvironment.getSortElement(), tableEnvironment.getSortElementAttributes());
+					//element.elementBefore(tableEnvironment.getSortElement(), tableEnvironment.getSortElementAttributes());
+					element.elementBefore("img","src",sortIcon,"class","fw-sortIcon");
 					element.remove();
 				}
 				if ( th(element)) {

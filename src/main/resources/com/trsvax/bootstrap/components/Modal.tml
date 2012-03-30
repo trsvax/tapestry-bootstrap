@@ -1,0 +1,15 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">      
+
+<div class="modal-header">
+<a class="close" data-dismiss="modal">x</a>
+<t:delegate to="header"/>
+</div>
+<div class="modal-body">
+<t:body/>
+</div>
+<div class="modal-footer">
+<t:delegate to="footer"/>
+</div>
+
+
+</t:container>

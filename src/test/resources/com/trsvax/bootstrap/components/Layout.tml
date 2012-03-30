@@ -54,8 +54,14 @@
 			      		<t:pagelink page="components/Miscellaneous">Miscellaneous</t:pagelink>
 		      		</t:dropdown>
 	      		</t:buttongroup>
+	      		<t:buttongroup>
+				    <a href="#">Javascript plugins</a>
+				    <t:dropdown>
+				    	<t:pagelink page="JavascriptPlugins/modal">Modal</t:pagelink>	
+				    </t:dropdown>
+				</t:buttongroup>
       			
-			    <t:pagelink page="JavascriptPlugins">Javascript plugins</t:pagelink>
+			    
 			</t:tb.nav>			
 	</t:tb.navbar>
 	

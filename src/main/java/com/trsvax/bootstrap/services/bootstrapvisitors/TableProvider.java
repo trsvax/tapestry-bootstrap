@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
@@ -18,9 +17,10 @@ import com.trsvax.bootstrap.environment.TableEnvironment;
 
 public class TableProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {Grid.class};
-	private final Logger logger;
-	private final String prefix = "table";
+	private final Class<TableEnvironment> environmentClass = TableEnvironment.class;
 	private final Environment environment;
+	private final Logger logger;
+
 	
 	public TableProvider(Environment environment, Logger logger) {
 		this.logger = logger;
@@ -32,19 +32,15 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 		if ( ! Grid.class.getCanonicalName().equals(mixin.getComponentClassName())) {
 			return false;
 		}
-		final TableEnvironment tableEnvironment = environment.peekRequired(TableEnvironment.class);
-		String t = mixin.getType();
-		if ( tableEnvironment != null ) {
-			t = tableEnvironment.getType(mixin);
-		}
-		final Set<Element> pop = new HashSet<Element>();
-		final String type = t;
+		final TableEnvironment tableEnvironment = environment.peekRequired(environmentClass);
+		final String type = tableEnvironment.getType(mixin);
 		if ( type == null ) {
 			return false;
 		}
-		if ( ! type.startsWith(prefix)) {
+		if ( ! type.startsWith(tableEnvironment.getPrefix())) {
 			return false;
 		}
+		final Set<Element> pop = new HashSet<Element>();
 		mixin.getRoot().visit(new Visitor() {
 			
 			public void visit(Element element) {
@@ -52,7 +48,7 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 					pop.add(element);
 				}
 				if ( table(element) && hasClass("t-data-grid",element)) {
-					element.forceAttributes("class", getClassForType(prefix, type));
+					element.forceAttributes("class", getClassForType(tableEnvironment.getPrefix(), type));
 				}
 				if ( img(element) && hasClass("t-sort-icon",element)) {
 					element.elementBefore("i", "class",tableEnvironment.getSortIcon());
@@ -69,21 +65,7 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 
 
 	public boolean instrument(FrameworkMixin mixin) {
-		String name = mixin.getComponentClassName();
-		String type = mixin.getType();
-		TableEnvironment tableEnvironment = environment.peekRequired(TableEnvironment.class);
-		if ( tableEnvironment != null ) {
-			type = tableEnvironment.getType(mixin);
-		}
-		for ( Class<?> clazz : handles ) {
-			if ( clazz.getCanonicalName().equals(name)) {
-				return type != null && type.startsWith(prefix);
-			}
-		}
-
-		return false;
-
-		
+		return instrument(mixin, environment.peekRequired(environmentClass), handles);
 	}
 
 }

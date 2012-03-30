@@ -7,6 +7,7 @@ public class ButtonGroupValues implements ButtonGroupEnvironment {
 	private boolean isButtonGroup;
 	private boolean isDropDown;
 	private String type;
+	private String prefix = "btn";
 	
 	public ButtonGroupValues(ButtonGroupValues values) {
 		
@@ -43,6 +44,10 @@ public class ButtonGroupValues implements ButtonGroupEnvironment {
 
 	public String getType(FrameworkMixin mixin) {
 		return mixin.getType() == null ? type : mixin.getType();
+	}
+
+	public String getPrefix() {
+		return prefix;
 	}
 
 }

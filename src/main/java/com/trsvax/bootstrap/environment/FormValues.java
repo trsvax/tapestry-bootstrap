@@ -2,15 +2,14 @@ package com.trsvax.bootstrap.environment;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 
-public class TableValues implements TableEnvironment {
-	private String type;
+public class FormValues implements FormEnvironment {
 	private boolean isInstrumented;
-	private String sortIcon = "icon-random";
-	private String prefix = "table";
+	private String type;
+	private String prefix = "form";
 	
-	public TableValues(TableEnvironment values) {
+	public FormValues(FormEnvironment values) {
 		if ( values != null ) {
-			
+			this.type = values.getType(null);
 		}
 	}
 
@@ -20,24 +19,17 @@ public class TableValues implements TableEnvironment {
 
 	public void withInstrumented(boolean value) {
 		isInstrumented = value;
-		
 	}
 
 	public String getType(FrameworkMixin mixin) {
+		if ( mixin == null ) {
+			return type;
+		}
 		return mixin.getType() == null ? type : mixin.getType();
 	}
 	
-	public TableValues withType(String type) {
+	public FormValues withType(String type) {
 		this.type = type;
-		return this;
-	}
-
-	public String getSortIcon() {
-		return sortIcon;
-	}
-
-	public TableValues withSortIcon(String sortIcon) {
-		this.sortIcon = sortIcon;
 		return this;
 	}
 

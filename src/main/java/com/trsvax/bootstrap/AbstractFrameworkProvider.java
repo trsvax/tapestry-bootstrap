@@ -3,6 +3,9 @@ package com.trsvax.bootstrap;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.dom.Element;
 
+import com.trsvax.bootstrap.environment.FWEnvironment;
+import com.trsvax.bootstrap.environment.TableEnvironment;
+
 public abstract class AbstractFrameworkProvider implements FrameworkProvider {
 	
 	public boolean setupRender(FrameworkMixin mixin, MarkupWriter writer) {
@@ -167,6 +170,17 @@ public abstract class AbstractFrameworkProvider implements FrameworkProvider {
 			element.forceAttributes("id",id);
 		}
 		return element;
+	}
+	
+	public boolean instrument(FrameworkMixin mixin, FWEnvironment environment, Class<?>[] handles) {
+		String name = mixin.getComponentClassName();
+		String type = environment.getType(mixin);
+		for ( Class<?> clazz : handles ) {
+			if ( clazz.getCanonicalName().equals(name)) {
+				return type != null && type.startsWith(environment.getPrefix());
+			}
+		}
+		return false;		
 	}
 	
 

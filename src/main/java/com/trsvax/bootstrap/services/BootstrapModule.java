@@ -38,6 +38,8 @@ import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
 import com.trsvax.bootstrap.environment.ButtonValues;
+import com.trsvax.bootstrap.environment.FormEnvironment;
+import com.trsvax.bootstrap.environment.FormValues;
 import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 import com.trsvax.bootstrap.environment.FrameworkValues;
 import com.trsvax.bootstrap.environment.NavEnvironment;
@@ -145,6 +147,7 @@ public class BootstrapModule {
 	public static void provideEnvironmentSetup(MappedConfiguration<Class, Object> configuration) {
 		configuration.add(FrameworkEnvironment.class, new FrameworkValues(null).withName("tb"));
 		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
+		configuration.add(FormEnvironment.class, new FormValues(null));
 		configuration.add(NavEnvironment.class, new NavValues(null));
 		configuration.add(TableEnvironment.class, new TableValues(null));
 	}

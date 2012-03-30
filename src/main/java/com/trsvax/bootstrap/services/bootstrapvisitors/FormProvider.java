@@ -4,41 +4,50 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.tapestry5.MarkupWriter;
+import org.apache.tapestry5.corelib.components.BeanEditForm;
+import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
+import org.apache.tapestry5.services.Environment;
 import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.AbstractFrameworkProvider;
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkMixin;
+import com.trsvax.bootstrap.environment.FormEnvironment;
+import com.trsvax.bootstrap.environment.TableEnvironment;
 
 public class FormProvider extends AbstractFrameworkProvider implements BootstrapProvider {
+	private final Class<?>[] handles = {BeanEditForm.class};
+	private final Class<FormEnvironment> environmentClass = FormEnvironment.class;
+	private final Environment environment;
 	private final Logger logger;
 	
-	public FormProvider(Logger logger) {
+	public FormProvider(Environment environment, Logger logger) {
+		this.environment = environment;
 		this.logger = logger;
 	}
 
 	public boolean cleanupRender(FrameworkMixin mixin, MarkupWriter writer) {
-		final Set<Element> pop = new HashSet<Element>();
-		final String type = mixin.getType();
+		
+		if ( ! BeanEditForm.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+			return false;
+		}
+		final FormEnvironment formEnvironment = environment.peekRequired(environmentClass);
+		final String type = formEnvironment.getType(mixin);
 		if ( type == null ) {
 			return false;
 		}
-		if ( ! type.startsWith("form")) {
+		if ( ! type.startsWith(formEnvironment.getPrefix())) {
 			return false;
 		}
-		logger.info("form  {}",mixin.getRoot());
+		
+		final Set<Element> pop = new HashSet<Element>();
 		mixin.getRoot().visit(beanEditForm(type,pop));
 		for ( Element element : pop ) {
 			element.pop();
 		}
 		return true;
-	}
-
-	public boolean renderMarkup(MarkupWriter writer) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	
@@ -84,7 +93,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 	}
 
 	public boolean instrument(FrameworkMixin mixin) {
-		return mixin.getType() != null && mixin.getType().startsWith("form");
+		return instrument(mixin, environment.peekRequired(environmentClass), handles);
 	}
 
 }

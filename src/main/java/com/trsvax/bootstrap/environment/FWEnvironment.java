@@ -7,5 +7,6 @@ public interface FWEnvironment {
 	public boolean isInstrumented();
 	public void withInstrumented(boolean value);
 	public String getType(FrameworkMixin mixin);
+	public String getPrefix();
 
 }

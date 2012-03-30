@@ -51,7 +51,7 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 					element.forceAttributes("class", getClassForType(tableEnvironment.getPrefix(), type));
 				}
 				if ( img(element) && hasClass("t-sort-icon",element)) {
-					element.elementBefore("i", "class",tableEnvironment.getSortIcon());
+					element.elementBefore(tableEnvironment.getSortElement(), tableEnvironment.getSortElementAttributes());
 					element.remove();
 				}
 				

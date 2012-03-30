@@ -3,4 +3,6 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
       
+      <t:grid source="addresses"  rowsPerPage="5"/>
+      <t:grid source="addresses" fwtype="table" rowsPerPage="5"/>
 </html>

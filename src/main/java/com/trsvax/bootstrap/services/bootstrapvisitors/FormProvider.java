@@ -79,7 +79,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 					} else if ( value.equals("Cancel")) {
 						element.addClassName("btn");
 					} else {
-						element.wrap("div", "class", "control");
+						element.wrap("div", "class", "controls");
 					}
 				}
 				if ( label(element)) {

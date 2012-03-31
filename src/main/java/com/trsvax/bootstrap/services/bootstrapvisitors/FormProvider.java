@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
-import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.services.Environment;
@@ -15,7 +14,6 @@ import com.trsvax.bootstrap.AbstractFrameworkProvider;
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.environment.FormEnvironment;
-import com.trsvax.bootstrap.environment.TableEnvironment;
 
 public class FormProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {BeanEditForm.class};
@@ -43,57 +41,63 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		}
 		
 		final Set<Element> pop = new HashSet<Element>();
-		mixin.getRoot().visit(beanEditForm(type,pop));
+		mixin.getRoot().visit( new BeanEditFormVisitor(type,pop));
 		for ( Element element : pop ) {
 			element.pop();
 		}
 		return true;
 	}
 	
-	
-	Visitor beanEditForm(final String type, final Set<Element> pop) {	
+	class BeanEditFormVisitor implements Visitor {
+		Element controls;
+		final String type;
+		final Set<Element> pop;
+		
+		public BeanEditFormVisitor(final String type, final Set<Element> pop) {
+			this.type = type;
+			this.pop = pop;
+		}
 
-		return new Visitor() {
+		public void visit(Element element) {
+			Element buttonContainer;
 
-			public void visit(Element element) {
-				Element buttonContainer;
-
-				if ( form(element)) {
-					element.addClassName(type);
-				}
+			if ( form(element)) {
+				element.addClassName(type);
+			}
+			
+			if (hasClass("t-beaneditor", element)) {
+				pop.add(element);
+			}
+			if (hasClass("t-beaneditor-row", element)) {
+				element.forceAttributes("class", "control-group");
+			}
+			if ( input(element)) {
 				
-				if (hasClass("t-beaneditor", element)) {
-					pop.add(element);
-				}
-				if (hasClass("t-beaneditor-row", element)) {
-					element.forceAttributes("class", "control-group");
-				}
-				if ( input(element)) {
-					
-					String type= element.getAttribute("type");
-					String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
-					if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
-						buttonContainer = element.getContainer();
-						buttonContainer.forceAttributes("class","form-actions");
-						element.addClassName("btn btn-primary");
-					} else if ( value.equals("Cancel")) {
-						element.addClassName("btn");
-					} else {
-						element.wrap("div", "class", "controls");
-					}
-				}
-				if ( textarea(element) ) {
-					element.wrap("div", "class", "controls");
-				}
-				if ( label(element)) {
-					element.addClassName("control-label");
-				}
-				if ( img(element)) {
-					element.remove();
+				String type= element.getAttribute("type");
+				String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
+				if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
+					buttonContainer = element.getContainer();
+					buttonContainer.forceAttributes("class","form-actions");
+					element.addClassName("btn btn-primary");
+				} else if ( value.equals("Cancel")) {
+					element.addClassName("btn");
+				} else {
+					controls = element.wrap("div", "class", "controls");
 				}
 			}
-		};
+			if ( textarea(element) ) {
+				element.wrap("div", "class", "controls");
+			}
+			if ( label(element)) {
+				element.addClassName("control-label");
+			}
+			if ( hasClass("t-calendar-trigger",element)) {
+				element.moveToBottom(controls);
+			}
+		}
 	}
+	
+
 
 	public boolean instrument(FrameworkMixin mixin) {
 		return instrument(mixin, environment.peekRequired(environmentClass), handles);

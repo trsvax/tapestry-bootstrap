@@ -12,7 +12,12 @@
        <!-- Navbar
     ================================================== -->
     
-    <t:tb.navbar fwtype="navbar-fixed" >
+    <t:tb.navbar fwtype="navbar-fixed" brand="literal:Tapestry Bootstrap" >
+    	<p:collapse>
+    		<span class="icon-bar"/>
+    		<span class="icon-bar"/>
+    		<span class="icon-bar"/>
+    	</p:collapse>
       		<t:tb.nav>
 			   <t:pagelink page="Overview">Overview</t:pagelink>
 			   <t:buttongroup>

@@ -10,7 +10,7 @@ public class AppModule {
 
     public static void contributeApplicationDefaults(
             MappedConfiguration<String, Object> configuration) {
-    	//configuration.add(JQuerySymbolConstants.SUPPRESS_PROTOTYPE, "false");
+    	configuration.add(JQuerySymbolConstants.SUPPRESS_PROTOTYPE, "false");
 
     }
 

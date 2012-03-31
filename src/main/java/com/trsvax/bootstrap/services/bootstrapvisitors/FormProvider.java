@@ -63,6 +63,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 
 			if ( form(element)) {
 				element.addClassName(type);
+				return;
 			}
 			
 			if (hasClass("t-beaneditor", element)) {

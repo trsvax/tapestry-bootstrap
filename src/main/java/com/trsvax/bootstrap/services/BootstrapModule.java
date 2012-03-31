@@ -14,6 +14,7 @@ import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Marker;
 import org.apache.tapestry5.ioc.annotations.Primary;
+import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
 import org.apache.tapestry5.ioc.services.ServiceOverride;
 import org.apache.tapestry5.json.JSONObject;
@@ -29,8 +30,10 @@ import org.apache.tapestry5.services.MarkupRendererFilter;
 import org.apache.tapestry5.services.PartialMarkupRenderer;
 import org.apache.tapestry5.services.PartialMarkupRendererFilter;
 import org.apache.tapestry5.services.ValidationDecoratorFactory;
+import org.apache.tapestry5.services.javascript.JavaScriptStack;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
+import org.got5.tapestry5.jquery.JQuerySymbolConstants;
 import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.BootstrapProvider;
@@ -59,6 +62,7 @@ import com.trsvax.bootstrap.services.bootstrapvisitors.NavBarProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.NavProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.PaginationProvider;
 import com.trsvax.bootstrap.services.bootstrapvisitors.TableProvider;
+import com.trsvax.bootstrap.services.javascript.BootstrapFormStack;
 
 
 /**
@@ -97,6 +101,14 @@ public class BootstrapModule {
 	public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
 		configuration.add(new LibraryMapping("tb", "com.trsvax.bootstrap"));
 	}
+	
+	public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration,
+    		@Symbol(JQuerySymbolConstants.SUPPRESS_PROTOTYPE) boolean suppressPrototype) {
+		if ( suppressPrototype ) {
+			configuration.overrideInstance(BootstrapFormStack.STACK_ID, BootstrapFormStack.class);
+		}
+    
+    }
 
 	public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> configuration,
 			@InjectService("SessionBindingFactory") BindingFactory sessionBindingFactory,

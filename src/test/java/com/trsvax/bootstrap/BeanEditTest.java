@@ -3,11 +3,13 @@ package com.trsvax.bootstrap;
 import java.util.Date;
 
 import org.apache.tapestry5.beaneditor.DataType;
+import org.apache.tapestry5.beaneditor.Validate;
 
 public class BeanEditTest {
 	
 	private boolean checkbox;
 	private Date dateField;
+	@Validate("required")
 	private String textField;
 	@DataType("longtext")
 	private String textArea;

@@ -1,4 +1,4 @@
-package com.trsvax.bootstrap.services.bootstrapvisitors;
+package com.trsvax.bootstrap.services.bootstrapprovider;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,7 +19,7 @@ import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.environment.GridPagerEnvironment;
 import com.trsvax.bootstrap.environment.GridPagerValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
-import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor.GridPager;
+import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapFrameworkVisitor.GridPager;
 
 public class TableProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {Grid.class};

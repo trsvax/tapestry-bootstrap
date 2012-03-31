@@ -1,4 +1,4 @@
-package com.trsvax.bootstrap.services.bootstrapvisitors;
+package com.trsvax.bootstrap.services.bootstrapprovider;
 
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.dom.Element;

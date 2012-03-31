@@ -14,8 +14,7 @@ import com.trsvax.bootstrap.annotations.Exclude;
 		},
 library={
 		"classpath:/com/trsvax/bootstrap/assets/bootstrap/js/bootstrap.js",
-		"classpath:/com/trsvax/bootstrap/assets/components/datepicker/datefield.js",
-		"classpath:/com/trsvax/bootstrap/assets/validation.js"
+		"classpath:/com/trsvax/bootstrap/assets/components/datepicker/datefield.js"
 		}
 )
 public class Layout  {

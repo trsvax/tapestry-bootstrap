@@ -51,17 +51,17 @@ import com.trsvax.bootstrap.environment.NavEnvironment;
 import com.trsvax.bootstrap.environment.NavValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
 import com.trsvax.bootstrap.environment.TableValues;
-import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapFrameworkVisitor;
-import com.trsvax.bootstrap.services.bootstrapvisitors.BootstrapVisitor;
-import com.trsvax.bootstrap.services.bootstrapvisitors.ButtonGroupProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.ButtonProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.DefaultProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.FormProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.LayoutProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.NavBarProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.NavProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.PaginationProvider;
-import com.trsvax.bootstrap.services.bootstrapvisitors.TableProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapFrameworkVisitor;
+import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapVisitor;
+import com.trsvax.bootstrap.services.bootstrapprovider.ButtonGroupProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.ButtonProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.DefaultProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.FormProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.LayoutProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.NavBarProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.NavProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.PaginationProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.TableProvider;
 import com.trsvax.bootstrap.services.javascript.BootstrapFormStack;
 
 

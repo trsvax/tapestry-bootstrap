@@ -12,7 +12,10 @@
        <!-- Navbar
     ================================================== -->
     
-    <t:tb.navbar fwtype="navbar-fixed" brand="literal:Tapestry Bootstrap" >
+    <t:tb.navbar fwtype="navbar-fixed" >
+    <p:brand>
+    	Tapestry Bootstrap
+    </p:brand>
     	<p:collapse>
     		<span class="icon-bar"/>
     		<span class="icon-bar"/>

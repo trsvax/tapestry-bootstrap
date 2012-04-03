@@ -8,7 +8,7 @@ import org.apache.tapestry5.annotations.Property;
 public class NavBar {
 	@Parameter
 	@Property
-	private String brand;
+	private Block brand;
 	
 	@Parameter
 	@Property

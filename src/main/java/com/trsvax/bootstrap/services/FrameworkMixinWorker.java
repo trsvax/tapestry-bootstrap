@@ -28,7 +28,6 @@ public class FrameworkMixinWorker implements ComponentClassTransformWorker2 {
 		if ( exclude(model)) {
 			return;
 		}
-		logger.info("check {}",model.getComponentClassName());
 	    if ( ! hasFW(model.getMixinClassNames())) {
 	    	
 			if ( model.getSupportsInformalParameters() ) {

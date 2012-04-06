@@ -81,7 +81,7 @@ public class NavProvider extends AbstractFrameworkProvider implements BootstrapP
 				li = element.wrap("li");
 			} 
 			if ( hasClass("active",element) || active == null) {
-				active = li;
+				//active = li;
 			}			
 		}
 		if ( active != null ) {

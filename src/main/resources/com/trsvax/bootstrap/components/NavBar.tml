@@ -8,8 +8,7 @@
 					<t:delegate to="collapse"/>
 				</a>
 				<t:if test="brand">
-					<a class="brand" href="#"><t:delegate to="brand"/></a>
-					
+					<t:delegate to="brand"/>					
 				</t:if>
 				<t:if test="collapse">
 					<div class="nav-collapse">

@@ -39,6 +39,8 @@ import org.slf4j.Logger;
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.FrameworkVisitor;
+import com.trsvax.bootstrap.environment.BreadcrumbEnvironment;
+import com.trsvax.bootstrap.environment.BreadcrumbValues;
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
 import com.trsvax.bootstrap.environment.ButtonValues;
 import com.trsvax.bootstrap.environment.FormEnvironment;
@@ -53,6 +55,7 @@ import com.trsvax.bootstrap.environment.TableEnvironment;
 import com.trsvax.bootstrap.environment.TableValues;
 import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapFrameworkVisitor;
 import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapVisitor;
+import com.trsvax.bootstrap.services.bootstrapprovider.BreadcrumbProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.ButtonGroupProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.ButtonProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.DefaultProvider;
@@ -82,6 +85,7 @@ public class BootstrapModule {
 		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
 		
 		
+		binder.bind(BootstrapProvider.class,BreadcrumbProvider.class).withId("BootstrapBreadcrumb");
 		binder.bind(BootstrapProvider.class,ButtonProvider.class).withId("BootstrapButton");
 		binder.bind(BootstrapProvider.class,ButtonGroupProvider.class).withId("BootstrapButtonGroup");
 		binder.bind(BootstrapProvider.class,DefaultProvider.class).withId("BootstrapDefault");
@@ -119,6 +123,7 @@ public class BootstrapModule {
 	}
 	
 	public static void contributeBootstrapProvider(OrderedConfiguration<BootstrapProvider> configuration,
+			@InjectService("BootstrapBreadcrumb") BootstrapProvider breadcrumbProvider,
 			@InjectService("BootstrapButton") BootstrapProvider buttonProvider,
 			@InjectService("BootstrapButtonGroup") BootstrapProvider buttonGroupProvider,
 			@InjectService("BootstrapDefault") BootstrapProvider defaultProvider,
@@ -128,6 +133,7 @@ public class BootstrapModule {
 			@InjectService("BootstrapNavBar") BootstrapProvider navBarProvider,
 			@InjectService("BootstrapPagination") BootstrapProvider paginationProvider,
 			@InjectService("BootstrapTable") BootstrapProvider tableProvider) {
+		configuration.add("Breadcrumb",breadcrumbProvider);
 		configuration.add("Button", buttonProvider);
 		configuration.add("ButtonGroup", buttonGroupProvider);
 		configuration.add("Default",defaultProvider);
@@ -164,6 +170,7 @@ public class BootstrapModule {
 	@Contribute(EnvironmentSetup.class)
 	public static void provideEnvironmentSetup(MappedConfiguration<Class, Object> configuration) {
 		configuration.add(FrameworkEnvironment.class, new FrameworkValues(null).withName("tb"));
+		configuration.add(BreadcrumbEnvironment.class,new BreadcrumbValues(null));
 		configuration.add(ButtonEnvironment.class, new ButtonValues(null));
 		configuration.add(FormEnvironment.class, new FormValues(null));
 		configuration.add(NavEnvironment.class, new NavValues(null));

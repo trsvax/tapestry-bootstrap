@@ -3,6 +3,7 @@ package com.trsvax.bootstrap.services.bootstrapprovider;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.dom.Element;
@@ -65,7 +66,9 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 				element.addClassName(type);
 				return;
 			}
-			
+			if (div(element) && hasClass("t-error", element)) {
+				element.forceAttributes("class", "alert alert-error");
+			}
 			if (hasClass("t-beaneditor", element)) {
 				pop.add(element);
 			}
@@ -74,6 +77,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 			}
 			if ( select(element)) {
 				controls = element.wrap("div", "class", "controls");
+				markErrors(element);
 			}
 			if ( input(element)) {
 				
@@ -87,16 +91,35 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 					element.addClassName("btn");
 				} else {
 					controls = element.wrap("div", "class", "controls");
+					markErrors(element);
 				}
 			}
 			if ( textarea(element) ) {
 				element.wrap("div", "class", "controls");
+				markErrors(element);
 			}
 			if ( label(element)) {
 				element.addClassName("control-label");
 			}
 			if ( hasClass("t-calendar-trigger",element)) {
 				element.moveToBottom(controls);
+			}
+		}
+
+		/**
+		 * If the element is marked as error by Tapesty, add the CSS class "error" to the control-group DIV.
+		 *
+		 * Moves the "help-inline" error message created but the ValidationDecorator as a child of the control DIV.
+		 *
+		 * @param element The input/select element to check for error
+		 */
+		private void markErrors(Element element) {
+			if (hasClass("error", element)){
+				controls.getContainer().addClassName("error");
+				Element helpInline = controls.getContainer().getElementByAttributeValue("class", "help-inline");
+				if (helpInline != null){
+					helpInline.moveAfter(element);
+				}
 			}
 		}
 	}

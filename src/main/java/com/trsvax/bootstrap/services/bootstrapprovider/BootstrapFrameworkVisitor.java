@@ -126,6 +126,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			return new Visitor() {
 	
 				public void visit(Element element) {
+					if (div(element) && hasClass("t-error", element)) {
+						element.forceAttributes("class", "alert alert-error");
+					}
 					if (hasClass("t-beaneditor", element)) {
 						pop(element);
 						element.visit(beanEditForm());

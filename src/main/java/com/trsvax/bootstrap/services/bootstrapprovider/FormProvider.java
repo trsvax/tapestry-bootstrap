@@ -72,6 +72,9 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 			if (hasClass("t-beaneditor-row", element)) {
 				element.forceAttributes("class", "control-group");
 			}
+			if ( select(element)) {
+				controls = element.wrap("div", "class", "controls");
+			}
 			if ( input(element)) {
 				
 				String type= element.getAttribute("type");

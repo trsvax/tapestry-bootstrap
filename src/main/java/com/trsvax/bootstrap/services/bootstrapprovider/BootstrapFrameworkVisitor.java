@@ -134,6 +134,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					if (hasClass("t-beaneditor-row", element)) {
 						element.forceAttributes("class", "control-group");
 					}
+					if ( select(element)) {
+						element.wrap("div", "class", "control");
+					}
 					if ( input(element)) {
 						
 						String type= element.getAttribute("type");
@@ -831,6 +834,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	}
 	boolean input(Element element) {
 		return hasName("input", element);
+	}
+	boolean select(Element element) {
+		return hasName("select", element);
 	}
 	boolean label(Element element) {
 		return hasName("label", element);

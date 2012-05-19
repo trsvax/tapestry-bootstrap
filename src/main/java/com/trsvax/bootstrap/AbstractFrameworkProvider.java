@@ -38,6 +38,9 @@ public abstract class AbstractFrameworkProvider implements FrameworkProvider {
 	public boolean input(Element element) {
 		return hasName("input", element);
 	}
+	public boolean select(Element element) {
+		return hasName("select", element);
+	}
 	public boolean label(Element element) {
 		return hasName("label", element);
 	}

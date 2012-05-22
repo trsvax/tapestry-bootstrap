@@ -126,6 +126,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 			return new Visitor() {
 	
 				public void visit(Element element) {
+					if (div(element) && hasClass("t-error", element)) {
+						element.forceAttributes("class", "alert alert-error");
+					}
 					if (hasClass("t-beaneditor", element)) {
 						pop(element);
 						element.visit(beanEditForm());
@@ -133,6 +136,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 					}
 					if (hasClass("t-beaneditor-row", element)) {
 						element.forceAttributes("class", "control-group");
+					}
+					if ( select(element)) {
+						element.wrap("div", "class", "control");
 					}
 					if ( input(element)) {
 						
@@ -831,6 +837,9 @@ public class BootstrapFrameworkVisitor implements FrameworkVisitor {
 	}
 	boolean input(Element element) {
 		return hasName("input", element);
+	}
+	boolean select(Element element) {
+		return hasName("select", element);
 	}
 	boolean label(Element element) {
 		return hasName("label", element);

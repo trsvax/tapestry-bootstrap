@@ -26,13 +26,14 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 	private final Class<TableEnvironment> environmentClass = TableEnvironment.class;
 	private final Environment environment;
 	private final Logger logger;
-	private final String sortIcon;
+	private final AssetSource assetSource;
+	
 
 	
 	public TableProvider(Environment environment, Logger logger, AssetSource assetSource) {
 		this.logger = logger;
 		this.environment = environment;
-		sortIcon = assetSource.getClasspathAsset("/com/trsvax/bootstrap/assets/images/sortable.gif").toClientURL();
+		this.assetSource = assetSource;
 	}
 	
 	public boolean setupRender(FrameworkMixin mixin, MarkupWriter writer) {
@@ -47,7 +48,7 @@ public class TableProvider extends AbstractFrameworkProvider implements Bootstra
 		if ( ! handle(mixin) ) {
 			return false;
 		}
-
+		final String sortIcon = assetSource.getClasspathAsset("/com/trsvax/bootstrap/assets/images/sortable.gif").toClientURL();
 		final TableEnvironment tableEnvironment = environment.peekRequired(environmentClass);
 		final String type = tableEnvironment.getType(mixin);
 		final Set<Element> pop = new HashSet<Element>();

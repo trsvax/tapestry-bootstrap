@@ -12,6 +12,7 @@ import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Service;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.dom.Element;
+import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Environment;
 
@@ -46,6 +47,9 @@ public class FW implements FrameworkMixin {
 	
 	@Inject
 	private Environment environment;
+	
+	@Inject
+	private Messages messages;
 	
 	private Element root;
 	private boolean instrument;
@@ -107,6 +111,8 @@ public class FW implements FrameworkMixin {
 		return componentResources.getContainer().getClass().getCanonicalName();
 	}
 	
-
+	public Messages getMessages() {
+		return messages;
+	}
 
 }

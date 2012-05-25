@@ -3,9 +3,9 @@ package com.trsvax.bootstrap.services.bootstrapprovider;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
+import org.apache.tapestry5.corelib.components.BeanEditor;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.services.Environment;
@@ -17,7 +17,7 @@ import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.environment.FormEnvironment;
 
 public class FormProvider extends AbstractFrameworkProvider implements BootstrapProvider {
-	private final Class<?>[] handles = {BeanEditForm.class};
+	private final Class<?>[] handles = {BeanEditForm.class,BeanEditor.class};
 	private final Class<FormEnvironment> environmentClass = FormEnvironment.class;
 	private final Environment environment;
 	private final Logger logger;
@@ -26,10 +26,21 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		this.environment = environment;
 		this.logger = logger;
 	}
+	
+	boolean handle(FrameworkMixin mixin) {
+		if ( BeanEditForm.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+			return true;
+		}
+		if ( BeanEditor.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+			return true;
+		}
+		
+		return false;
+	}
 
 	public boolean cleanupRender(FrameworkMixin mixin, MarkupWriter writer) {
-		
-		if ( ! BeanEditForm.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+
+		if ( ! handle(mixin)) {
 			return false;
 		}
 		final FormEnvironment formEnvironment = environment.peekRequired(environmentClass);
@@ -42,7 +53,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		}
 		
 		final Set<Element> pop = new HashSet<Element>();
-		mixin.getRoot().visit( new BeanEditFormVisitor(type,pop));
+		mixin.getRoot().visit( new BeanEditFormVisitor(mixin,type,pop));
 		for ( Element element : pop ) {
 			element.pop();
 		}
@@ -53,10 +64,12 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		Element controls;
 		final String type;
 		final Set<Element> pop;
+		final FrameworkMixin mixin;
 		
-		public BeanEditFormVisitor(final String type, final Set<Element> pop) {
+		public BeanEditFormVisitor(final FrameworkMixin mixin, final String type, final Set<Element> pop) {
 			this.type = type;
 			this.pop = pop;
+			this.mixin = mixin;
 		}
 
 		public void visit(Element element) {
@@ -90,6 +103,11 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 				} else if ( value.equals("Cancel")) {
 					element.addClassName("btn");
 				} else {
+					String id = element.getAttribute("id");
+					String help = message(mixin, id + "-help");
+					if ( help != null ) {
+						element.element("p", "class", "help-block").text(help);
+					}
 					controls = element.wrap("div", "class", "controls");
 					markErrors(element);
 				}
@@ -128,6 +146,17 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 
 	public boolean instrument(FrameworkMixin mixin) {
 		return instrument(mixin, environment.peekRequired(environmentClass), handles);
+	}
+	
+	public String message(FrameworkMixin mixin, String key) {
+		String message = null;
+		
+		if ( mixin.getComponentResources().getPage().getComponentResources().getMessages().contains(key)) {
+			message = mixin.getComponentResources().getPage().getComponentResources().getMessages().get(key);
+		}
+		logger.info("help {} {}",key,message);
+		return message;
+		
 	}
 
 }

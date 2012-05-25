@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.dom.Element;
+import org.apache.tapestry5.ioc.Messages;
 
 public interface FrameworkMixin {
 
@@ -14,5 +15,6 @@ public interface FrameworkMixin {
 	public void setRoot(Element element);
 	public ComponentResources getComponentResources();
 	public String getComponentClassName();
+	public Messages getMessages();
 
 }

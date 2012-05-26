@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" t:type="layout" title="Form"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
+      xmlns:p="tapestry:parameter">
+      
+<t:zone t:id="counterZone" id="counterZone">
+  <p>You have clicked the link <strong>${clickCount}</strong> times.</p>
+</t:zone>
+
+<t:zone t:id="counterZone2" id="counterZone2">
+  <p>You have clicked the link <strong>${clickCount2}</strong> times.</p>
+</t:zone>
+
+<p>
+  <t:actionlink t:id="clicker" zone="counterZone">increment the count</t:actionlink>
+</p>
+
+</html>

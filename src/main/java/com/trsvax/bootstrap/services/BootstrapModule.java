@@ -247,9 +247,8 @@ public class BootstrapModule {
 					Element body = root.find("ajax-partial");
 					if ( body != null) {
 						frameworkVisitor.visit(body);
-					}	
-					//This does not seem right
-					reply.put("content", body.getChildMarkup());
+						reply.put("content", body.getChildMarkup());
+					} 				
 				}
 			}					
 		};

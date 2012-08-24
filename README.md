@@ -99,6 +99,21 @@ table to be formated by Bootstrap
 as with Grid an fwtype parameter will format the form with Bootstrap. 
 based on [Forms](http://twitter.github.com/bootstrap/base-css.html#forms)
 
+## Using BeanDisplay
+Add fwtype parameter to the BeanDisplay. If the value is null the BeanDisplat looks as before.
+Use values "dl" or "dl-horizontal" to apply mixin.
+Any other CSS classes can be additionally specified here, i.e., bootstrap "well".
+
+## Using Alerts
+Add fwtype parameter to the Alerts. If the value is null the Alerts looks as before.
+Value fwtype="alert" changes look and feel according to [bootstrap alerts](http://twitter.github.com/bootstrap/components.html#alerts).
+
+Until [TAP5-1996](https://issues.apache.org/jira/browse/TAP5-1996) fixed Tap5 alerts will use this mapping:
+Tap5 'info' -> 'alert-success'
+Tap5 'warn' -> 'alert'
+Tap5 'error' -> 'alert-error'
+
+
 ## Customizing Bootstrap:
 There are two Tapestry configurations that allow you to customize Bootstrap. First the EnvironmentSetup.class defines
 a set of mapped objects that set defaults for most of the components/mixins. For example the following sets the default

@@ -39,6 +39,10 @@ import org.slf4j.Logger;
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.FrameworkVisitor;
+import com.trsvax.bootstrap.environment.AlertsEnvironment;
+import com.trsvax.bootstrap.environment.AlertsValues;
+import com.trsvax.bootstrap.environment.BeanDisplayEnvironment;
+import com.trsvax.bootstrap.environment.BeanDisplayValues;
 import com.trsvax.bootstrap.environment.BreadcrumbEnvironment;
 import com.trsvax.bootstrap.environment.BreadcrumbValues;
 import com.trsvax.bootstrap.environment.ButtonEnvironment;
@@ -53,6 +57,8 @@ import com.trsvax.bootstrap.environment.NavEnvironment;
 import com.trsvax.bootstrap.environment.NavValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
 import com.trsvax.bootstrap.environment.TableValues;
+import com.trsvax.bootstrap.services.bootstrapprovider.AlertsProvider;
+import com.trsvax.bootstrap.services.bootstrapprovider.BeanDisplayProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapFrameworkVisitor;
 import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapVisitor;
 import com.trsvax.bootstrap.services.bootstrapprovider.BreadcrumbProvider;
@@ -84,7 +90,6 @@ public class BootstrapModule {
 		binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
 		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
 		
-		
 		binder.bind(BootstrapProvider.class,BreadcrumbProvider.class).withId("BootstrapBreadcrumb");
 		binder.bind(BootstrapProvider.class,ButtonProvider.class).withId("BootstrapButton");
 		binder.bind(BootstrapProvider.class,ButtonGroupProvider.class).withId("BootstrapButtonGroup");
@@ -95,7 +100,8 @@ public class BootstrapModule {
 		binder.bind(BootstrapProvider.class,NavBarProvider.class).withId("BootstrapNavBar");
 		binder.bind(BootstrapProvider.class,PaginationProvider.class).withId("BootstrapPagination");
 		binder.bind(BootstrapProvider.class,TableProvider.class).withId("BootstrapTable");	
-		
+		binder.bind(BootstrapProvider.class, BeanDisplayProvider.class).withId("BootstrapBeanDisplay");
+		binder.bind(BootstrapProvider.class, AlertsProvider.class).withId("BootstrapAlerts");
 		
 		
 		binder.bind(FrameworkProvider.class,FrameworkProviderImpl.class).withId("FrameworkProvider");
@@ -107,12 +113,12 @@ public class BootstrapModule {
 	}
 	
 	public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration,
-    		@Symbol(JQuerySymbolConstants.SUPPRESS_PROTOTYPE) boolean suppressPrototype) {
+			@Symbol(JQuerySymbolConstants.SUPPRESS_PROTOTYPE) boolean suppressPrototype) {
 		if ( suppressPrototype ) {
 			configuration.overrideInstance(BootstrapFormStack.STACK_ID, BootstrapFormStack.class);
 		}
-    
-    }
+	
+	}
 
 	public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> configuration,
 			@InjectService("SessionBindingFactory") BindingFactory sessionBindingFactory,
@@ -132,7 +138,10 @@ public class BootstrapModule {
 			@InjectService("BootstrapNav") BootstrapProvider navProvider,
 			@InjectService("BootstrapNavBar") BootstrapProvider navBarProvider,
 			@InjectService("BootstrapPagination") BootstrapProvider paginationProvider,
-			@InjectService("BootstrapTable") BootstrapProvider tableProvider) {
+			@InjectService("BootstrapTable") BootstrapProvider tableProvider,
+			@InjectService("BootstrapBeanDisplay") BootstrapProvider beanDisplayProvider,
+			@InjectService("BootstrapAlerts") BootstrapProvider alertsProvider)
+	{
 		configuration.add("Breadcrumb",breadcrumbProvider);
 		configuration.add("Button", buttonProvider);
 		configuration.add("ButtonGroup", buttonGroupProvider);
@@ -143,7 +152,8 @@ public class BootstrapModule {
 		configuration.add("NavBar", navBarProvider);
 		configuration.add("Pagination", paginationProvider);
 		configuration.add("Table", tableProvider);
-		
+		configuration.add("BeanDisplay", beanDisplayProvider);
+		configuration.add("Alerts", alertsProvider);
 	}
 	
 	@Marker(Primary.class)
@@ -161,7 +171,7 @@ public class BootstrapModule {
 	*/
 
 	@Contribute(ComponentClassTransformWorker2.class)   
-	public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {    
+	public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {	
 		workers.addInstance("ConnectWorker", ConnectWorker.class);
 		workers.addInstance("ExcludeWorker", ExcludeWorker.class);
 		workers.addInstance("FrameworkMixinWorker", FrameworkMixinWorker.class);
@@ -176,6 +186,8 @@ public class BootstrapModule {
 		configuration.add(NavEnvironment.class, new NavValues(null));
 		configuration.add(GridPagerEnvironment.class, new GridPagerValues(null));
 		configuration.add(TableEnvironment.class, new TableValues(null));
+		configuration.add(BeanDisplayEnvironment.class, new BeanDisplayValues(null));
+		configuration.add(AlertsEnvironment.class, new AlertsValues(null));
 	}
 
 	public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
@@ -282,12 +294,12 @@ public class BootstrapModule {
 	}
 	
 	private static void addEditBlock(Configuration<BeanBlockContribution> configuration, String dataType) {
-        addEditBlock(configuration, dataType, dataType);
-    }
+		addEditBlock(configuration, dataType, dataType);
+	}
 	
 	private static void addEditBlock(Configuration<BeanBlockContribution> configuration, String dataType, String blockId) {
-        configuration.add(new EditBlockContribution(dataType, "tb/AppPropertyEditBlocks", blockId));
-    }
+		configuration.add(new EditBlockContribution(dataType, "tb/AppPropertyEditBlocks", blockId));
+	}
 
 	private static void addDisplayBlock(Configuration<BeanBlockContribution> configuration, String dataType)
 	{

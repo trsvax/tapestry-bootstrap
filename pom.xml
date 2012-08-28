@@ -1,18 +1,37 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.trsvax.bootstrap</groupId>
+    <groupId>com.trsvax</groupId>
     <artifactId>tapestry-bootstrap</artifactId>
-    <version>2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>tapestry-bootstrap Tapestry 5 Application</name>
+    <name>tapestry-bootstrap Tapestry 5 Application</name>    
+    <version>2.1-SNAPSHOT</version>
+	<description>Integrates Tapestry with Twitter Bootstrap Framework</description>
     <url>https://github.com/trsvax/tapestry-bootstrap</url>
-
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
     <scm>
-        <url>https://github.com/trsvax/tapestry-bootstrap</url>
+        <url>git@github.com/trsvax/tapestry-bootstrap</url>
         <connection>scm:git:git://github.com/trsvax/tapestry-bootstrap.git</connection>
         <developerConnection>scm:git:git@github.com:trsvax/tapestry-bootstrap.git</developerConnection>
     </scm>
+    <developers>
+		<developer>
+			<id>trsvax</id>
+			<name>Barry Books</name>
+			<email>bfb@trsvax.com</email>
+		</developer>
+	</developers>
+	<parent>
+	    <groupId>org.sonatype.oss</groupId>
+	    <artifactId>oss-parent</artifactId>
+	    <version>7</version>
+  	</parent>
 
     <dependencies>
         <!-- Too set up an application with a database, change the artifactId below to
@@ -45,7 +64,7 @@
         <dependency>
             <groupId>org.got5</groupId>
             <artifactId>tapestry5-jquery</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.0</version>
         </dependency>
     	
     	
@@ -278,32 +297,10 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </plugins>
     </build>
 
-    <repositories>
-	<repository>
-        <id>devlab722-repo</id>
-        <url>http://nexus.devlab722.net/nexus/content/repositories/releases
-        </url>
-        <snapshots>
-            <enabled>false</enabled>
-        </snapshots>
-    </repository>
-
-    <repository>
-        <id>devlab722-snapshot-repo</id>
-        <url>http://nexus.devlab722.net/nexus/content/repositories/snapshots
-        </url>
-        <releases>
-            <enabled>false</enabled>
-        </releases>
-    </repository>
-       
+    <repositories>      
     </repositories>
 
     <pluginRepositories>
-        <pluginRepository>
-            <id>oss-sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </pluginRepository>
     </pluginRepositories>
     
     <profiles>
@@ -327,7 +324,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 </distributionManagement>
 
     <properties>
-        <tapestry-release-version>5.3.2</tapestry-release-version>
+        <tapestry-release-version>5.3.4</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.9</testng-release-version>
         <easymock-release-version>3.0</easymock-release-version>

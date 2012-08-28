@@ -44,11 +44,11 @@
         </dependency>
 
         <!-- This adds automatic compression of JavaScript and CSS when in production mode. -->
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-yuicompressor</artifactId>
-            <version>${tapestry-release-version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tapestry</groupId>-->
+            <!--<artifactId>tapestry-yuicompressor</artifactId>-->
+            <!--<version>${tapestry-release-version}</version>-->
+        <!--</dependency>-->
 
         <!-- Uncomment this to add support for file uploads:
 
@@ -297,7 +297,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </plugins>
     </build>
 
-    <repositories>      
+    <repositories>
     </repositories>
 
     <pluginRepositories>

@@ -18,7 +18,6 @@ import org.apache.tapestry5.services.Environment;
 
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.FrameworkProvider;
-import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.FrameworkEnvironment;
 
 //@SupportsInformalParameters
@@ -34,9 +33,9 @@ public class FW implements FrameworkMixin {
 	@Parameter
 	private Map<String,Object> fwargs;
 	
-	@Inject
-	@Service("FrameworkVisitor")
-	private FrameworkVisitor vistor;
+	//@Inject
+	//@Service("FrameworkVisitor")
+	//private FrameworkVisitor vistor;
 
 	@Inject
 	private ComponentResources componentResources;

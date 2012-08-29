@@ -38,7 +38,6 @@ import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkProvider;
-import com.trsvax.bootstrap.FrameworkVisitor;
 import com.trsvax.bootstrap.environment.AlertsEnvironment;
 import com.trsvax.bootstrap.environment.AlertsValues;
 import com.trsvax.bootstrap.environment.BeanDisplayEnvironment;
@@ -59,8 +58,6 @@ import com.trsvax.bootstrap.environment.TableEnvironment;
 import com.trsvax.bootstrap.environment.TableValues;
 import com.trsvax.bootstrap.services.bootstrapprovider.AlertsProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.BeanDisplayProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapFrameworkVisitor;
-import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapVisitor;
 import com.trsvax.bootstrap.services.bootstrapprovider.BreadcrumbProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.ButtonGroupProvider;
 import com.trsvax.bootstrap.services.bootstrapprovider.ButtonProvider;
@@ -84,9 +81,8 @@ public class BootstrapModule {
 		binder.bind(BindingFactory.class,SessionBindingFactory.class).withId("SessionBindingFactory");
 		binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
 		binder.bind(StringTemplateParser.class,StringTemplateParserImpl.class);
-		binder.bind(ValidationDecoratorFactory.class,BootStrapValidationDecoratorFactoryImpl.class).withId("BootStrapValidation");
-		binder.bind(FrameworkVisitor.class, BootstrapVisitor.class).withId(BootstrapVisitor.id);
-		binder.bind(FrameworkVisitor.class,BootstrapFrameworkVisitor.class).withId(BootstrapFrameworkVisitor.id);
+		//binder.bind(ValidationDecoratorFactory.class,BootStrapValidationDecoratorFactoryImpl.class).withId("BootStrapValidation");
+
 		binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
 		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
 		
@@ -161,14 +157,6 @@ public class BootstrapModule {
 		return chainBuilder.build(BootstrapProvider.class, configuration);
 	}
 	
-	/*
-	@Contribute(FrameworkProvider.class)
-	public static void provideFrameworks(MappedConfiguration<String, FrameworkProvider> configuration,
-			@Primary BootstrapProvider bootstrapProvider) {
-		//configuration.add("Bootstrap", bootstrapProvider);
-		
-	}
-	*/
 
 	@Contribute(ComponentClassTransformWorker2.class)   
 	public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {	
@@ -196,7 +184,6 @@ public class BootstrapModule {
 			final Environment environment, 
 			final JavaScriptSupport javaScriptSupport, 
 			final ExcludeVisitor excludeVistior,
-			@InjectService(BootstrapVisitor.id)  final FrameworkVisitor frameworkVisitor,
 			@InjectService("FrameworkProvider") final FrameworkProvider frameworkProvider) {
 
 		MarkupRendererFilter bootstrapFilter = new MarkupRendererFilter() {		
@@ -205,23 +192,7 @@ public class BootstrapModule {
 				renderer.renderMarkup(writer);				
 				final FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
 				environmentSetup.pop();
-
-				frameworkProvider.renderMarkup(writer);
-				
-				/*
-				Element root = writer.getDocument().getRootElement();
-				if ( root != null ) {
-					Element head = root.find("head");
-					if ( head != null ) {
-						head.visit(excludeVistior.visit(values));
-					}
-					Element body = root.find("body");
-					if ( body != null) {				
-						frameworkVisitor.visit(body);
-					}	
-				}
-				*/
-				
+				frameworkProvider.renderMarkup(writer);				
 			}		
 		};
 
@@ -244,8 +215,7 @@ public class BootstrapModule {
 			final EnvironmentSetup environmentSetup,
 			final Environment environment,
 			final JavaScriptSupport javaScriptSupport, 
-			final ExcludeVisitor excludeVistior,
-			@InjectService(BootstrapVisitor.id) final FrameworkVisitor frameworkVisitor) {
+			final ExcludeVisitor excludeVistior) {
 		PartialMarkupRendererFilter bootstrapFilter = new PartialMarkupRendererFilter() {
 
 			public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
@@ -258,7 +228,8 @@ public class BootstrapModule {
 				if ( root != null ) {
 					Element body = root.find("ajax-partial");
 					if ( body != null) {
-						frameworkVisitor.visit(body);
+						//TODO use provider
+						//frameworkVisitor.visit(body);
 						reply.put("content", body.getChildMarkup());
 					} 				
 				}
@@ -267,25 +238,16 @@ public class BootstrapModule {
 		configuration.add("BootstrapAJAXFilter", bootstrapFilter,"before:*");
 	}
 
-	public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration)
-	{
+	public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration) {
 		configuration.add("tap-bootstrap", "com/trsvax/bootstrap");
 	}
 
-	@Contribute(FrameworkVisitor.class)
-	public static void provideBootStrapVisitors(MappedConfiguration<String, FrameworkVisitor> configuration,
-			@InjectService(BootstrapFrameworkVisitor.id) FrameworkVisitor fw) {
-		configuration.add(BootstrapFrameworkVisitor.id,fw);
-	}
-
-
-
+	/*
 	@Contribute(ServiceOverride.class)
-	public static void setupApplicationServiceOverrides(MappedConfiguration<Class,Object> configuration, @Local ValidationDecoratorFactory override )
-	{
-		
+	public static void setupApplicationServiceOverrides(MappedConfiguration<Class,Object> configuration, @Local ValidationDecoratorFactory override ) {		
 		configuration.add(ValidationDecoratorFactory.class, override);
 	}
+	*/
 
 	@Contribute(BeanBlockSource.class)
 	public static void provideDefaultBeanBlocks(Configuration<BeanBlockContribution> configuration) {
@@ -301,14 +263,11 @@ public class BootstrapModule {
 		configuration.add(new EditBlockContribution(dataType, "tb/AppPropertyEditBlocks", blockId));
 	}
 
-	private static void addDisplayBlock(Configuration<BeanBlockContribution> configuration, String dataType)
-	{
+	private static void addDisplayBlock(Configuration<BeanBlockContribution> configuration, String dataType) {
 		addDisplayBlock(configuration, dataType, dataType);
 	}
 
-	private static void addDisplayBlock(Configuration<BeanBlockContribution> configuration, String dataType,
-			String blockId)
-	{
+	private static void addDisplayBlock(Configuration<BeanBlockContribution> configuration, String dataType, String blockId) {
 		configuration.add(new DisplayBlockContribution(dataType, "tb/AppPropertyDisplayBlocks", blockId));
 	}
 

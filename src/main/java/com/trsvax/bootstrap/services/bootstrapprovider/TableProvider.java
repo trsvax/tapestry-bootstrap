@@ -7,8 +7,6 @@ import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.corelib.components.Grid;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
-import org.apache.tapestry5.ioc.Resource;
-import org.apache.tapestry5.services.AssetFactory;
 import org.apache.tapestry5.services.AssetSource;
 import org.apache.tapestry5.services.Environment;
 import org.slf4j.Logger;
@@ -19,7 +17,6 @@ import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.environment.GridPagerEnvironment;
 import com.trsvax.bootstrap.environment.GridPagerValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
-import com.trsvax.bootstrap.services.bootstrapprovider.BootstrapFrameworkVisitor.GridPager;
 
 public class TableProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {Grid.class};

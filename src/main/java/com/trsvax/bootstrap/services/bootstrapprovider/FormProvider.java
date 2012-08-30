@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.tapestry5.MarkupWriter;
+import org.apache.tapestry5.ValidationDecorator;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.corelib.components.BeanEditor;
 import org.apache.tapestry5.dom.Element;
@@ -15,6 +16,7 @@ import com.trsvax.bootstrap.AbstractFrameworkProvider;
 import com.trsvax.bootstrap.BootstrapProvider;
 import com.trsvax.bootstrap.FrameworkMixin;
 import com.trsvax.bootstrap.environment.FormEnvironment;
+import com.trsvax.bootstrap.services.BootStrapValidationDecorator;
 
 public class FormProvider extends AbstractFrameworkProvider implements BootstrapProvider {
 	private final Class<?>[] handles = {BeanEditForm.class,BeanEditor.class};
@@ -37,6 +39,15 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		
 		return false;
 	}
+	
+	@Override
+	public boolean setupRender(FrameworkMixin mixin, MarkupWriter writer) {
+		if ( ! handle(mixin)) {
+			return false;
+		}
+		environment.push(ValidationDecorator.class, new BootStrapValidationDecorator(writer, environment));
+		return true;
+	}
 
 	public boolean cleanupRender(FrameworkMixin mixin, MarkupWriter writer) {
 
@@ -57,6 +68,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		for ( Element element : pop ) {
 			element.pop();
 		}
+		environment.pop(ValidationDecorator.class);
 		return true;
 	}
 	
@@ -135,6 +147,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 			if (hasClass("error", element)){
 				controls.getContainer().addClassName("error");
 				Element helpInline = controls.getContainer().getElementByAttributeValue("class", "help-inline");
+				helpInline.addClassName("error");
 				if (helpInline != null){
 					helpInline.moveAfter(element);
 				}
@@ -158,5 +171,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		return message;
 		
 	}
+
+
 
 }

@@ -308,12 +308,23 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <profile>
             <id>mac-os-test</id>
             <activation>
-                <os><family>mac</family></os>	
+                <os><family>mac</family></os>
             </activation>
             <properties>
                 <browserStartCommand>*googlechrome /Applications/Google Chrome.app/Contents/MacOS/Google Chrome</browserStartCommand>
             </properties>
-        </profile>
+        </profile>        <profile>
+        <id>windows-os-test</id>
+        <activation>
+            <os>
+                <name>Windows XP</name>
+                <family>Windows</family>
+            </os>
+        </activation>
+        <properties>
+            <browserStartCommand>*googlechrome ${user.home}\Local Settings\Application Data\Google\Chrome\Application\chrome.exe</browserStartCommand>
+        </properties>
+    </profile>
 	</profiles>
 	
 	<distributionManagement>

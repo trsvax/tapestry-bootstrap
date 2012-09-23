@@ -10,7 +10,7 @@
             
             $alert.removeClass();
             
-            $alert.addClass("alert " + addClass);
+            $alert.addClass("alert" + (addClass == "" ? "" : " ") + addClass);
             
             var $dismiss = $alert.children(".t-dismiss").first();
             
@@ -29,9 +29,12 @@
                     makeBootstrapAlert($(this), "alert-error");
                 });
                 $alerts.filter("DIV.t-warn").each(function(){
-                    makeBootstrapAlert($(this), "alert");
+                    makeBootstrapAlert($(this), "");
                 });
                 $alerts.filter("DIV.t-info").each(function(){
+                    makeBootstrapAlert($(this), "alert-info");
+                });
+                $alerts.filter("DIV.t-success").each(function(){
                     makeBootstrapAlert($(this), "alert-success");
                 });
                 

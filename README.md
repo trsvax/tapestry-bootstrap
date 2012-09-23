@@ -108,10 +108,7 @@ Any other CSS classes can be additionally specified here, i.e., bootstrap "well"
 Add fwtype parameter to the Alerts. If the value is null the Alerts looks as before.
 Value fwtype="alert" changes look and feel according to [bootstrap alerts](http://twitter.github.com/bootstrap/components.html#alerts).
 
-Until [TAP5-1996](https://issues.apache.org/jira/browse/TAP5-1996) fixed Tap5 alerts will use this mapping:
-Tap5 'info' -> 'alert-success'
-Tap5 'warn' -> 'alert'
-Tap5 'error' -> 'alert-error'
+Alerts will work better with Tapestry 5.3.6 and above (see [TAP5-1996](https://issues.apache.org/jira/browse/TAP5-1996)).
 
 
 ## Customizing Bootstrap:

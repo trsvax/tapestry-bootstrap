@@ -43,13 +43,6 @@
             <version>${tapestry-release-version}</version>
         </dependency>
 
-        <!-- This adds automatic compression of JavaScript and CSS when in production mode. -->
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-yuicompressor</artifactId>
-            <version>${tapestry-release-version}</version>
-        </dependency>
-
         <!-- Uncomment this to add support for file uploads:
 
          <dependency>
@@ -62,9 +55,9 @@
         
         
         <dependency>
-            <groupId>org.got5</groupId>
+            <groupId>com.github.lltyk</groupId>
             <artifactId>tapestry5-jquery</artifactId>
-            <version>3.2.0</version>
+            <version>3.2.1</version>
         </dependency>
     	
     	

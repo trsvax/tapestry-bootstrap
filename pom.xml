@@ -1,7 +1,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.trsvax</groupId>
+    <groupId>${group.id}</groupId>
     <artifactId>tapestry-bootstrap</artifactId>
     <packaging>jar</packaging>
     <name>tapestry-bootstrap Tapestry 5 Application</name>    
@@ -335,6 +335,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 </distributionManagement>
 
     <properties>
+        <group.id>com.trsvax</group.id>
         <tapestry-release-version>5.3.4</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.9</testng-release-version>

@@ -1,7 +1,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.trsvax</groupId>
+    <groupId>${group.id}</groupId>
     <artifactId>tapestry-bootstrap</artifactId>
     <packaging>jar</packaging>
     <name>tapestry-bootstrap Tapestry 5 Application</name>    
@@ -44,11 +44,11 @@
         </dependency>
 
         <!-- This adds automatic compression of JavaScript and CSS when in production mode. -->
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-yuicompressor</artifactId>
-            <version>${tapestry-release-version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tapestry</groupId>-->
+            <!--<artifactId>tapestry-yuicompressor</artifactId>-->
+            <!--<version>${tapestry-release-version}</version>-->
+        <!--</dependency>-->
 
         <!-- Uncomment this to add support for file uploads:
 
@@ -297,7 +297,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </plugins>
     </build>
 
-    <repositories>      
+    <repositories>
     </repositories>
 
     <pluginRepositories>
@@ -308,12 +308,23 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         <profile>
             <id>mac-os-test</id>
             <activation>
-                <os><family>mac</family></os>	
+                <os><family>mac</family></os>
             </activation>
             <properties>
                 <browserStartCommand>*googlechrome /Applications/Google Chrome.app/Contents/MacOS/Google Chrome</browserStartCommand>
             </properties>
-        </profile>
+        </profile>        <profile>
+        <id>windows-os-test</id>
+        <activation>
+            <os>
+                <name>Windows XP</name>
+                <family>Windows</family>
+            </os>
+        </activation>
+        <properties>
+            <browserStartCommand>*googlechrome ${user.home}\Local Settings\Application Data\Google\Chrome\Application\chrome.exe</browserStartCommand>
+        </properties>
+    </profile>
 	</profiles>
 	
 	<distributionManagement>
@@ -324,6 +335,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 </distributionManagement>
 
     <properties>
+        <group.id>com.trsvax</group.id>
         <tapestry-release-version>5.3.4</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.9</testng-release-version>

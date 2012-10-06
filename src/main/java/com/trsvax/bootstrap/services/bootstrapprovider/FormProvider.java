@@ -147,9 +147,9 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 			if (hasClass("error", element)){
 				controls.getContainer().addClassName("error");
 				Element helpInline = controls.getContainer().getElementByAttributeValue("class", "help-inline");
-				helpInline.addClassName("error");
 				if (helpInline != null){
-					helpInline.moveAfter(element);
+                    helpInline.addClassName("error");
+                    helpInline.moveAfter(element);
 				}
 			}
 		}

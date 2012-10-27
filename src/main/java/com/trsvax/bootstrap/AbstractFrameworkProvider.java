@@ -118,6 +118,25 @@ public abstract class AbstractFrameworkProvider implements FrameworkProvider {
 		return false;
 	}
 	
+	public boolean startsWithClass(String className, Element element) {
+		if ( isPopped(element) ) {
+			return false;
+		}
+		String c = element.getAttribute("class");
+		if (c == null || className == null || c.length() == 0
+				|| className.length() == 0) {
+			return false;
+		}
+		String[] classes = c.split(" ");
+		for (String s : classes) {
+			if ( s.startsWith(className)) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
 	protected String getClassForType(String prefix, String type) {
 		if ( type.startsWith(prefix + "-")) {
 			boolean hasPrefix = false;

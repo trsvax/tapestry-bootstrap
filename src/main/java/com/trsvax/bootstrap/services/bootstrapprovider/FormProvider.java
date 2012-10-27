@@ -7,6 +7,7 @@ import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.ValidationDecorator;
 import org.apache.tapestry5.corelib.components.BeanEditForm;
 import org.apache.tapestry5.corelib.components.BeanEditor;
+import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.services.Environment;
@@ -19,7 +20,7 @@ import com.trsvax.bootstrap.environment.FormEnvironment;
 import com.trsvax.bootstrap.services.BootStrapValidationDecorator;
 
 public class FormProvider extends AbstractFrameworkProvider implements BootstrapProvider {
-	private final Class<?>[] handles = {BeanEditForm.class,BeanEditor.class};
+	private final Class<?>[] handles = {BeanEditForm.class,BeanEditor.class,Form.class};
 	private final Class<FormEnvironment> environmentClass = FormEnvironment.class;
 	private final Environment environment;
 	private final Logger logger;
@@ -34,6 +35,9 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 			return true;
 		}
 		if ( BeanEditor.class.getCanonicalName().equals(mixin.getComponentClassName())) {
+			return true;
+		}
+		if ( Form.class.getCanonicalName().equals(mixin.getComponentClassName())) {
 			return true;
 		}
 		
@@ -79,7 +83,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		final FrameworkMixin mixin;
 		
 		public BeanEditFormVisitor(final FrameworkMixin mixin, final String type, final Set<Element> pop) {
-			this.type = type;
+			this.type = mixin.getType() != null ? mixin.getType() : type;
 			this.pop = pop;
 			this.mixin = mixin;
 		}
@@ -101,27 +105,32 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 				element.forceAttributes("class", "control-group");
 			}
 			if ( select(element)) {
-				controls = element.wrap("div", "class", "controls");
-				markErrors(element);
-			}
-			if ( input(element)) {
-				
-				String type= element.getAttribute("type");
-				String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
-				if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
-					buttonContainer = element.getContainer();
-					buttonContainer.forceAttributes("class","form-actions");
-					element.addClassName("btn btn-primary");
-				} else if ( value.equals("Cancel")) {
-					element.addClassName("btn");
-				} else {
-					String id = element.getAttribute("id");
-					String help = message(mixin, id + "-help");
-					if ( help != null ) {
-						element.element("p", "class", "help-block").text(help);
-					}
+				if ( ! startsWithClass("span", element) ) {
 					controls = element.wrap("div", "class", "controls");
 					markErrors(element);
+				}
+			}
+			if ( input(element)) {
+				if ( ! startsWithClass("span", element) ) {
+					String type= element.getAttribute("type");
+					String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
+					if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
+						buttonContainer = element.getContainer();
+						buttonContainer.forceAttributes("class","form-actions");
+						element.addClassName("btn btn-primary");
+					} else if ( type != null && type.equals("hidden")) {
+						//ignore
+					} else if ( value.equals("Cancel")) {
+						element.addClassName("btn");
+					} else {
+						String id = element.getAttribute("id");
+						String help = message(mixin, id + "-help");
+						if ( help != null ) {
+							element.element("p", "class", "help-block").text(help);
+						}
+						controls = element.wrap("div", "class", "controls");
+						markErrors(element);
+					}
 				}
 			}
 			if ( textarea(element) ) {
@@ -167,7 +176,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		if ( mixin.getComponentResources().getPage().getComponentResources().getMessages().contains(key)) {
 			message = mixin.getComponentResources().getPage().getComponentResources().getMessages().get(key);
 		}
-		logger.info("help {} {}",key,message);
+		//logger.info("help {} {}",key,message);
 		return message;
 		
 	}

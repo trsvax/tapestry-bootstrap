@@ -11,12 +11,10 @@ import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
-import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Marker;
 import org.apache.tapestry5.ioc.annotations.Primary;
 import org.apache.tapestry5.ioc.annotations.Symbol;
 import org.apache.tapestry5.ioc.services.ChainBuilder;
-import org.apache.tapestry5.ioc.services.ServiceOverride;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.BeanBlockContribution;
 import org.apache.tapestry5.services.BeanBlockSource;
@@ -29,7 +27,6 @@ import org.apache.tapestry5.services.MarkupRenderer;
 import org.apache.tapestry5.services.MarkupRendererFilter;
 import org.apache.tapestry5.services.PartialMarkupRenderer;
 import org.apache.tapestry5.services.PartialMarkupRendererFilter;
-import org.apache.tapestry5.services.ValidationDecoratorFactory;
 import org.apache.tapestry5.services.javascript.JavaScriptStack;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
@@ -81,7 +78,6 @@ public class BootstrapModule {
 		binder.bind(BindingFactory.class,SessionBindingFactory.class).withId("SessionBindingFactory");
 		binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
 		binder.bind(StringTemplateParser.class,StringTemplateParserImpl.class);
-		//binder.bind(ValidationDecoratorFactory.class,BootStrapValidationDecoratorFactoryImpl.class).withId("BootStrapValidation");
 
 		binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
 		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
@@ -242,12 +238,6 @@ public class BootstrapModule {
 		configuration.add("tap-bootstrap", "com/trsvax/bootstrap");
 	}
 
-	/*
-	@Contribute(ServiceOverride.class)
-	public static void setupApplicationServiceOverrides(MappedConfiguration<Class,Object> configuration, @Local ValidationDecoratorFactory override ) {		
-		configuration.add(ValidationDecoratorFactory.class, override);
-	}
-	*/
 
 	@Contribute(BeanBlockSource.class)
 	public static void provideDefaultBeanBlocks(Configuration<BeanBlockContribution> configuration) {

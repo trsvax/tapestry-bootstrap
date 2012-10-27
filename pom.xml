@@ -4,8 +4,8 @@
     <artifactId>tapestry-bootstrap</artifactId>
     <packaging>jar</packaging>
     <name>tapestry-bootstrap Tapestry 5 Application</name>    
-    <version>y</version>
-	<description>Integrates Tapestry with Twitter Bootstrap Framework</description>
+    <version>2.1.1-SNAPSHOT</version>
+    <description>Integrates Tapestry with Twitter Bootstrap Framework</description>
     <url>https://github.com/trsvax/tapestry-bootstrap</url>
 	<licenses>
 		<license>

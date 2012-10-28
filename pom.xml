@@ -314,13 +314,15 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
             </properties>
         </profile>
 	</profiles>
-	
+
+<!--  	
 	<distributionManagement>
   <repository>
     <id>gh-pages</id>
     <url>file:///${basedir}/../tapestry-bootstrap-pages/repository/</url>
   </repository>
 </distributionManagement>
+-->
 
     <properties>
         <tapestry-release-version>5.3.4</tapestry-release-version>

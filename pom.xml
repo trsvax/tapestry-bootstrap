@@ -41,32 +41,12 @@
             <artifactId>tapestry-core</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
-
-        <!-- This adds automatic compression of JavaScript and CSS when in production mode. -->
-        <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-yuicompressor</artifactId>
-            <version>${tapestry-release-version}</version>
-        </dependency>
-
-        <!-- Uncomment this to add support for file uploads:
-
-         <dependency>
-            <groupId>org.apache.tapestry</groupId>
-            <artifactId>tapestry-upload</artifactId>
-            <version>${tapestry-release-version}</version>
-        </dependency>
-
-        -->
-        
         
         <dependency>
             <groupId>org.got5</groupId>
             <artifactId>tapestry5-jquery</artifactId>
             <version>3.2.1</version>
         </dependency>
-    	
-    	
 
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
 will fail, preventing Maven from packaging the WAR. Tapestry includes a large number
@@ -321,6 +301,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
     <id>gh-pages</id>
     <url>file:///${basedir}/../tapestry-bootstrap-pages/repository/</url>
   </repository>
+  
 </distributionManagement>
 -->
 

@@ -14,10 +14,9 @@ import org.apache.tapestry5.dom.Visitor;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.javascript.JavaScriptSupport;
-import org.got5.tapestry5.jquery.ImportJQueryUI;
 import org.slf4j.Logger;
 
-@ImportJQueryUI(value = {"jquery.ui.widget", "jquery.ui.mouse", "jquery.ui.draggable"})
+//@ImportJQueryUI(value = {"jquery.ui.widget", "jquery.ui.mouse", "jquery.ui.draggable"})
 @Import(library = { "classpath:com/trsvax/bootstrap/assets/mixins/draggable/draggable.js" })
 
 @MixinAfter

@@ -1,40 +1,19 @@
 package com.trsvax.bootstrap.services;
 
-import java.util.List;
-import java.util.Map.Entry;
-
-import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
-import org.apache.tapestry5.ioc.annotations.Marker;
-import org.apache.tapestry5.ioc.annotations.Primary;
-import org.apache.tapestry5.ioc.annotations.Symbol;
-import org.apache.tapestry5.ioc.services.ChainBuilder;
-import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.BeanBlockContribution;
 import org.apache.tapestry5.services.BeanBlockSource;
 import org.apache.tapestry5.services.BindingFactory;
 import org.apache.tapestry5.services.DisplayBlockContribution;
 import org.apache.tapestry5.services.EditBlockContribution;
-import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.LibraryMapping;
-import org.apache.tapestry5.services.MarkupRenderer;
-import org.apache.tapestry5.services.MarkupRendererFilter;
-import org.apache.tapestry5.services.PartialMarkupRenderer;
-import org.apache.tapestry5.services.PartialMarkupRendererFilter;
-import org.apache.tapestry5.services.javascript.JavaScriptStack;
-import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
-import org.got5.tapestry5.jquery.JQuerySymbolConstants;
-import org.slf4j.Logger;
 
-import com.trsvax.bootstrap.BootstrapProvider;
-import com.trsvax.bootstrap.FrameworkProvider;
 import com.trsvax.bootstrap.environment.AlertsEnvironment;
 import com.trsvax.bootstrap.environment.AlertsValues;
 import com.trsvax.bootstrap.environment.BeanDisplayEnvironment;
@@ -53,19 +32,6 @@ import com.trsvax.bootstrap.environment.NavEnvironment;
 import com.trsvax.bootstrap.environment.NavValues;
 import com.trsvax.bootstrap.environment.TableEnvironment;
 import com.trsvax.bootstrap.environment.TableValues;
-import com.trsvax.bootstrap.services.bootstrapprovider.AlertsProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.BeanDisplayProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.BreadcrumbProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.ButtonGroupProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.ButtonProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.DefaultProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.FormProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.LayoutProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.NavBarProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.NavProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.PaginationProvider;
-import com.trsvax.bootstrap.services.bootstrapprovider.TableProvider;
-import com.trsvax.bootstrap.services.javascript.BootstrapFormStack;
 
 
 /**
@@ -79,24 +45,8 @@ public class BootstrapModule {
 		binder.bind(BindingFactory.class,EnvironmentBindingFactory.class).withId("EnvironmentBindingFactory");
 		binder.bind(StringTemplateParser.class,StringTemplateParserImpl.class);
 
-		binder.bind(ExcludeVisitor.class,ExcludeVisitorImpl.class);
 		binder.bind(EnvironmentSetup.class, EnvironmentSetupImpl.class);
-		
-		binder.bind(BootstrapProvider.class,BreadcrumbProvider.class).withId("BootstrapBreadcrumb");
-		binder.bind(BootstrapProvider.class,ButtonProvider.class).withId("BootstrapButton");
-		binder.bind(BootstrapProvider.class,ButtonGroupProvider.class).withId("BootstrapButtonGroup");
-		binder.bind(BootstrapProvider.class,DefaultProvider.class).withId("BootstrapDefault");
-		binder.bind(BootstrapProvider.class,FormProvider.class).withId("BootstrapForm");
-		binder.bind(BootstrapProvider.class,LayoutProvider.class).withId("BootstrapLayout");	
-		binder.bind(BootstrapProvider.class,NavProvider.class).withId("BootstrapNav");
-		binder.bind(BootstrapProvider.class,NavBarProvider.class).withId("BootstrapNavBar");
-		binder.bind(BootstrapProvider.class,PaginationProvider.class).withId("BootstrapPagination");
-		binder.bind(BootstrapProvider.class,TableProvider.class).withId("BootstrapTable");	
-		binder.bind(BootstrapProvider.class, BeanDisplayProvider.class).withId("BootstrapBeanDisplay");
-		binder.bind(BootstrapProvider.class, AlertsProvider.class).withId("BootstrapAlerts");
-		
-		
-		binder.bind(FrameworkProvider.class,FrameworkProviderImpl.class).withId("FrameworkProvider");
+
 
 	}
 
@@ -104,13 +54,6 @@ public class BootstrapModule {
 		configuration.add(new LibraryMapping("tb", "com.trsvax.bootstrap"));
 	}
 	
-	public static void contributeJavaScriptStackSource(MappedConfiguration<String, JavaScriptStack> configuration,
-			@Symbol(JQuerySymbolConstants.SUPPRESS_PROTOTYPE) boolean suppressPrototype) {
-		if ( suppressPrototype ) {
-			configuration.overrideInstance(BootstrapFormStack.STACK_ID, BootstrapFormStack.class);
-		}
-	
-	}
 
 	public static void contributeBindingSource(MappedConfiguration<String, BindingFactory> configuration,
 			@InjectService("SessionBindingFactory") BindingFactory sessionBindingFactory,
@@ -119,46 +62,11 @@ public class BootstrapModule {
 		configuration.add("session", sessionBindingFactory);  
 		configuration.add("env", environmentBindingFactory);
 	}
-	
-	public static void contributeBootstrapProvider(OrderedConfiguration<BootstrapProvider> configuration,
-			@InjectService("BootstrapBreadcrumb") BootstrapProvider breadcrumbProvider,
-			@InjectService("BootstrapButton") BootstrapProvider buttonProvider,
-			@InjectService("BootstrapButtonGroup") BootstrapProvider buttonGroupProvider,
-			@InjectService("BootstrapDefault") BootstrapProvider defaultProvider,
-			@InjectService("BootstrapForm") BootstrapProvider formProvider,
-			@InjectService("BootstrapLayout") BootstrapProvider layoutProvider,
-			@InjectService("BootstrapNav") BootstrapProvider navProvider,
-			@InjectService("BootstrapNavBar") BootstrapProvider navBarProvider,
-			@InjectService("BootstrapPagination") BootstrapProvider paginationProvider,
-			@InjectService("BootstrapTable") BootstrapProvider tableProvider,
-			@InjectService("BootstrapBeanDisplay") BootstrapProvider beanDisplayProvider,
-			@InjectService("BootstrapAlerts") BootstrapProvider alertsProvider)
-	{
-		configuration.add("Breadcrumb",breadcrumbProvider);
-		configuration.add("Button", buttonProvider);
-		configuration.add("ButtonGroup", buttonGroupProvider);
-		configuration.add("Default",defaultProvider);
-		configuration.add("Form", formProvider);
-		configuration.add("Layout", layoutProvider);
-		configuration.add("Nav", navProvider,"before:ButtonGroup");
-		configuration.add("NavBar", navBarProvider);
-		configuration.add("Pagination", paginationProvider);
-		configuration.add("Table", tableProvider);
-		configuration.add("BeanDisplay", beanDisplayProvider);
-		configuration.add("Alerts", alertsProvider);
-	}
-	
-	@Marker(Primary.class)
-	public BootstrapProvider build(List<BootstrapProvider> configuration, ChainBuilder chainBuilder) {
-		return chainBuilder.build(BootstrapProvider.class, configuration);
-	}
-	
+		
 
 	@Contribute(ComponentClassTransformWorker2.class)   
 	public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {	
 		workers.addInstance("ConnectWorker", ConnectWorker.class);
-		workers.addInstance("ExcludeWorker", ExcludeWorker.class);
-		workers.addInstance("FrameworkMixinWorker", FrameworkMixinWorker.class);
 	} 
 	
 	@Contribute(EnvironmentSetup.class)
@@ -174,65 +82,8 @@ public class BootstrapModule {
 		configuration.add(AlertsEnvironment.class, new AlertsValues(null));
 	}
 
-	public void contributeMarkupRenderer(OrderedConfiguration<MarkupRendererFilter> configuration,
-			final Logger logger,
-			final EnvironmentSetup environmentSetup,
-			final Environment environment, 
-			final JavaScriptSupport javaScriptSupport, 
-			final ExcludeVisitor excludeVistior,
-			@InjectService("FrameworkProvider") final FrameworkProvider frameworkProvider) {
-
-		MarkupRendererFilter bootstrapFilter = new MarkupRendererFilter() {		
-			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
-				environmentSetup.push();
-				renderer.renderMarkup(writer);				
-				final FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
-				environmentSetup.pop();
-				frameworkProvider.renderMarkup(writer);				
-			}		
-		};
-
-		MarkupRendererFilter javaScriptFilter = new MarkupRendererFilter() {		
-			public void renderMarkup(MarkupWriter writer, MarkupRenderer renderer) {
-				renderer.renderMarkup(writer);
-				FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
-				for ( Entry<String, String> script : values.getOnceScripts()) {
-					javaScriptSupport.addScript(script.getKey());
-				}
-			}
-		};
-
-
-		configuration.add("JavaScriptFilter", javaScriptFilter,"after:JavaScriptSupport");
-		configuration.add("BootstrapFilter", bootstrapFilter,"before:*");
-	}
-
-	public void contributePartialMarkupRenderer(OrderedConfiguration<PartialMarkupRendererFilter> configuration,
-			final EnvironmentSetup environmentSetup,
-			final Environment environment,
-			final JavaScriptSupport javaScriptSupport, 
-			final ExcludeVisitor excludeVistior) {
-		PartialMarkupRendererFilter bootstrapFilter = new PartialMarkupRendererFilter() {
-
-			public void renderMarkup(MarkupWriter writer, JSONObject reply, PartialMarkupRenderer renderer) {
-				environmentSetup.push();
-				renderer.renderMarkup(writer,reply);				
-				final FrameworkEnvironment values = environment.peek(FrameworkEnvironment.class);
-				environmentSetup.pop();
-
-				Element root = writer.getDocument().getRootElement();
-				if ( root != null ) {
-					Element body = root.find("ajax-partial");
-					if ( body != null) {
-						//TODO use provider
-						//frameworkVisitor.visit(body);
-						reply.put("content", body.getChildMarkup());
-					} 				
-				}
-			}					
-		};
-		configuration.add("BootstrapAJAXFilter", bootstrapFilter,"before:*");
-	}
+	
+	
 
 	public static void contributeClasspathAssetAliasManager(MappedConfiguration<String, String> configuration) {
 		configuration.add("tap-bootstrap", "com/trsvax/bootstrap");

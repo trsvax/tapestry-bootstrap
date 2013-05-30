@@ -5,8 +5,6 @@
 
 CKEDITOR.editorConfig = function( config ) {
 	config.extraPlugins = 'save';
-	config.filebrowserUploadUrl = '/uploader/upload.php';
-	config.filebrowserBrowseUrl = '/browser/browse.php';
 
 	
 	// Define changes to default configuration here.

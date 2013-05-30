@@ -2,6 +2,7 @@ package com.trsvax.bootstrap.mixins;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.Link;
@@ -14,6 +15,7 @@ import org.apache.tapestry5.services.Environment;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.ValueEncoderSource;
+import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.environment.LoopEnvironment;
 import com.trsvax.bootstrap.environment.LoopValues;
@@ -33,6 +35,12 @@ public class Pager<T> {
 		
 		@Parameter
 		private Integer currentPage;
+		
+		@Parameter
+		private Object[] context;
+		
+		@Parameter(allowNull = false)
+		private Map<String, ?> parameters;
 		
 		@Parameter(defaultPrefix="literal")
 		private Integer rowsPerPage;
@@ -99,6 +107,9 @@ public class Pager<T> {
 			return valueEncoderSource.getValueEncoder(Integer.class).toValue(request.getParameter(parameterName));
 		}
 		
+		@Inject
+		private Logger logger;
+		
 		PaginationValues values( final String event,final String parameterName) {
 			return new PaginationValues(environment.peek(PaginationEnvironment.class)) {
 	    		public Link getLink(Integer count) {
@@ -107,7 +118,13 @@ public class Pager<T> {
 	    				link = resources.getContainerResources().createEventLink(event,count);
 	    			} else {
 	    				link = pageRenderLinkSource.createPageRenderLink(resources.getPageName());
+	    				//link = resources.createPageLink(resources.getPageName(), resources.isBound("context"), context);
 	    				link.addParameter(parameterName,count.toString());
+	    				if ( resources.isBound("parameters")) {				 
+					        for(Map.Entry<String,?> entry : parameters.entrySet()) {
+					             link.addParameterValue(entry.getKey(), entry.getValue());
+					        }
+	    				}
 	    			}
 	    			return link;
 	    		};

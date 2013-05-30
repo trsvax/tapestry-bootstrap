@@ -66,7 +66,6 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 		if ( ! type.startsWith(formEnvironment.getPrefix())) {
 			return false;
 		}
-		
 		final Set<Element> pop = new HashSet<Element>();
 		mixin.getRoot().visit( new BeanEditFormVisitor(mixin,type,pop));
 		for ( Element element : pop ) {
@@ -92,6 +91,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 			Element buttonContainer;
 
 			if ( form(element)) {
+				logger.info("form {}",type);
 				element.addClassName(type);
 				return;
 			}
@@ -116,7 +116,7 @@ public class FormProvider extends AbstractFrameworkProvider implements Bootstrap
 					String value = element.getAttribute("value") == null ? "" : element.getAttribute("value") ;
 					if ( type != null && type.equals("submit") && ! value.equals("Cancel") ) {
 						buttonContainer = element.getContainer();
-						buttonContainer.forceAttributes("class","form-actions");
+						buttonContainer.forceAttributes("class","form-actions " + this.type);
 						element.addClassName("btn btn-primary");
 					} else if ( type != null && type.equals("hidden")) {
 						//ignore

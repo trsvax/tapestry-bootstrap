@@ -1,11 +1,17 @@
 package com.trsvax.bootstrap.components;
 
-import org.apache.tapestry5.Link;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
 
 import com.trsvax.bootstrap.environment.PaginationEnvironment;
 
@@ -19,6 +25,7 @@ public class Pagination  {
 	private PaginationEnvironment pagination;
 	
 	@Parameter(value=PaginationEnvironment.currentPage,required=true)
+	@Property
 	private Integer currentPage; 
 	
 	@Parameter(value=PaginationEnvironment.itemCount,required=true)
@@ -29,81 +36,66 @@ public class Pagination  {
 	
 	@Parameter(value=PaginationEnvironment.range,required=true)
 	private Integer range;
+	
+	@Property
+	private List<Page> pages;
+	@Property
+	private Page page;
+	
+	@Property
+	private String pageName;
+	
+	@Inject
+	private ComponentResources resources;
 			
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
+		pageName = resources.getPageName();
+		pages = new ArrayList<Pagination.Page>();
+		
+		pages.add(new Page(currentPage-1,"&laquo;"));
+		for ( Integer i = 1; i <= itemCount/rowsPerPage; i++ ) {
+			pages.add(new Page(i,i.toString()));
+		}
+		pages.add(new Page(currentPage-1,"&raquo;"));
+	}
+	
+	public String getClassName() {
+		if ( page.getPageNum().equals(currentPage)) {
+			return "active";
+		}
+		return "";
+	}
+	
 
-		Integer pageCount = itemCount/rowsPerPage;
-		if ( itemCount % rowsPerPage != 0 ) {
-			pageCount ++;
-		}
-		int min = currentPage - range;
-		int max = currentPage + range;
-		if ( min <= 0 ) {
-			int offset = Math.abs(min) + 1;
-			min += offset;
-			max += offset;
-		}
-		if ( max > pageCount ) {
-			max = pageCount;
+	
+	public class Page {
+		private final Map<String,Integer> pageParameters;
+		private final String pageLabel;
+		private final Integer pageNum;
+		
+		
+		public Page(Integer pageNum, String pageLabel) {
+			this.pageParameters = new HashMap<String, Integer>();
+			this.pageParameters.put("page", pageNum);
+			this.pageLabel = pageLabel;
+			this.pageNum = pageNum;
 		}
 		
-		writer.element("div", "class","pagination");
-		writer.element("ul");		
-		prev(writer);
-		for ( Integer page = min; page <= max; page++ ) {
-			link(writer,page);
-		}		
-		next(writer,pageCount);
-		writer.end();
-		writer.end();
-	}
-
-
-	private void link(MarkupWriter writer, Integer page) {
-		if ( currentPage.equals(page)) {
-			writer.element("li","class","active");
-		} else {
-			writer.element("li");
+		public Integer getPageNum() {
+			return pageNum;
 		}
-		writer.element("a", "href",makeLink(page));
-		writer.write(page.toString());
-		writer.end();
-		writer.end();
+		
+		public Map<String,Integer> getPageParameters() {
+			return pageParameters;
+		}
+		
+		public String getPageLabel() {
+			return pageLabel;
+		}
 	}
 	
-	private void prev(MarkupWriter writer) {
-		if ( currentPage == 1 ) {
-			writer.element("li","class","prev disabled");
-			writer.element("a", "href",makeLink(1));
-		} else {
-			writer.element("li","class","prev");
-			writer.element("a", "href",makeLink( currentPage - 1));
-		}
-		writer.writeRaw("&larr; Previous");
-		writer.end();
-		writer.end();
-	}
-	
-	private void next(MarkupWriter writer, Integer pageCount) {
-		if ( currentPage >= pageCount ) {
-			writer.element("li","class","next disabled");
-			writer.element("a", "href","#");
-		} else {
-			writer.element("li","class","next");
-			writer.element("a", "href",makeLink( currentPage + 1),"class","next");
-		}
 
-		writer.writeRaw("Next &rarr;");
-		writer.end();
-		writer.end();
-	}
-	
-	private Link makeLink(Integer count) {
-		if ( pagination == null ) {
-			return null;
-		}
-		return pagination.getLink(count);		
-	}
+
 
 }

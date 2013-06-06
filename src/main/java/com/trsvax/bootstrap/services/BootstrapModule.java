@@ -1,8 +1,11 @@
 package com.trsvax.bootstrap.services;
 
+import org.apache.tapestry5.annotations.Path;
+import org.apache.tapestry5.corelib.components.PageLink;
 import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
+import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.InjectService;
@@ -12,8 +15,11 @@ import org.apache.tapestry5.services.BindingFactory;
 import org.apache.tapestry5.services.DisplayBlockContribution;
 import org.apache.tapestry5.services.EditBlockContribution;
 import org.apache.tapestry5.services.LibraryMapping;
+import org.apache.tapestry5.services.javascript.JavaScriptModuleConfiguration;
+import org.apache.tapestry5.services.javascript.ModuleManager;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
 
+import com.trsvax.bootstrap.annotations.MixinDefaults;
 import com.trsvax.bootstrap.environment.AlertsEnvironment;
 import com.trsvax.bootstrap.environment.AlertsValues;
 import com.trsvax.bootstrap.environment.BeanDisplayEnvironment;
@@ -49,6 +55,10 @@ public class BootstrapModule {
 
 
 	}
+	
+	public static void contributeFactoryDefaults(MappedConfiguration<String, Object> configuration) {
+		configuration.add("trsvax.asset.root", "classpath:META-INF/assets/module/trsvax");
+	}
 
 	public static void contributeComponentClassResolver(Configuration<LibraryMapping> configuration) {
 		configuration.add(new LibraryMapping("tb", "com.trsvax.bootstrap"));
@@ -67,7 +77,11 @@ public class BootstrapModule {
 	@Contribute(ComponentClassTransformWorker2.class)   
 	public static void  provideWorkers(OrderedConfiguration<ComponentClassTransformWorker2> workers) {	
 		workers.addInstance("ConnectWorker", ConnectWorker.class);
+		workers.addInstance("DefaultMixinWorker", DefaultMixinWorker.class);
 	} 
+	
+	
+	
 	
 	@Contribute(EnvironmentSetup.class)
 	public static void provideEnvironmentSetup(MappedConfiguration<Class, Object> configuration) {
@@ -81,6 +95,10 @@ public class BootstrapModule {
 		configuration.add(BeanDisplayEnvironment.class, new BeanDisplayValues(null));
 		configuration.add(AlertsEnvironment.class, new AlertsValues(null));
 	}
+	
+	
+
+	
 
 	
 	
@@ -111,6 +129,16 @@ public class BootstrapModule {
 	private static void addDisplayBlock(Configuration<BeanBlockContribution> configuration, String dataType, String blockId) {
 		configuration.add(new DisplayBlockContribution(dataType, "tb/AppPropertyDisplayBlocks", blockId));
 	}
+	
+	
+	@Contribute(ModuleManager.class)
+	public static void setupBaseModules(MappedConfiguration<String, Object> configuration,
+			@Path("${trsvax.asset.root}/bootstrap/init.js") Resource bootstrap) {
+		
+		configuration.add("trsvax/bootstrap", new JavaScriptModuleConfiguration(bootstrap).dependsOn("bootstrap"));
+
+	}
+	
 
 
 }

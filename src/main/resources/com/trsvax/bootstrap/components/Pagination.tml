@@ -1,0 +1,13 @@
+<html 
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+      xmlns:p="tapestry:parameter">
+
+<div class="pagination">
+  <ul>
+<t:loop source="pages" value="page">
+	<li class="${className}"><t:pagelink page="prop:pageName" parameters="page.pageParameters" ><t:outputraw value="${page.pageLabel}"/></t:pagelink></li>
+</t:loop>
+</ul>
+</div>
+      
+</html>

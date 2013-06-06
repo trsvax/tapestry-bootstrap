@@ -55,7 +55,7 @@ Bootstap Mixins
 - **FW**
    - internal mixin for attaching framework chain to component
 
-- **LoopEnviromentMixin*
+- **LoopEnviromentMixin**
    - add to Loop component to support paging
    
 - **Pager**

@@ -48,7 +48,7 @@ public class BootstrapForm {
 					String labelClass = className.replace("control-label", "").trim();
 					element.forceAttributes("class", labelClass.length() == 0 ? null : labelClass);
 				}
-				if ( isDiv(element) && isButtonGroup(className) && needBR() ) {
+				if ( isDiv(element) && isButtonGroup(className) && addBR() ) {
 						element.elementBefore("br");
 				}
 				if ( isButtonGroup(className) && removeButtonGroup()) {
@@ -59,7 +59,7 @@ public class BootstrapForm {
 		for ( Element element : removeElements ) {
 			element.pop();
 		}
-		if ( needFieldSet()) {
+		if ( addFieldSet()) {
 			List<Node> children = form.getChildren();
 			Element fieldset = form.element("fieldset");
 			for ( Node child : children ) {
@@ -69,24 +69,20 @@ public class BootstrapForm {
 		
 	}
 	
-	private boolean isDiv(Element element) {
-		return "div".equals(element.getName());
-	}
-	
-	private boolean isControLabel(String className) {
-		return className == null ? false : className.contains("control-label");
-	}
-	
-	private boolean needBR() {
+	private boolean addBR() {
 		return broken || isInlineForm() || isSearchForm() ? false : (broken = true);
+	}
+	
+	private boolean addFieldSet() {
+		return isDefaultForm();
 	}
 	
 	private boolean removeButtonGroup() {
 		return isInlineForm() || isSearchForm();
 	}
-	
-	private boolean needFieldSet() {
-		return isDefaultForm();
+		
+	private boolean isControLabel(String className) {
+		return className == null ? false : className.contains("control-label");
 	}
 	
 	private boolean isButtonGroup(String className) {
@@ -101,8 +97,8 @@ public class BootstrapForm {
 		return className == null ? false : className.contains("controls") || className.contains("control-group") ;
 	}
 	
-	private boolean isDefaultForm() {
-		return isSearchForm() || isInlineForm() || isHorizontalForm() ? false : true;
+	private boolean isDiv(Element element) {
+		return "div".equals(element.getName());
 	}
 	
 	private boolean isSearchForm() {
@@ -115,6 +111,10 @@ public class BootstrapForm {
 	
 	private boolean isHorizontalForm() {
 		return "form-horizontal".equals(formClass);
+	}
+	
+	private boolean isDefaultForm() {
+		return isSearchForm() || isInlineForm() || isHorizontalForm() ? false : true;
 	}
 
 }

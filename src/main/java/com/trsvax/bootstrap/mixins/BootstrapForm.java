@@ -27,7 +27,6 @@ public class BootstrapForm {
 	}
 	
 	private List<Element> divs;
-	private Element submit;
 	
 	@CleanupRender
 	void cleanupRender() {
@@ -39,17 +38,20 @@ public class BootstrapForm {
 		form.visit( new Visitor() {
 			
 			public void visit(Element element) {
-				if ( element.getName().equals("div")) {
-					divs.add(element);
-				}
 				String className = element.getAttribute("class");
+				if ( element.getName().equals("div") && (isControl(className) || isFormActions(className)) ) {
+					divs.add(element);
+				}			
 				if ( className != null && className.contains("control-label")) {
-					element.forceAttributes("class",className.replace("control-label", ""));
+					String labelClass = className.replace("control-label", "");
+					if ( labelClass.length() == 0 ) {
+						element.forceAttributes("class",null);
+					} else {
+						element.forceAttributes("class",labelClass);
+					}
 				}
-				String type = element.getAttribute("type");
-				if ( type != null && submit == null && type.equals("submit")) {
+				if ( element.getName().equals("div") && isButtonGroup(className)) {
 					element.elementBefore("br");
-					submit = element;
 				}
 				
 				
@@ -60,11 +62,43 @@ public class BootstrapForm {
 		}
 		List<Node> children = form.getChildren();
 		Element fieldset = form.element("fieldset");
-
 		for ( Node child : children ) {
 			child.moveToBottom(fieldset);
 		}
 		
+	}
+	
+	private boolean isButtonGroup(String className) {
+		if ( className == null ) {
+			return false;
+		}
+		if ( className.contains("btn-group")) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isFormActions(String className) {
+		if ( className == null ) {
+			return false;
+		}
+		if ( className.contains("form-actions")) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isControl(String className) {
+		if ( className == null ) {
+			return false;
+		}
+		if ( className.contains("control-group")) {
+			return true;
+		}
+		if ( className.contains("controls")) {
+			return true;
+		}
+		return false;
 	}
 
 }

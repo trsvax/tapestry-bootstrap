@@ -27,6 +27,7 @@ public class BootstrapForm {
 	}
 	
 	private List<Element> divs;
+	private boolean broken;
 	
 	@CleanupRender
 	void cleanupRender() {
@@ -50,8 +51,9 @@ public class BootstrapForm {
 						element.forceAttributes("class",labelClass);
 					}
 				}
-				if ( element.getName().equals("div") && isButtonGroup(className)) {
+				if ( element.getName().equals("div") && isButtonGroup(className) && ! broken) {
 					element.elementBefore("br");
+					broken = true;
 				}
 				
 				

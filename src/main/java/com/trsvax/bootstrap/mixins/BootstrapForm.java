@@ -70,7 +70,7 @@ public class BootstrapForm {
 	}
 	
 	private boolean isDiv(Element element) {
-		return "div".equals( element.getName());
+		return "div".equals(element.getName());
 	}
 	
 	private boolean isControLabel(String className) {
@@ -78,11 +78,7 @@ public class BootstrapForm {
 	}
 	
 	private boolean needBR() {
-		if ( broken || isInlineForm() || isSearchForm() ) {
-			return false;
-		}
-		broken = true;
-		return true;
+		return broken || isInlineForm() || isSearchForm() ? false : (broken = true);
 	}
 	
 	private boolean removeButtonGroup() {

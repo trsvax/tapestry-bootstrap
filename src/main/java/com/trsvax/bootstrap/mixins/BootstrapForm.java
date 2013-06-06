@@ -74,10 +74,7 @@ public class BootstrapForm {
 	}
 	
 	private boolean isControLabel(String className) {
-		if ( className == null ) {
-			return false;
-		}
-		return className.contains("control-label");
+		return className == null ? false : className.contains("control-label");
 	}
 	
 	private boolean needBR() {
@@ -89,79 +86,39 @@ public class BootstrapForm {
 	}
 	
 	private boolean removeButtonGroup() {
-		if ( isInlineForm() || isSearchForm() ) {
-			return true;
-		}
-		return false;
+		return isInlineForm() || isSearchForm();
 	}
 	
 	private boolean needFieldSet() {
-		if ( isDefaultForm() ) {
-			return true;
-		}
-		return false;
+		return isDefaultForm();
 	}
 	
 	private boolean isButtonGroup(String className) {
-		if ( className == null ) {
-			return false;
-		}
-		if ( className.contains("btn-group")) {
-			return true;
-		}
-		return false;
+		return className == null ? false : className.contains("btn-group");
 	}
 	
 	private boolean isFormActions(String className) {
-		if ( className == null ) {
-			return false;
-		}
-		if ( className.contains("form-actions")) {
-			return true;
-		}
-		return false;
+		return className == null ? false : className.contains("form-actions");
 	}
 	
 	private boolean isControlClass(String className) {
-		if ( className == null ) {
-			return false;
-		}
-		if ( className.contains("control-group")) {
-			return true;
-		}
-		if ( className.contains("controls")) {
-			return true;
-		}
-		return false;
+		return className == null ? false : className.contains("controls") || className.contains("control-group") ;
 	}
 	
 	private boolean isDefaultForm() {
-		if ( isSearchForm() || isInlineForm() || isHorizontalForm() ) {
-			return false;
-		}
-		
-		return true;
+		return isSearchForm() || isInlineForm() || isHorizontalForm() ? false : true;
 	}
 	
 	private boolean isSearchForm() {
-		if ( "form-search".equals(formClass)) {
-			return true;
-		}
-		return false;
+		return "form-search".equals(formClass);
 	}
 	
 	private boolean isInlineForm() {
-		if ( "form-inline".equals(formClass)) {
-			return true;
-		}
-		return false;
+		return "form-inline".equals(formClass);
 	}
 	
 	private boolean isHorizontalForm() {
-		if ( "form-horizontal".equals(formClass)) {
-			return true;
-		}
-		return false;
+		return "form-horizontal".equals(formClass);
 	}
 
 }

@@ -10,8 +10,6 @@ import org.apache.tapestry5.annotations.MixinAfter;
 import org.apache.tapestry5.dom.Element;
 import org.apache.tapestry5.dom.Node;
 import org.apache.tapestry5.dom.Visitor;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.slf4j.Logger;
 
 @MixinAfter
 public class BootstrapForm {
@@ -20,15 +18,11 @@ public class BootstrapForm {
 	private List<Element> removeElements;
 	private boolean broken;
 	private String formClass;
-	
-	@Inject
-	private Logger logger;
-		
+			
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
 		form = writer.getElement();	
 	}
-	
 	
 	@CleanupRender
 	void cleanupRender() {

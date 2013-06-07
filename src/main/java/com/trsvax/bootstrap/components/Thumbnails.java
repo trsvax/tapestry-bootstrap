@@ -14,12 +14,12 @@ public class Thumbnails {
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
-		writer.element("ul", "class","thumbnails");
+		//writer.element("ul", "class","thumbnails");
 	}
 	
 	@AfterRender
 	void afterRender(MarkupWriter writer) {
-		writer.end();
+		//writer.end();
 	}
 
 }

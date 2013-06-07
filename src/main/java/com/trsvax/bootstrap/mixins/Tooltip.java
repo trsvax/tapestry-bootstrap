@@ -32,9 +32,7 @@ public class Tooltip {
 	void beginRender(MarkupWriter writer) {
 		//just blow up if not a clientElement
 		String id = ((ClientElement) resources.getContainer()).getClientId();
-		
-		logger.info("args {}",resources.getContainerResources().getInformalParameterNames());
-		
+				
 		if ( title != null ) {
 			writer.getElement().attribute("title", title);
 		}

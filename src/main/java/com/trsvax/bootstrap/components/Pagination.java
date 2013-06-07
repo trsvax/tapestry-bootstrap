@@ -5,38 +5,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.MarkupWriter;
 import org.apache.tapestry5.annotations.BeginRender;
-import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Request;
+import org.slf4j.Logger;
 
-import com.trsvax.bootstrap.environment.PaginationEnvironment;
+import com.trsvax.bootstrap.environment.PagerEnvironment;
 
 /**
  * @tapestrydoc
  */
 public class Pagination  {
 	
-	@Property
-	@Environmental(false)
-	private PaginationEnvironment pagination;
+	//@Property
+	//@Environmental(false)
+	//private PagerEnvironment pagination;
 	
-	@Parameter(value=PaginationEnvironment.currentPage,required=true)
+	@Parameter(value=PagerEnvironment.currentPage,required=true)
 	@Property
 	private Integer currentPage; 
 	
-	@Parameter(value=PaginationEnvironment.itemCount,required=true)
-	private Integer itemCount;
+	@Parameter(value=PagerEnvironment.availableRows,required=true)
+	private Integer availableRows;
 	
-	@Parameter(value=PaginationEnvironment.rowsPerPage,required=true)
+	@Parameter(value=PagerEnvironment.rowsPerPage,required=true)
 	private Integer rowsPerPage;
 	
-	@Parameter(value=PaginationEnvironment.range,required=true)
-	private Integer range;
-	
+	@Parameter(value=PagerEnvironment.id,required=true)
+	private String id;
+
 	@Property
 	private List<Page> pages;
 	@Property
@@ -47,14 +50,24 @@ public class Pagination  {
 	
 	@Inject
 	private ComponentResources resources;
+	
+	@Inject
+	private Request request;
+	
+	@Inject
+	private Logger logger;
 			
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
 		pageName = resources.getPageName();
+		logger.info("page {} {}",pageName,availableRows);
 		pages = new ArrayList<Pagination.Page>();
+		if ( availableRows == null ) {
+			return;
+		}
 		
 		pages.add(new Page(currentPage-1,"&laquo;"));
-		for ( Integer i = 1; i <= itemCount/rowsPerPage; i++ ) {
+		for ( Integer i = 1; i <= availableRows/rowsPerPage; i++ ) {
 			pages.add(new Page(i,i.toString()));
 		}
 		pages.add(new Page(currentPage-1,"&raquo;"));
@@ -70,14 +83,17 @@ public class Pagination  {
 
 	
 	public class Page {
-		private final Map<String,Integer> pageParameters;
+		private final Map<String,Object> pageParameters;
 		private final String pageLabel;
 		private final Integer pageNum;
 		
 		
 		public Page(Integer pageNum, String pageLabel) {
-			this.pageParameters = new HashMap<String, Integer>();
-			this.pageParameters.put("page", pageNum);
+			this.pageParameters = new HashMap<String, Object>();
+			for ( String name : request.getParameterNames() ) {
+				this.pageParameters.put(name, request.getParameter(name));
+			}
+			this.pageParameters.put(id, pageNum.toString());
 			this.pageLabel = pageLabel;
 			this.pageNum = pageNum;
 		}
@@ -86,7 +102,7 @@ public class Pagination  {
 			return pageNum;
 		}
 		
-		public Map<String,Integer> getPageParameters() {
+		public Map<String,Object> getPageParameters() {
 			return pageParameters;
 		}
 		

@@ -1,49 +1,36 @@
 package com.trsvax.bootstrap.mixins;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
+import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.CleanupRender;
 import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Environment;
-import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.ValueEncoderSource;
 import org.slf4j.Logger;
 
-import com.trsvax.bootstrap.environment.LoopEnvironment;
-import com.trsvax.bootstrap.environment.LoopValues;
-import com.trsvax.bootstrap.environment.PaginationEnvironment;
-import com.trsvax.bootstrap.environment.PaginationValues;
+import com.trsvax.bootstrap.environment.PagerEnvironment;
+import com.trsvax.bootstrap.environment.PagerValues;
 
-public class Pager<T> {
+public class Pager {
 	
-		@Parameter(required=true,allowNull=false)
-		private List<T> source;
+	@Parameter(name = "for", required = true, allowNull = false, defaultPrefix = BindingConstants.LITERAL)
+	private String component;
 		
-		@Parameter
-		private String event;
-		
-		@Parameter(value="resources.container.componentResources.id")
-		private String parameterName;
+		//@Parameter(value="resources.container.componentResources.id")
+		//private String parameterName;
 		
 		@Parameter
 		private Integer currentPage;
 		
-		@Parameter
-		private Object[] context;
-		
-		@Parameter(allowNull = false)
-		private Map<String, ?> parameters;
 		
 		@Parameter(defaultPrefix="literal")
 		private Integer rowsPerPage;
+		
+		@Parameter(defaultPrefix="prop")
+		private Integer availableRows;
 		
 	 	@Inject
 	  	private Environment environment;
@@ -55,79 +42,32 @@ public class Pager<T> {
 		private ValueEncoderSource valueEncoderSource;
 		
 		@Inject
-		@Property
 		private ComponentResources resources;
-			
-		@Inject
-		private PageRenderLinkSource pageRenderLinkSource;
 		
-
-		@SetupRender
-		void setupRender()  {			
-			PaginationValues paginationValues = values(event,parameterName);
-	    	paginationValues.setCurrentPage(currentPage());
-	    	if ( rowsPerPage != null ) {
-	    		paginationValues.setRowsPerPage(rowsPerPage);
-	    	}
-	    	paginationValues.setItemCount(source.size());
-			@SuppressWarnings("unchecked")
-			LoopValues<T> loopValues = new LoopValues<T>(environment.peek(LoopEnvironment.class));
-			loopValues.setSource(source(paginationValues));
-    	
-			environment.push(LoopEnvironment.class, loopValues);
-			environment.push(PaginationEnvironment.class, paginationValues);
-		}
-		
-		@CleanupRender
-		void cleanupRender() {
-			environment.pop(LoopEnvironment.class);
-			environment.pop(PaginationEnvironment.class);
-		}
-		
-		List<T> source(PaginationValues paginationValues) {
-			int fromIndex = (paginationValues.getCurrentPage() - 1) * paginationValues.getRowsPerPage();
-			int toIndex = fromIndex + paginationValues.getRowsPerPage();
-			if ( toIndex > paginationValues.getItemCount()) {
-				toIndex = paginationValues.getItemCount();
-			}
-			if ( fromIndex < 0 || fromIndex > toIndex || toIndex > source.size() ) {
-				return Collections.emptyList();
-			}
-			
-			return source.subList(fromIndex, toIndex);
-		}
-		
-		Integer currentPage() {
-			if ( currentPage != null ) {
-				return currentPage;
-			}
-			if ( request.getParameter(parameterName) == null ) {
-				return 1;
-			}
-			return valueEncoderSource.getValueEncoder(Integer.class).toValue(request.getParameter(parameterName));
-		}
 		
 		@Inject
 		private Logger logger;
 		
-		PaginationValues values( final String event,final String parameterName) {
-			return new PaginationValues(environment.peek(PaginationEnvironment.class)) {
-	    		public Link getLink(Integer count) {
-	    			Link link = null;
-	    			if ( event != null ) {
-	    				link = resources.getContainerResources().createEventLink(event,count);
-	    			} else {
-	    				link = pageRenderLinkSource.createPageRenderLink(resources.getPageName());
-	    				//link = resources.createPageLink(resources.getPageName(), resources.isBound("context"), context);
-	    				link.addParameter(parameterName,count.toString());
-	    				if ( resources.isBound("parameters")) {				 
-					        for(Map.Entry<String,?> entry : parameters.entrySet()) {
-					             link.addParameterValue(entry.getKey(), entry.getValue());
-					        }
-	    				}
-	    			}
-	    			return link;
-	    		};
-			};
+
+		@SetupRender
+		void setupRender()  {	
+			environment.push(PagerEnvironment.class, new PagerValues(rowsPerPage,currentPage(),availableRows,component) );
 		}
+		
+		@CleanupRender
+		void cleanupRender() {
+			environment.pop(PagerEnvironment.class);
+		}
+		
+		
+		private Integer currentPage() {
+			if ( currentPage != null ) {
+				return currentPage;
+			}
+			if ( request.getParameter(component) == null ) {
+				return 1;
+			}
+			return valueEncoderSource.getValueEncoder(Integer.class).toValue(request.getParameter(component));
+		}
+
 }

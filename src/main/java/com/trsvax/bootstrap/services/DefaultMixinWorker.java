@@ -1,6 +1,7 @@
 package com.trsvax.bootstrap.services;
 
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.corelib.components.Loop;
 import org.apache.tapestry5.corelib.components.PageLink;
 import org.apache.tapestry5.model.MutableComponentModel;
 import org.apache.tapestry5.plastic.PlasticClass;
@@ -9,6 +10,7 @@ import org.apache.tapestry5.services.transform.TransformationSupport;
 import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.mixins.BootstrapForm;
+import com.trsvax.bootstrap.mixins.PagedLoopMixin;
 import com.trsvax.bootstrap.mixins.Tooltip;
 
 
@@ -23,7 +25,6 @@ public class DefaultMixinWorker implements ComponentClassTransformWorker2 {
 	}
 
 	public void transform(PlasticClass plasticClass, TransformationSupport support, MutableComponentModel model) {
-		logger.info("name {}",model.getComponentClassName());
 		if ( PageLink.class.getName().equals(model.getComponentClassName())) {
 			model.addMixinClassName(Tooltip.class.getName());
 			logger.info("added tooltip");
@@ -31,6 +32,10 @@ public class DefaultMixinWorker implements ComponentClassTransformWorker2 {
 		
 		if ( Form.class.getName().equals(model.getComponentClassName())) {
 			model.addMixinClassName(BootstrapForm.class.getName());
+		}
+		
+		if ( Loop.class.getName().equals(model.getComponentClassName())) {
+			model.addMixinClassName(PagedLoopMixin.class.getName());
 		}
 		
 	}

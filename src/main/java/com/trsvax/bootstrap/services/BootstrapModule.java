@@ -128,7 +128,8 @@ public class BootstrapModule {
 	
 	@Contribute(ModuleManager.class)
 	public static void setupBaseModules(MappedConfiguration<String, Object> configuration,
-			@Path("${trsvax.asset.root}/bootstrap/init.js") Resource bootstrap) {
+			@Path("${trsvax.asset.root}/bootstrap/init.js") Resource bootstrap
+			) {
 		
 		configuration.add("trsvax/bootstrap", new JavaScriptModuleConfiguration(bootstrap).dependsOn("bootstrap"));
 

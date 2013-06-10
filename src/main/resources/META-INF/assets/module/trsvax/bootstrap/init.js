@@ -9,9 +9,12 @@ define(["jquery", "bootstrap"], function($) {
 			},
 			tooltip: function(id,options) {
 				$('#'+id).tooltip(options);
+			},
+			infinitescroll: function(id,url,options) {
+				$('#'+id).infinitescroll($.extend(true,{path: function(index) {
+					return url.replace("#index#", index);
+				}},options));
 			}
 	};
 
 });
-
-

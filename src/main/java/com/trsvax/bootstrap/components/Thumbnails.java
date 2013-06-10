@@ -1,25 +1,18 @@
 package com.trsvax.bootstrap.components;
 
-import org.apache.tapestry5.MarkupWriter;
-import org.apache.tapestry5.annotations.AfterRender;
-import org.apache.tapestry5.annotations.BeginRender;
-import org.apache.tapestry5.annotations.Mixin;
 
-import com.trsvax.bootstrap.mixins.Pager;
+public class Thumbnails extends Pager {
 
-public class Thumbnails {
-	
-	@Mixin
-	private Pager pager;
-	
-	@BeginRender
-	void beginRender(MarkupWriter writer) {
-		//writer.element("ul", "class","thumbnails");
+	@Override
+	public String getElement() {
+		return "ul";
+	}
+
+	@Override
+	public String getElementClassName() {
+		return "thumbnails";
 	}
 	
-	@AfterRender
-	void afterRender(MarkupWriter writer) {
-		//writer.end();
-	}
+	
 
 }

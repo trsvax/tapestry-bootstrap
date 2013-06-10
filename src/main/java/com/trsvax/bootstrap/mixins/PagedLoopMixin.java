@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.tapestry5.ComponentResources;
+import org.apache.tapestry5.MarkupWriter;
+import org.apache.tapestry5.annotations.AfterRender;
+import org.apache.tapestry5.annotations.BeginRender;
 import org.apache.tapestry5.annotations.BindParameter;
 import org.apache.tapestry5.annotations.Environmental;
 import org.apache.tapestry5.annotations.SetupRender;
@@ -19,7 +22,10 @@ import com.trsvax.bootstrap.environment.PagerEnvironment;
 public class PagedLoopMixin {
 	
 	@BindParameter
-	private Iterable source;
+	private Iterable<Object> source;
+	
+	@BindParameter
+	private String element;
 
  	@Environmental(false)
   	private PagerEnvironment env;
@@ -36,17 +42,16 @@ public class PagedLoopMixin {
  	
  	private int startIndex;
  	private int endIndex;
+ 	
+ 	private String id;
 	
 	@SetupRender
 	void setupRender() {
-		String id = resources.getContainerResources().getId();
-		if ( id == null || env == null) {
+		id = resources.getContainerResources().getId();
+		if ( ! isPaged() ) {
 			return;
 		}
-
-		if ( ! id.equals(env.getID())) {
-			return;
-		}
+		element = "li";
 		rowsPerPage = env.getRowsPerPage();
 		currentPage = env.getCurrentPage();
 
@@ -54,7 +59,6 @@ public class PagedLoopMixin {
 		Class<?> type = resources.getContainerResources().getBoundType("source");
 		logger.info("source type {}",type);
 		if ( Collection.class.isAssignableFrom(type)) {
-			@SuppressWarnings("unchecked")
 			Collection<Object> c = (Collection<Object>) source;
 			availableRows = c.size();
 			env.setAvailableRows(availableRows);
@@ -70,9 +74,36 @@ public class PagedLoopMixin {
 			source = source(ds);
 			return;
 		}
-		throw new RuntimeException("Loop Paging not supported by " + type);
+		throw new RuntimeException("Loop Paging not supported for source input " + type);
 	}
 	
+	private boolean done;
+	@BeginRender
+	void beginRender(MarkupWriter writer) {
+		if ( ! done  && isPaged()) {
+			//writer.element("ul","id",id,"class","thumbnails");
+			writer.element(env.getElement(), "id",id,"class",env.getElementClass());
+			done = true;
+		}
+	}
+	
+	@AfterRender
+	void afterRender(MarkupWriter writer) {
+		if ( done ) {
+			writer.end();
+		}
+	}
+	
+	private boolean isPaged() {
+		if ( id == null || env == null) {
+			return false;
+		}
+
+		if ( ! id.equals(env.getID())) {
+			return false;
+		}
+		return true;
+	}
 	
 
 

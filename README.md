@@ -50,7 +50,7 @@ Bootstap Mixins
    - makes elements [Draggable](http://jqueryui.com/demos/draggable/)
    
 - **Droppable**
-   - makes elements [Droppable](Droppable)
+   - makes elements [Droppable](http://jqueryui.com/droppable/)
    
 - **FW**
    - internal mixin for attaching framework chain to component
@@ -65,7 +65,7 @@ Bootstap Mixins
   - push new objects into the environment
   
 - **Sortable**
-  - makes elements [Sortable]http://jqueryui.com/demos/sortable/)
+  - makes elements [Sortable](http://jqueryui.com/demos/sortable/)
   
 
 ##Using Bootstrap:

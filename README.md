@@ -55,8 +55,9 @@ Bootstap Mixins
 - **FW**
    - internal mixin for attaching framework chain to component
 
-- **LoopEnviromentMixin*
+- **LoopEnvironmentMixin**
    - add to Loop component to support paging
+   (https://github.com/trsvax/tapestry-bootstrap/blob/master/src/main/java/com/trsvax/bootstrap/mixins/LoopEnvironmentMixin.java?source=c)
    
 - **Pager**
   - integrates Pagination and Loop to implement paged data sets

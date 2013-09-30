@@ -17,6 +17,8 @@ import org.apache.tapestry5.services.BindingFactory;
 import org.apache.tapestry5.services.DisplayBlockContribution;
 import org.apache.tapestry5.services.EditBlockContribution;
 import org.apache.tapestry5.services.LibraryMapping;
+import org.apache.tapestry5.services.RequestFilter;
+import org.apache.tapestry5.services.RequestHandler;
 import org.apache.tapestry5.services.javascript.JavaScriptModuleConfiguration;
 import org.apache.tapestry5.services.javascript.ModuleManager;
 import org.apache.tapestry5.services.transform.ComponentClassTransformWorker2;
@@ -135,6 +137,11 @@ public class BootstrapModule {
 
 	}
 	
+	
+	 @Contribute(RequestHandler.class)
+		public static void fixRelativeRequests(OrderedConfiguration<RequestFilter> configuration) {
+			configuration.addInstance("ckeditor", CKEditorRequestFilter.class);
+		}
 
 
 }

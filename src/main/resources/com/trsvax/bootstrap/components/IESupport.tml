@@ -1,0 +1,8 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter">      
+
+<t:tb.ifIE test="lt IE 9">
+	<script src="${asset:classpath:/META-INF/assets/tb/browsersupport/html5shiv.js}"></script>
+	<script src="${asset:classpath:/META-INF/assets/tb/browsersupport/respond.min.js}"></script>
+</t:tb.ifIE>
+
+</t:container>

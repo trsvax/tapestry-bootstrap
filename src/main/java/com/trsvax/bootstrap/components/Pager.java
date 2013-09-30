@@ -18,17 +18,9 @@ public class Pager {
 
 	@Parameter(name = "for", required = true, allowNull = false, defaultPrefix = BindingConstants.LITERAL)
 	private String component;
-
-
+	
 	@Parameter
 	private Integer currentPage;
-
-	@Parameter(defaultPrefix="literal")
-	private String element;
-
-	@Parameter(name="class",defaultPrefix="literal")
-	private String className;
-
 
 	@Parameter(defaultPrefix="literal")
 	private Integer rowsPerPage;
@@ -55,13 +47,7 @@ public class Pager {
 
 	@SetupRender
 	void setupRender()  {	
-		if ( ! resources.isBound("element")) {
-			element = getElement();
-		}
-		if ( ! resources.isBound("className")) {
-			className = getElementClassName();
-		}
-		environment.push(PagerEnvironment.class, new PagerValues(rowsPerPage,currentPage(),availableRows,component,element,className) );
+		environment.push(PagerEnvironment.class, new PagerValues(rowsPerPage,currentPage(),availableRows,component) );
 	}
 
 	@CleanupRender
@@ -73,10 +59,6 @@ public class Pager {
 		return "div";
 	}
 	
-	public String getElementClassName() {
-		return "";
-	}
-
 
 	private Integer currentPage() {
 		if ( currentPage != null ) {

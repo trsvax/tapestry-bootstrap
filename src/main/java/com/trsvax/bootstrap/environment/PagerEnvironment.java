@@ -17,9 +17,7 @@ public interface PagerEnvironment {
 	public String getID();
 	public String getNextURL();
 	public void setNextURL(String url);
-	
-	public String getElement();
-	public String getElementClass();
+
 	
 	
 

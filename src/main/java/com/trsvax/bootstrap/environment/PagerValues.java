@@ -7,17 +7,15 @@ public class PagerValues implements PagerEnvironment {
 	private final int currentPage;
 	private final String id;
 	private String nextURL;
-	private String element;
 	private String elementClass;
 	
-	public PagerValues(int rowPerPage, int currentPage, Integer availableRows, String id, String element, String elementClass) {
+	public PagerValues(int rowPerPage, int currentPage, Integer availableRows, String id) {
 
 		this.rowsPerPage = rowPerPage;
 		this.currentPage = currentPage;
 		this.availableRows = availableRows;
 		this.id = id;
-		this.element = element;
-		this.elementClass = elementClass;
+
 	}
 
 	public void setNextURL(String url) {
@@ -48,11 +46,5 @@ public class PagerValues implements PagerEnvironment {
 		return id;
 	}
 
-	public String getElement() {
-		return element;
-	}
 	
-	public String getElementClass() {
-		return elementClass;
-	}
 }

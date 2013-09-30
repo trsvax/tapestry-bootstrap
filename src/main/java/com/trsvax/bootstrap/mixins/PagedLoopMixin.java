@@ -15,7 +15,6 @@ import org.apache.tapestry5.annotations.SetupRender;
 import org.apache.tapestry5.grid.GridDataSource;
 import org.apache.tapestry5.grid.SortConstraint;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.environment.PagerEnvironment;
 
@@ -24,17 +23,13 @@ public class PagedLoopMixin {
 	@BindParameter
 	private Iterable<Object> source;
 	
-	@BindParameter
-	private String element;
-
  	@Environmental(false)
   	private PagerEnvironment env;
  	
  	@Inject
  	private ComponentResources resources;
  	
- 	@Inject
- 	private Logger logger;
+
  	
  	private int rowsPerPage;
  	private int currentPage;
@@ -51,13 +46,11 @@ public class PagedLoopMixin {
 		if ( ! isPaged() ) {
 			return;
 		}
-		element = "li";
 		rowsPerPage = env.getRowsPerPage();
 		currentPage = env.getCurrentPage();
 
 		
 		Class<?> type = resources.getContainerResources().getBoundType("source");
-		logger.info("source type {}",type);
 		if ( Collection.class.isAssignableFrom(type)) {
 			Collection<Object> c = (Collection<Object>) source;
 			availableRows = c.size();
@@ -82,7 +75,7 @@ public class PagedLoopMixin {
 	void beginRender(MarkupWriter writer) {
 		if ( ! done  && isPaged()) {
 			//writer.element("ul","id",id,"class","thumbnails");
-			writer.element(env.getElement(), "id",id,"class",env.getElementClass());
+			//writer.element(env.getElement(), "id",id,"class",env.getElementClass());
 			done = true;
 		}
 	}
@@ -90,7 +83,7 @@ public class PagedLoopMixin {
 	@AfterRender
 	void afterRender(MarkupWriter writer) {
 		if ( done ) {
-			writer.end();
+			//writer.end();
 		}
 	}
 	

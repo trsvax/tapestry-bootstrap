@@ -40,7 +40,7 @@ public class Modal implements ClientElement {
 	
 	@BeginRender
 	void beginRender(MarkupWriter writer) {
-		modalElement = writer.element("div", "class","modal hide");
+		modalElement = writer.element("div", "class","modal ");
 		if ( fade ) {
 			modalElement.addClassName("fade");
 		}

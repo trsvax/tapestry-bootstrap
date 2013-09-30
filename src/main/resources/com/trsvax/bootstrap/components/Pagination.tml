@@ -2,14 +2,32 @@
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
       xmlns:p="tapestry:parameter">
 
-<div class="pagination ${className}">
-  <ul>
-<t:loop source="pages" value="page">
-	<li class="${page.className}">
-			<t:pagelink page="prop:pageName" parameters="page.pageParameters" ><t:outputraw value="${page.pageLabel}"/></t:pagelink>
-	</li>
-</t:loop>
+<t:if test="paged">
+<ul class="pagination ${className} hidden-xs">
+	<t:loop source="pages" value="page">
+		<li class="${page.className}">
+				<t:pagelink page="prop:pageName" parameters="page.pageParameters" >
+				<t:outputraw value="${page.pageLabel}"/>
+				</t:pagelink>
+		</li>
+	</t:loop>
 </ul>
-</div>
+
+<ul class="pager visible-xs">
+	<t:if test="previous.disabled">
+		<li class="previous disabled"><a href="#" >Previous</a></li>
+	<p:else>
+	  <li class="previous"><t:pagelink page="prop:pageName" parameters="previous.pageParameters" class="previous">Previous</t:pagelink></li>	
+	</p:else>
+	</t:if>
+	<t:if test="next.disabled">
+		<li class="next disabled"><a href="#" >Next</a></li>
+	<p:else>
+	  <li class="next"><t:pagelink page="prop:pageName" parameters="next.pageParameters">Next</t:pagelink></li>	
+	</p:else>
+	</t:if>
+</ul>
+
+</t:if>
       
 </html>

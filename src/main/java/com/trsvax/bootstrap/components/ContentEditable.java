@@ -19,6 +19,11 @@ import org.apache.tapestry5.services.javascript.JavaScriptSupport;
 @SupportsInformalParameters
 public class ContentEditable {
 	
+	/**
+	* The object to be rendered; if not explicitly bound, a default binding to a property whose name matches this
+	* component's id will be used.
+	* @magic magic tag
+	*/
 	@Parameter
 	private String content;
 	

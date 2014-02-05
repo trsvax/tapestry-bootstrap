@@ -45,7 +45,7 @@
         <dependency>
             <groupId>org.got5</groupId>
             <artifactId>tapestry5-jquery</artifactId>
-            <version>3.2.1</version>
+            <version>3.3.3</version>
         </dependency>
 
         <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests)
@@ -275,7 +275,14 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </plugins>
     </build>
 
-    <repositories>      
+    <repositories>
+      <repository>
+	<id>devlab722-repo</id>
+        <url>http://nexus.devlab722.net/nexus/content/repositories/releases</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+      </repository>
     </repositories>
 
     <pluginRepositories>
@@ -305,7 +312,7 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
 -->
 
     <properties>
-        <tapestry-release-version>5.3.4</tapestry-release-version>
+        <tapestry-release-version>5.3.6</tapestry-release-version>
         <servlet-api-release-version>2.5</servlet-api-release-version>
         <testng-release-version>5.14.9</testng-release-version>
         <easymock-release-version>3.0</easymock-release-version>

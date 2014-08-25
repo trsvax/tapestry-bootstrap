@@ -275,7 +275,30 @@ of testing facilities designed for use with TestNG (http://testng.org/), so it's
         </plugins>
     </build>
 
-    <repositories>      
+    <repositories>
+        <!--  repositories for jquery-->
+        <repository>
+                <id>devlab722-repo</id>
+                <url>http://nexus.devlab722.net/nexus/content/repositories/releases
+                </url>
+                <snapshots>
+                    <enabled>false</enabled>
+                </snapshots>
+            </repository>
+
+            <repository>
+                <id>devlab722-snapshot-repo</id>
+                <url>http://nexus.devlab722.net/nexus/content/repositories/snapshots
+                </url>
+                <releases>
+                    <enabled>false</enabled>
+                </releases>
+            </repository>
+
+            <repository>
+                    <id>sonatype-nexus</id>
+                    <url>https://oss.sonatype.org/content/groups/public</url>
+            </repository>
     </repositories>
 
     <pluginRepositories>

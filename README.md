@@ -1,4 +1,4 @@
- # Tapestry 5 Twitter Bootstrap Module
+# Tapestry 5 Twitter Bootstrap Module
 
 ## List Of Contributors
 - Barry Books as trsvax
@@ -55,7 +55,7 @@ Bootstap Mixins
 - **FW**
    - internal mixin for attaching framework chain to component
 
-- **LoopEnviromentMixin*
+- **LoopEnviromentMixin**
    - add to Loop component to support paging
    
 - **Pager**
@@ -65,7 +65,7 @@ Bootstap Mixins
   - push new objects into the environment
   
 - **Sortable**
-  - makes elements [Sortable]http://jqueryui.com/demos/sortable/)
+  - makes elements [Sortable](http://jqueryui.com/demos/sortable/)
   
 
 ##Using Bootstrap:

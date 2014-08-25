@@ -1,4 +1,4 @@
- # Tapestry 5 Twitter Bootstrap Module
+# Tapestry 5 Twitter Bootstrap Module
 
 ## List Of Contributors
 - Barry Books as trsvax

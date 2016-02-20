@@ -70,6 +70,11 @@ public class StringTemplateParserImpl implements StringTemplateParser {
 				public int hashCode() {
 					return template.hashCode();
 				}
+
+				public boolean isVirtual() {
+					// TODO Auto-generated method stub
+					return false;
+				}
 			};
 		}
 

@@ -15,12 +15,10 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.Request;
-import org.slf4j.Logger;
 
 import com.trsvax.bootstrap.environment.PagerEnvironment;
 
 /**
- * @tapestrydoc
  */
 public class Pagination  {
 	
